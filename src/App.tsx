@@ -78,7 +78,7 @@ function App() {
     <div className={"chart"}>
       <h2>Data on Corona in Sweden</h2>
       <Line data={chartData} />
-      <p><a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome here</p>
+      <p><a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome <a href={"https://github.com/yetric/corona-2020"}>here</a></p>
     </div>
   );
 }
