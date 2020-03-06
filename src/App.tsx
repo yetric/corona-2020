@@ -2,18 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Line} from 'react-chartjs-2';
 import './App.css';
 import Papa from "papaparse";
-
-const headerCountry = "";
-
-const REGION_IDX = 0;
 const COUNTRY_IDX = 1;
-const LAT_IDX = 2;
-const LNG_IDX = 3;
 const DATA_START_IDX = 4;
-
 const confirmedCasesCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
-//const confirmedDeathsCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
-//const confirmedRecoveredCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv";
 
 const Table = (props: any) => {
   if (!props.data.labels) {
@@ -24,11 +15,13 @@ const Table = (props: any) => {
     const now = props.data.data[index];
     const change = now - last;
     const changeRelative = change / last;
+    const total = props.data.data[index];
+    if (total === 0) return null;
     last = now;
     return <tr key={index}>
       <td>{label}</td>
       <td>{change}</td>
-      <td>{props.data.data[index]}</td>
+      <td>{total}</td>
       <td>{(changeRelative > 0 && isFinite(changeRelative)) && Math.round(changeRelative * 100) + "%"}</td>
     </tr>
   });
@@ -62,12 +55,10 @@ function App() {
   };
 
   const getLabels = (dataset: any[]) => {
-    return dataset[0].splice(DATA_START_IDX);
+    return dataset[0].splice(DATA_START_IDX).map((date: string) => {
+      return new Date(date).toLocaleDateString('sv-se');
+    });
   };
-
-  useEffect(() => {
-    loadCases();
-  }, []);
 
   const loadCases = async () => {
     Papa.parse(confirmedCasesCSV, {
@@ -88,20 +79,20 @@ function App() {
               lineTension: 0,
               label: "Confirmed Cases Sweden",
               data: swedenData,
-              backgroundColor: 'rgba(136,192,208,0.4)',
-              borderColor: 'rgba(136,192,208,1)',
+              backgroundColor: 'rgb(208, 135, 112)',
+              borderColor: 'rgb(208, 135, 112)',
               borderCapStyle: 'butt',
               borderDash: [],
               borderDashOffset: 0.0,
               borderJoinStyle: 'miter',
-              pointBorderColor: 'rgba(136,192,208,1)',
-              pointBackgroundColor: '#fff',
+              pointBorderColor: 'rgb(208, 135, 112)',
+              pointBackgroundColor: 'rgb(208, 135, 112)',
               pointBorderWidth: 1,
-              pointHoverRadius: 5,
-              pointHoverBackgroundColor: 'rgba(136,192,208,1)',
+              pointHoverRadius: 10,
+              pointHoverBackgroundColor: 'rgb(208, 135, 112)',
               pointHoverBorderColor: 'rgba(220,220,220,1)',
-              pointHoverBorderWidth: 2,
-              pointRadius: 3,
+              pointHoverBorderWidth: 1,
+              pointRadius: 0,
               pointHitRadius: 10,
               borderWidth: 2
             }
@@ -113,11 +104,29 @@ function App() {
 
   };
 
+  useEffect(() => {
+    loadCases().then(() => {
+      console.log("Cases loaded");
+    });
+  }, []);
+
+  const options = {
+    scales: {
+      xAxes: [{
+        display: false
+      }],
+      yAxes: [{
+        display: false
+      }],
+    }
+      };
 
   return (
     <div className={"chart"}>
       <h2>Data on Corona in Sweden</h2>
-      <Line data={chartData} />
+      <div className="chart-line">
+        <Line data={chartData} options={options} />
+      </div>
       <Table data={raw} />
       <p><a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome <a href={"https://github.com/yetric/corona-2020"}>here</a></p>
 
