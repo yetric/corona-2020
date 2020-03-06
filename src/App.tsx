@@ -27,8 +27,8 @@ const Table = (props: any) => {
     last = now;
     return <tr key={index}>
       <td>{label}</td>
-      <td>{props.data.data[index]}</td>
       <td>{change}</td>
+      <td>{props.data.data[index]}</td>
       <td>{(changeRelative > 0 && isFinite(changeRelative)) && Math.round(changeRelative * 100) + "%"}</td>
     </tr>
   });
@@ -36,9 +36,9 @@ const Table = (props: any) => {
     <thead>
     <tr>
       <th>Date</th>
-      <th>Cases</th>
+      <th>New</th>
+      <th>Total</th>
       <th>Change</th>
-      <th>Percentage</th>
     </tr>
     </thead>
     <tbody>
