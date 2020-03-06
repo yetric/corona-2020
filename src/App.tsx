@@ -15,8 +15,42 @@ const confirmedCasesCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVI
 //const confirmedDeathsCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
 //const confirmedRecoveredCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv";
 
+const Table = (props: any) => {
+  if (!props.data.labels) {
+    return null;
+  }
+  let last = 0;
+  const rows = props.data.labels.map((label: any, index: number) => {
+    const now = props.data.data[index];
+    const change = now - last;
+    const changeRelative = change / last;
+    last = now;
+    return <tr key={index}>
+      <td>{label}</td>
+      <td>{props.data.data[index]}</td>
+      <td>{change}</td>
+      <td>{(changeRelative > 0 && isFinite(changeRelative)) && Math.round(changeRelative * 100) + "%"}</td>
+    </tr>
+  });
+  return <table>
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Cases</th>
+      <th>Change</th>
+      <th>Percentage</th>
+    </tr>
+    </thead>
+    <tbody>
+    {rows}
+    </tbody>
+  </table>;
+};
+
+
 function App() {
   const [chartData, setChartData] = useState({});
+  const [raw, setRaw] = useState({});
   const getCountry = (dataset: any[], countryName: string) => {
     for (let i = 0; i < dataset.length; i++) {
       const row = dataset[i];
@@ -41,8 +75,13 @@ function App() {
       header: false,
       complete: function(results) {
         const swedenData = getCountry(results.data, "Sweden");
+        const labels = getLabels(results.data);
+        setRaw({
+          data: swedenData,
+          labels
+        })
         const chartDataset = {
-          labels: getLabels(results.data),
+          labels,
           datasets: [
             {
               fill: false,
@@ -79,7 +118,9 @@ function App() {
     <div className={"chart"}>
       <h2>Data on Corona in Sweden</h2>
       <Line data={chartData} />
+      <Table data={raw} />
       <p><a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome <a href={"https://github.com/yetric/corona-2020"}>here</a></p>
+
     </div>
   );
 }

@@ -43,3 +43,31 @@ a {
 .chart {
   padding: 12px;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+}
+
+
+table th {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+table td, table th {
+  text-align: right;
+  padding: 8px;
+  border-bottom: 1px solid var(--nord2);
+  font-size: 14px;
+}
+
+table tr td:first-child,
+table tr th:first-child{
+  text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: var(--nord1);
+}
