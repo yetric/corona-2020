@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/line": "^0.61.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -13,6 +12,8 @@
     "@types/react-dom": "^16.9.0",
     "chart.js": "^2.9.3",
     "csv-parser": "^2.3.2",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.1.8",
     "papaparse": "^5.1.1",
     "react": "^16.13.0",
     "react-chartjs-2": "^2.9.0",
