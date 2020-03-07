@@ -1,10 +1,13 @@
 import React from "react";
 import {Line} from "react-chartjs-2";
 
+export type ChartType = "linear" | "logarithmic";
+
 interface ChartProps {
     labels: any[];
     data: any[];
     name: string;
+    type: ChartType | string;
 }
 
 export const Chart = (props: ChartProps) => {
@@ -40,5 +43,22 @@ export const Chart = (props: ChartProps) => {
         ]
     };
 
-    return <Line data={chartDataset} options={{}} />;
+    const options = {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Chart.js Line Chart - Logarithmic'
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+            }],
+            yAxes: [{
+                display: true,
+                type: props.type,
+            }]
+        }
+    };
+
+    return <Line data={chartDataset} options={options} />;
 };

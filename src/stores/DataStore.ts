@@ -1,4 +1,4 @@
-import {action, computed, observable} from "mobx";
+import {action, observable} from "mobx";
 import Papa from "papaparse";
 
 export const REGION_IDX = 0;

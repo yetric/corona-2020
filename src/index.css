@@ -85,3 +85,13 @@ table tr th:first-child {
 table tbody tr:nth-child(even) {
     background-color: var(--nord1);
 }
+
+.toggle {
+    list-style: none;
+    padding: 0;
+}
+
+.toggle li {
+    display: inline-block;
+    padding: 4px 12px;
+}

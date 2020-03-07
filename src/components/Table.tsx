@@ -9,7 +9,7 @@ interface TableProps {
     data: DataProp;
 }
 export const Table = (props: TableProps) => {
-    if (!props.data.labels) {
+    if(props.data.labels.length === 0 || props.data.data.length === 0) {
         return null;
     }
     let last = 0;
