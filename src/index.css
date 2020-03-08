@@ -54,10 +54,6 @@ a {
     padding: 12px;
 }
 
-.chart-line {
-    padding: 20px;
-}
-
 table {
     border-collapse: collapse;
     width: 100%;
@@ -86,6 +82,14 @@ table tbody tr:nth-child(even) {
     background-color: var(--nord1);
 }
 
+table tbody tr {
+    display: none;
+}
+table tbody tr:nth-last-of-type(10),
+table tbody tr:nth-last-of-type(10) ~ tr {
+    display:table-row;
+}
+
 .toggle {
     list-style: none;
     padding: 0;
@@ -99,4 +103,41 @@ table tbody tr:nth-child(even) {
 }
 
 .toggle li a {
+}
+
+.chart-line {
+    min-height: 320px;
+    padding: 0;
+}
+
+@media screen and (min-width: 480px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        padding: 0 6px;
+    }
+
+    .col-sm {
+        max-width: 40%;
+        padding: 0 6px;
+    }
+
+    .col:first-child {
+        padding-left: 0;
+    }
+
+    .col:last-child, .col-sm:last-child {
+        padding-right: 0;
+    }
+}
+
+.footer {
+    text-align: center;
+    opacity: .4;
 }

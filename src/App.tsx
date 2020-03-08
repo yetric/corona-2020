@@ -10,36 +10,44 @@ const App = observer(() => {
     return (
         <div className={"chart"}>
             <h2>Data on Corona in Sweden</h2>
-            <ul className={"toggle"}>
-                <li>
-                    <a
-                        href={"#linear"}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            dataStore.setRenderType("linear");
-                        }}>
-                        Linear
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href={"#logarithmic"}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            dataStore.setRenderType("logarithmic");
-                        }}>
-                        Logarithmic
-                    </a>
-                </li>
-            </ul>
-            <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed Cases Sweden"} />
-            <Table
-                data={{
-                    labels: dataStore.labels,
-                    data: dataStore.data
-                }}
-            />
-            <p>
+            <div className="row">
+                <div className="col">
+                    <ul className={"toggle"}>
+                        <li>
+                            <a
+                                href={"#linear"}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    dataStore.setRenderType("linear");
+                                }}>
+                                Linear
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#logarithmic"}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    dataStore.setRenderType("logarithmic");
+                                }}>
+                                Logarithmic
+                            </a>
+                        </li>
+                    </ul>
+                    <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed Cases Sweden"} />
+                </div>
+                <div className="col">
+                    <Table
+                        data={{
+                            labels: dataStore.labels,
+                            data: dataStore.data
+                        }}
+                    />
+                </div>
+            </div>
+
+
+            <p className={"footer"}>
                 <a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by{" "}
                 <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome{" "}
                 <a href={"https://github.com/yetric/corona-2020"}>here</a>

@@ -43,16 +43,38 @@ export const Chart = (props: ChartProps) => {
     };
 
     const options = {
+        maintainAspectRatio: false,
+        skipXLabels: 2,
         responsive: true,
         scales: {
             yAxes: [
                 {
                     display: true,
-                    type: props.type
+                    type: props.type,
+                    gridLines: false,
+                    ticks: {
+                        autoSkip : false,
+                        callback: (value: any, index: any, values: any) => {
+                            return value % 20 === 0 ? value : "";
+                        }
+                    },
+                }
+            ],
+            xAxes: [
+                {
+                    ticks: {
+                        autoSkip : false,
+                        callback: (value: any, index: any, values: any) => {
+                            return index % 7 === 0 ? value : "";
+                        }
+                    },
+                    gridLines : {
+                        display : false,
+                    }
                 }
             ]
         }
     };
 
-    return <Line redraw={true} data={chartDataset} options={options} />;
+    return <div className={"chart-line"}><Line redraw={true} data={chartDataset} options={options} /></div>;
 };
