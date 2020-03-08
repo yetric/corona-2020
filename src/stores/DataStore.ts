@@ -1,4 +1,4 @@
-import {action, observable} from "mobx";
+import { action, observable } from "mobx";
 import Papa from "papaparse";
 
 export const REGION_IDX = 0;
@@ -7,15 +7,19 @@ export const LAT_IDX = 2;
 export const LNG_IDX = 3;
 export const DATA_START_IDX = 4;
 
-export const confirmedCasesCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
-export const confirmedDeathsCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
-export const confirmedRecoveredCSV = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv";
+export const confirmedCasesCSV =
+    "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
+export const confirmedDeathsCSV =
+    "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
+export const confirmedRecoveredCSV =
+    "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv";
 
 export class DataStore {
     @observable cases: any[] = [];
-    @observable data: any[] = [];
-    @observable headers: any[] = [];
-    @observable labels: any[] = [];
+    @observable data: number[] = [];
+
+    @observable headers: string[] = [];
+    @observable labels: string[] = [];
     @observable renderType: string = "linear";
 
     constructor() {
@@ -31,9 +35,9 @@ export class DataStore {
                 this.cases = results.data;
                 this.headers = this.cases[0];
                 this.labels = this.headers.splice(DATA_START_IDX).map((date: string) => {
-                    return new Date(date).toLocaleDateString('sv-se');
+                    return new Date(date).toLocaleDateString("sv-se");
                 });
-                this.loadCountry('Sweden');
+                this.loadCountry("Sweden");
             }
         });
     }
@@ -53,7 +57,7 @@ export class DataStore {
     }
 
     @action
-    setRenderType (renderType: string) {
+    setRenderType(renderType: string) {
         this.renderType = renderType;
     }
 }
