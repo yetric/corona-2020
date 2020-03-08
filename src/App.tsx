@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { DataStore } from "./stores/DataStore";
 import { observer } from "mobx-react";
 import { Table } from "./components/Table";
 import { Chart } from "./components/Chart";
 
 const dataStore = new DataStore();
+
 const App = observer(() => {
-    const [chartType, setChartType] = useState("logarithmic");
     return (
         <div className={"chart"}>
             <h2>Data on Corona in Sweden</h2>
@@ -16,7 +16,7 @@ const App = observer(() => {
                         href={"#linear"}
                         onClick={(event) => {
                             event.preventDefault();
-                            setChartType("linear");
+                            dataStore.setRenderType("linear");
                         }}>
                         Linear
                     </a>
@@ -26,13 +26,13 @@ const App = observer(() => {
                         href={"#logarithmic"}
                         onClick={(event) => {
                             event.preventDefault();
-                            setChartType("logarithmic");
+                            dataStore.setRenderType("logarithmic");
                         }}>
                         Logarithmic
                     </a>
                 </li>
             </ul>
-            <Chart type={chartType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed Cases Sweden"} />
+            <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed Cases Sweden"} />
             <Table
                 data={{
                     labels: dataStore.labels,

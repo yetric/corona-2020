@@ -16,6 +16,7 @@ export class DataStore {
     @observable data: any[] = [];
     @observable headers: any[] = [];
     @observable labels: any[] = [];
+    @observable renderType: string = "linear";
 
     constructor() {
         this.loadConfirmed();
@@ -42,10 +43,17 @@ export class DataStore {
         for (let i = 0; i < this.cases.length; i++) {
             const row = this.cases[i];
             const country = row[COUNTRY_IDX];
+            console.log(country);
             if (country === countryName) {
+                console.log(row);
                 this.data = row.splice(DATA_START_IDX).map((nr: string) => parseInt(nr));
-                break;
+                //break;
             }
         }
+    }
+
+    @action
+    setRenderType (renderType: string) {
+        this.renderType = renderType;
     }
 }

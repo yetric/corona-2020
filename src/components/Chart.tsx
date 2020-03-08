@@ -1,5 +1,5 @@
 import React from "react";
-import {Line} from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -7,14 +7,13 @@ interface ChartProps {
     labels: any[];
     data: any[];
     name: string;
-    type: ChartType | string;
+    type: string;
 }
 
 export const Chart = (props: ChartProps) => {
     if (props.labels.length === 0 || props.data.length === 0) {
         return null;
     }
-
     const chartDataset = {
         labels: props.labels,
         datasets: [
@@ -23,18 +22,18 @@ export const Chart = (props: ChartProps) => {
                 lineTension: 0,
                 label: props.name,
                 data: props.data,
-                backgroundColor: 'rgb(208, 135, 112)',
-                borderColor: 'rgb(208, 135, 112)',
-                borderCapStyle: 'butt',
+                backgroundColor: "rgb(208, 135, 112)",
+                borderColor: "rgb(208, 135, 112)",
+                borderCapStyle: "butt",
                 borderDash: [],
                 borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: 'rgb(208, 135, 112)',
-                pointBackgroundColor: 'rgb(208, 135, 112)',
+                borderJoinStyle: "miter",
+                pointBorderColor: "rgb(208, 135, 112)",
+                pointBackgroundColor: "rgb(208, 135, 112)",
                 pointBorderWidth: 1,
                 pointHoverRadius: 10,
-                pointHoverBackgroundColor: 'rgb(208, 135, 112)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBackgroundColor: "rgb(208, 135, 112)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
                 pointHoverBorderWidth: 1,
                 pointRadius: 0,
                 pointHitRadius: 10,
@@ -45,20 +44,15 @@ export const Chart = (props: ChartProps) => {
 
     const options = {
         responsive: true,
-        title: {
-            display: true,
-            text: 'Chart.js Line Chart - Logarithmic'
-        },
         scales: {
-            xAxes: [{
-                display: true,
-            }],
-            yAxes: [{
-                display: true,
-                type: props.type,
-            }]
+            yAxes: [
+                {
+                    display: true,
+                    type: props.type
+                }
+            ]
         }
     };
 
-    return <Line data={chartDataset} options={options} />;
+    return <Line redraw={true} data={chartDataset} options={options} />;
 };
