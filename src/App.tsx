@@ -13,7 +13,7 @@ const App = observer(() => {
             <div className="row">
                 <div className="col">
                     <ul className={"toggle"}>
-                        <li>
+                        <li className={dataStore.renderType === 'linear' ? "active" : ""}>
                             <a
                                 href={"#linear"}
                                 onClick={(event) => {
@@ -23,7 +23,7 @@ const App = observer(() => {
                                 Linear
                             </a>
                         </li>
-                        <li>
+                        <li className={dataStore.renderType === 'logarithmic' ? "active" : ""}>
                             <a
                                 href={"#logarithmic"}
                                 onClick={(event) => {
@@ -34,7 +34,7 @@ const App = observer(() => {
                             </a>
                         </li>
                     </ul>
-                    <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed Cases Sweden"} />
+                    <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed"} />
                 </div>
                 <div className="col">
                     <Table

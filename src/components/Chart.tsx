@@ -43,6 +43,9 @@ export const Chart = (props: ChartProps) => {
     };
 
     const options = {
+        legend: {
+            display: false
+        },
         maintainAspectRatio: false,
         skipXLabels: 2,
         responsive: true,
@@ -62,11 +65,9 @@ export const Chart = (props: ChartProps) => {
             ],
             xAxes: [
                 {
+                    display: false,
                     ticks: {
-                        autoSkip : false,
-                        callback: (value: any, index: any, values: any) => {
-                            return index % 7 === 0 ? value : "";
-                        }
+                        autoSkip : true
                     },
                     gridLines : {
                         display : false,

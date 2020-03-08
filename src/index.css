@@ -60,11 +60,6 @@ table {
     margin: 20px 0;
 }
 
-table th {
-    font-weight: bold;
-    font-size: 15px;
-}
-
 table td,
 table th {
     text-align: right;
@@ -72,6 +67,15 @@ table th {
     border-bottom: 1px solid var(--nord2);
     font-size: 14px;
 }
+
+table th {
+    font-weight: 100;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: var(--nord14);
+}
+
+
 
 table tr td:first-child,
 table tr th:first-child {
@@ -99,10 +103,19 @@ table tbody tr:nth-last-of-type(10) ~ tr {
 .toggle li {
     display: inline-block;
     padding: 4px 12px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .toggle li a {
+    color: var(--nord3);
+}
+
+.toggle li.active {
+
+}
+
+.toggle li.active a {
+    color: var(--nord12)
 }
 
 .chart-line {
@@ -110,7 +123,7 @@ table tbody tr:nth-last-of-type(10) ~ tr {
     padding: 0;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 640px) {
     .row {
         display: flex;
         flex-wrap: wrap;
