@@ -1,10 +1,8 @@
-import { action, observable } from "mobx";
+import {action, computed, observable} from "mobx";
 import Papa from "papaparse";
+import {ma} from "../core/stats";
 
-export const REGION_IDX = 0;
 export const COUNTRY_IDX = 1;
-export const LAT_IDX = 2;
-export const LNG_IDX = 3;
 export const DATA_START_IDX = 4;
 
 export const confirmedCasesCSV =
@@ -19,6 +17,7 @@ export class DataStore {
     @observable data: number[] = [];
 
     @observable headers: string[] = [];
+    @observable countries: string[] = [];
     @observable labels: string[] = [];
     @observable renderType: string = "linear";
 
@@ -44,14 +43,22 @@ export class DataStore {
 
     @action
     loadCountry(countryName: string) {
+
+        let countriesUnfiltered = this.cases.slice(1).map((row) => {
+            return row[COUNTRY_IDX]
+        });
+        this.countries = [...new Set(countriesUnfiltered)];
+
         for (let i = 0; i < this.cases.length; i++) {
             const row = this.cases[i];
             const country = row[COUNTRY_IDX];
-            console.log(country);
+
+            if (!this.countries.includes(country)) {
+                this.countries.push(country);
+            }
+
             if (country === countryName) {
-                console.log(row);
                 this.data = row.splice(DATA_START_IDX).map((nr: string) => parseInt(nr));
-                //break;
             }
         }
     }
@@ -60,4 +67,9 @@ export class DataStore {
     setRenderType(renderType: string) {
         this.renderType = renderType;
     }
+
+    @computed get movingAvg() {
+        return ma(this.data, 3);
+    }
+
 }

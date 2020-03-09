@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import {ma} from "../core/stats";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -33,6 +34,28 @@ export const Chart = (props: ChartProps) => {
                 pointBorderWidth: 1,
                 pointHoverRadius: 10,
                 pointHoverBackgroundColor: "rgb(208, 135, 112)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 1,
+                pointRadius: 0,
+                pointHitRadius: 10,
+                borderWidth: 2
+            },
+            {
+                fill: false,
+                lineTension: 0,
+                label: "Moving Avg",
+                data: ma(props.data, 3),
+                backgroundColor: "rgb(115, 115, 115)",
+                borderColor: "rgb(115, 115, 115)",
+                borderCapStyle: "butt",
+                borderDash: [5,10],
+                borderDashOffset: 0.0,
+                borderJoinStyle: "miter",
+                pointBorderColor: "rgb(115, 115, 115)",
+                pointBackgroundColor: "rgb(115, 115, 115)",
+                pointBorderWidth: 1,
+                pointHoverRadius: 10,
+                pointHoverBackgroundColor: "rgb(115, 115, 115)",
                 pointHoverBorderColor: "rgba(220,220,220,1)",
                 pointHoverBorderWidth: 1,
                 pointRadius: 0,

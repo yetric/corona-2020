@@ -15,6 +15,9 @@
     --nord13: #ebcb8b;
     --nord14: #a3be8c;
     --nord15: #b48ead;
+
+    --meta: #6b7383;
+    --meta-light: #a2acc0;
 }
 
 * {
@@ -57,7 +60,12 @@ a {
 table {
     border-collapse: collapse;
     width: 100%;
-    margin: 20px 0;
+    margin: 0 0 12px 0;
+}
+
+small {
+    color: var(--meta);
+    text-align: right;
 }
 
 table td,
@@ -72,10 +80,8 @@ table th {
     font-weight: 100;
     font-size: 15px;
     text-transform: uppercase;
-    color: var(--nord14);
+    color: var(--meta-light);
 }
-
-
 
 table tr td:first-child,
 table tr th:first-child {
@@ -92,6 +98,11 @@ table tbody tr {
 table tbody tr:nth-last-of-type(10),
 table tbody tr:nth-last-of-type(10) ~ tr {
     display:table-row;
+}
+
+table ~ small {
+    display: block;
+    text-align: right;
 }
 
 .toggle {
@@ -133,7 +144,7 @@ table tbody tr:nth-last-of-type(10) ~ tr {
         flex-basis: 0;
         flex-grow: 1;
         max-width: 100%;
-        padding: 0 6px;
+        padding: 0 12px;
     }
 
     .col-sm {
@@ -154,3 +165,20 @@ table tbody tr:nth-last-of-type(10) ~ tr {
     text-align: center;
     opacity: .4;
 }
+
+
+    select {
+        width: 100%;
+        line-height: 1.3em;
+        padding: .6em 1.4em .5em .8em;
+        box-sizing: border-box;
+        margin: 0;
+        border: 1px solid #aaa;
+        box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #fff;
+        background-image: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+    }
+
