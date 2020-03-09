@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataStore } from "./stores/DataStore";
 import { observer } from "mobx-react";
 import { Table } from "./components/Table";
@@ -8,6 +8,7 @@ import {Select} from "./components/Select";
 const dataStore = new DataStore();
 
 const App = observer(() => {
+    const [truncate, setTruncate] = useState(true);
     return (
         <div className={"chart"}>
             <h2>Data on Corona</h2>
@@ -47,8 +48,12 @@ const App = observer(() => {
                             data: dataStore.data,
                             ma: dataStore.movingAvg
                         }}
+                        truncate={truncate}
                     />
-                    <small>Only showing last 10 days in table</small>
+                    <small>Only showing last 10 days in table <a href={"#"} onClick={(event) => {
+                        event.preventDefault();
+                        setTruncate(!truncate);
+                    }}>Show all</a></small>
                 </div>
             </div>
 

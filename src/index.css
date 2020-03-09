@@ -92,11 +92,11 @@ table tbody tr:nth-child(even) {
     background-color: var(--nord1);
 }
 
-table tbody tr {
+table.truncate tbody tr {
     display: none;
 }
-table tbody tr:nth-last-of-type(10),
-table tbody tr:nth-last-of-type(10) ~ tr {
+table.truncate tbody tr:nth-last-of-type(10),
+table.truncate tbody tr:nth-last-of-type(10) ~ tr {
     display: table-row;
 }
 

@@ -8,18 +8,19 @@ interface DataProp {
 
 interface TableProps {
     data: DataProp;
+    truncate: boolean;
 }
-export const Table = (props: TableProps) => {
-    if(props.data.labels.length === 0 || props.data.data.length === 0) {
+export const Table = ({data, truncate = true}: TableProps) => {
+    if(data.labels.length === 0 || data.data.length === 0) {
         return null;
     }
     let last = 0;
-    const rows = props.data.labels.map((label: any, index: number) => {
-        const now = props.data.data[index];
-        const moving = parseInt(props.data.ma[index]);
+    const rows = data.labels.map((label: any, index: number) => {
+        const now = data.data[index];
+        const moving = parseInt(data.ma[index]);
         const change = now - last;
         const changeRelative = change / last;
-        const total = props.data.data[index];
+        const total = data.data[index];
         if (total === 0) return null;
         last = now;
         return (
@@ -32,8 +33,10 @@ export const Table = (props: TableProps) => {
             </tr>
         );
     });
+
+    const clsName = truncate ? "truncate" : "";
     return (
-        <table>
+        <table className={clsName}>
             <thead>
                 <tr>
                     <th>Date</th>
