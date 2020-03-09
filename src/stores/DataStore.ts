@@ -1,10 +1,8 @@
-import { action, observable } from "mobx";
+import {action, computed, observable} from "mobx";
 import Papa from "papaparse";
+import {ma} from "../core/stats";
 
-export const REGION_IDX = 0;
 export const COUNTRY_IDX = 1;
-export const LAT_IDX = 2;
-export const LNG_IDX = 3;
 export const DATA_START_IDX = 4;
 
 export const confirmedCasesCSV =
@@ -19,8 +17,11 @@ export class DataStore {
     @observable data: number[] = [];
 
     @observable headers: string[] = [];
+    @observable countries: string[] = [];
     @observable labels: string[] = [];
     @observable renderType: string = "linear";
+
+    @observable selectedCountry: string = "Sweden";
 
     constructor() {
         this.loadConfirmed();
@@ -37,27 +38,56 @@ export class DataStore {
                 this.labels = this.headers.splice(DATA_START_IDX).map((date: string) => {
                     return new Date(date).toLocaleDateString("sv-se");
                 });
-                this.loadCountry("Sweden");
+
+                let countriesUnfiltered = this.cases.slice(1).map((row) => {
+                    return row[COUNTRY_IDX]
+                });
+                this.countries = [...new Set(countriesUnfiltered)];
+
+                this.loadCountry(this.selectedCountry);
             }
         });
     }
 
     @action
     loadCountry(countryName: string) {
+        this.selectedCountry = countryName;
+        const countryData = [];
         for (let i = 0; i < this.cases.length; i++) {
             const row = this.cases[i];
             const country = row[COUNTRY_IDX];
-            console.log(country);
+
+            if (!this.countries.includes(country)) {
+                this.countries.push(country);
+            }
+
             if (country === countryName) {
-                console.log(row);
-                this.data = row.splice(DATA_START_IDX).map((nr: string) => parseInt(nr));
-                //break;
+                countryData.push(row.splice(DATA_START_IDX).map((nr: string) => parseInt(nr)));
             }
         }
+
+        const accumulated: number[] = [];
+
+        countryData.forEach((subData) => {
+            subData.forEach((data: number, index: number) => {
+                if (accumulated[index]) {
+                    accumulated[index] += data;
+                } else {
+                    accumulated[index] = data;
+                }
+            });
+        });
+
+        this.data = accumulated;
     }
 
     @action
     setRenderType(renderType: string) {
         this.renderType = renderType;
     }
+
+    @computed get movingAvg() {
+        return ma(this.data, 3);
+    }
+
 }
