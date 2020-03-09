@@ -107,7 +107,7 @@ table ~ small {
 
 .toggle {
     position: absolute;
-    top: 12px;
+    top: 0;
     right: 0;
     list-style: none;
     padding: 0;
@@ -169,6 +169,10 @@ table ~ small {
 .footer {
     text-align: center;
     opacity: 0.4;
+}
+
+.col {
+    position: relative;
 }
 
 select {

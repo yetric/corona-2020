@@ -32,10 +32,7 @@ export const Bars = ({ data, labels }: BarsProps) => {
                 {
                     display: true,
                     ticks: {
-                        autoSkip : false,
-                        callback: (value: any, index: any, values: any) => {
-                            return value % 20 === 0 ? value : "";
-                        }
+                        autoSkip : true
                     },
                 }
             ],
