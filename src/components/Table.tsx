@@ -28,7 +28,7 @@ export const Table = ({data, truncate = true}: TableProps) => {
                 <td>{label}</td>
                 <td>{change}</td>
                 <td>{total}</td>
-                <td>{moving}</td>
+                <td>{isNaN(moving) ? "-" : moving}</td>
                 <td>{changeRelative > 0 && isFinite(changeRelative) && Math.round(changeRelative * 100) + "%"}</td>
             </tr>
         );

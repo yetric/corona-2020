@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { Table } from "./components/Table";
 import { Chart } from "./components/Chart";
 import {Select} from "./components/Select";
+import { Bars } from "./components/Bars";
 
 const dataStore = new DataStore();
 
@@ -17,6 +18,7 @@ const App = observer(() => {
             }} countries={dataStore.countries} selected={dataStore.selectedCountry}  />
             <div className="row">
                 <div className="col">
+                    <h4>Accumulated</h4>
                     <ul className={"toggle"}>
                         <li className={dataStore.renderType === 'linear' ? "active" : ""}>
                             <a
@@ -42,6 +44,11 @@ const App = observer(() => {
                     <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed"} />
                 </div>
                 <div className="col">
+                    <h4>New cases</h4>
+                    <Bars data={dataStore.data} labels={dataStore.labels}/>
+                </div>
+                <div className="col">
+                    <h4>Overview</h4>
                     <Table
                         data={{
                             labels: dataStore.labels,

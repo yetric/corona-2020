@@ -106,6 +106,9 @@ table ~ small {
 }
 
 .toggle {
+    position: absolute;
+    top: 12px;
+    right: 0;
     list-style: none;
     padding: 0;
     text-align: right;
@@ -128,7 +131,8 @@ table ~ small {
     color: var(--nord12);
 }
 
-.chart-line {
+.chart-line,
+.bar-chart-elm {
     min-height: 320px;
     padding: 0;
 }
@@ -140,6 +144,7 @@ table ~ small {
     }
 
     .col {
+        position: relative;
         flex-basis: 0;
         flex-grow: 1;
         max-width: 100%;

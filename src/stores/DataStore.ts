@@ -43,7 +43,6 @@ export class DataStore {
                     return row[COUNTRY_IDX]
                 });
                 this.countries = [...new Set(countriesUnfiltered)];
-
                 this.loadCountry(this.selectedCountry);
             }
         });
@@ -66,7 +65,7 @@ export class DataStore {
             }
         }
 
-        const accumulated: number[] = [];
+        let accumulated: number[] = [];
 
         countryData.forEach((subData) => {
             subData.forEach((data: number, index: number) => {
