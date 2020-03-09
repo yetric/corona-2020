@@ -10,11 +10,10 @@ const dataStore = new DataStore();
 const App = observer(() => {
     return (
         <div className={"chart"}>
-            <h2>Data on Corona in Sweden</h2>
+            <h2>Data on Corona</h2>
             <Select onChange={(value: string) => {
-                console.log(value);
                 dataStore.loadCountry(value);
-            }} countries={dataStore.countries}  />
+            }} countries={dataStore.countries} selected={dataStore.selectedCountry}  />
             <div className="row">
                 <div className="col">
                     <ul className={"toggle"}>

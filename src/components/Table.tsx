@@ -39,7 +39,7 @@ export const Table = (props: TableProps) => {
                     <th>Date</th>
                     <th>New</th>
                     <th>Total</th>
-                    <th>Moving Avg. (3 days)</th>
+                    <th>Moving Avg.</th>
                     <th>Change</th>
                 </tr>
             </thead>

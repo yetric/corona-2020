@@ -97,7 +97,7 @@ table tbody tr {
 }
 table tbody tr:nth-last-of-type(10),
 table tbody tr:nth-last-of-type(10) ~ tr {
-    display:table-row;
+    display: table-row;
 }
 
 table ~ small {
@@ -122,11 +122,10 @@ table ~ small {
 }
 
 .toggle li.active {
-
 }
 
 .toggle li.active a {
-    color: var(--nord12)
+    color: var(--nord12);
 }
 
 .chart-line {
@@ -156,29 +155,29 @@ table ~ small {
         padding-left: 0;
     }
 
-    .col:last-child, .col-sm:last-child {
+    .col:last-child,
+    .col-sm:last-child {
         padding-right: 0;
     }
 }
 
 .footer {
     text-align: center;
-    opacity: .4;
+    opacity: 0.4;
 }
 
-
-    select {
-        width: 100%;
-        line-height: 1.3em;
-        padding: .6em 1.4em .5em .8em;
-        box-sizing: border-box;
-        margin: 0;
-        border: 1px solid #aaa;
-        box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-        -moz-appearance: none;
-        -webkit-appearance: none;
-        appearance: none;
-        background-color: #fff;
-        background-image: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
-    }
-
+select {
+    width: 100%;
+    line-height: 1.3em;
+    font-size: 16px;
+    padding: 0.6em 1.4em 0.5em 0.8em;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: linear-gradient(to bottom, #ffffff 0%, var(--nord4) 100%);
+}

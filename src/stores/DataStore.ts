@@ -21,6 +21,8 @@ export class DataStore {
     @observable labels: string[] = [];
     @observable renderType: string = "linear";
 
+    @observable selectedCountry: string = "Sweden";
+
     constructor() {
         this.loadConfirmed();
     }
@@ -36,19 +38,21 @@ export class DataStore {
                 this.labels = this.headers.splice(DATA_START_IDX).map((date: string) => {
                     return new Date(date).toLocaleDateString("sv-se");
                 });
-                this.loadCountry("Sweden");
+
+                let countriesUnfiltered = this.cases.slice(1).map((row) => {
+                    return row[COUNTRY_IDX]
+                });
+                this.countries = [...new Set(countriesUnfiltered)];
+
+                this.loadCountry(this.selectedCountry);
             }
         });
     }
 
     @action
     loadCountry(countryName: string) {
-
-        let countriesUnfiltered = this.cases.slice(1).map((row) => {
-            return row[COUNTRY_IDX]
-        });
-        this.countries = [...new Set(countriesUnfiltered)];
-
+        this.selectedCountry = countryName;
+        const countryData = [];
         for (let i = 0; i < this.cases.length; i++) {
             const row = this.cases[i];
             const country = row[COUNTRY_IDX];
@@ -58,9 +62,23 @@ export class DataStore {
             }
 
             if (country === countryName) {
-                this.data = row.splice(DATA_START_IDX).map((nr: string) => parseInt(nr));
+                countryData.push(row.splice(DATA_START_IDX).map((nr: string) => parseInt(nr)));
             }
         }
+
+        const accumulated: number[] = [];
+
+        countryData.forEach((subData) => {
+            subData.forEach((data: number, index: number) => {
+                if (accumulated[index]) {
+                    accumulated[index] += data;
+                } else {
+                    accumulated[index] = data;
+                }
+            });
+        });
+
+        this.data = accumulated;
     }
 
     @action
