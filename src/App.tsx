@@ -15,7 +15,7 @@ const App = () => {
     return (
         <Router>
         <div className={"chart"}>
-            <h2>Data on Corona</h2>
+            <h2><Link to={"/"}>Data on Corona</Link></h2>
 
             <Search />
 
