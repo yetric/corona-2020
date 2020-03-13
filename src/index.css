@@ -106,9 +106,6 @@ table ~ small {
 }
 
 .toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
     list-style: none;
     padding: 0;
     text-align: right;
@@ -169,6 +166,7 @@ table ~ small {
 .footer {
     text-align: center;
     opacity: 0.4;
+    font-size: 12px;
 }
 
 .col {
@@ -189,4 +187,75 @@ select {
     appearance: none;
     background-color: #fff;
     background-image: linear-gradient(to bottom, #ffffff 0%, var(--nord4) 100%);
+}
+
+.card {
+    border: 1px solid var(--nord2);
+}
+
+.card-header {
+    background-color: var(--nord1);
+    border-bottom: 1px solid var(--nord2);
+    line-height: 48px;
+    font-weight: 300;
+    padding: 0 20px;
+    font-size: 21px;
+    text-transform: uppercase;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+dl {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+    padding: 0;
+    align-items: baseline;
+    justify-content: center;
+}
+
+dt {
+    flex-basis: 40%;
+    font-weight: 300;
+    line-height: 54px;
+    padding: 0 20px 0 0;
+    text-align: right;
+    color: var(--nord4);
+}
+
+dd {
+    flex-basis: 60%;
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    line-height: 54px;
+    color: var(--nord6);
+}
+
+dd small {
+    font-size: 12px;
+    color: var(--meta);
+    float: right;
+}
+
+.top-nav {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+}
+
+.top-nav li {
+    display: inline-block;
+    padding: 0 20px;
+    line-height: 32px;
+}
+
+input[type="search"] {
+    width: 100%;
+    margin: 0 0 12px 0;
+    line-height: 32px;
+    padding: 12px;
+    font-size: 16px;
 }

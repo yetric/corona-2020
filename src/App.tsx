@@ -1,68 +1,27 @@
-import React, { useState } from "react";
-import { DataStore } from "./stores/DataStore";
-import { observer } from "mobx-react";
-import { Table } from "./components/Table";
-import { Chart } from "./components/Chart";
-import {Select} from "./components/Select";
-import { Bars } from "./components/Bars";
+import React from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import { Home } from "./views/Home";
+import { Search } from "./components/Search";
 
-const dataStore = new DataStore();
 
-const App = observer(() => {
-    const [truncate, setTruncate] = useState(true);
+
+const App = () => {
+
     return (
+        <Router>
         <div className={"chart"}>
             <h2>Data on Corona</h2>
-            <Select onChange={(value: string) => {
-                dataStore.loadCountry(value);
-            }} countries={dataStore.countries} selected={dataStore.selectedCountry}  />
-            <div className="row">
-                <div className="col">
-                    <h4>Accumulated</h4>
-                    <ul className={"toggle"}>
-                        <li className={dataStore.renderType === 'linear' ? "active" : ""}>
-                            <a
-                                href={"#linear"}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    dataStore.setRenderType("linear");
-                                }}>
-                                Linear
-                            </a>
-                        </li>
-                        <li className={dataStore.renderType === 'logarithmic' ? "active" : ""}>
-                            <a
-                                href={"#logarithmic"}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    dataStore.setRenderType("logarithmic");
-                                }}>
-                                Logarithmic
-                            </a>
-                        </li>
-                    </ul>
-                    <Chart type={dataStore.renderType} labels={dataStore.labels} data={dataStore.data} name={"Confirmed"} />
-                </div>
-                <div className="col">
-                    <h4>New cases</h4>
-                    <Bars data={dataStore.data} labels={dataStore.labels}/>
-                </div>
-                <div className="col">
-                    <h4>Overview</h4>
-                    <Table
-                        data={{
-                            labels: dataStore.labels,
-                            data: dataStore.data,
-                            ma: dataStore.movingAvg
-                        }}
-                        truncate={truncate}
-                    />
-                    <small>Only showing last 10 days in table <a href={"#"} onClick={(event) => {
-                        event.preventDefault();
-                        setTruncate(!truncate);
-                    }}>Show all</a></small>
-                </div>
-            </div>
+
+            <Search />
+
+            <Switch>
+                <Route path={"/:country"} component={Home} />
+            </Switch>
 
 
             <p className={"footer"}>
@@ -71,7 +30,8 @@ const App = observer(() => {
                 <a href={"https://github.com/yetric/corona-2020"}>here</a>
             </p>
         </div>
+        </Router>
     );
-});
+};
 
 export default App;

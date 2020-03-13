@@ -3,7 +3,6 @@ import React from "react";
 interface DataProp {
     data: any[];
     labels: any[];
-    ma: any[];
 }
 
 interface TableProps {
@@ -17,7 +16,6 @@ export const Table = ({data, truncate = true}: TableProps) => {
     let last = 0;
     const rows = data.labels.map((label: any, index: number) => {
         const now = data.data[index];
-        const moving = parseInt(data.ma[index]);
         const change = now - last;
         const changeRelative = change / last;
         const total = data.data[index];
@@ -28,7 +26,6 @@ export const Table = ({data, truncate = true}: TableProps) => {
                 <td>{label}</td>
                 <td>{change}</td>
                 <td>{total}</td>
-                <td>{isNaN(moving) ? "-" : moving}</td>
                 <td>{changeRelative > 0 && isFinite(changeRelative) && Math.round(changeRelative * 100) + "%"}</td>
             </tr>
         );
@@ -42,7 +39,6 @@ export const Table = ({data, truncate = true}: TableProps) => {
                     <th>Date</th>
                     <th>New</th>
                     <th>Total</th>
-                    <th>Moving Avg.</th>
                     <th>Change</th>
                 </tr>
             </thead>
