@@ -50,7 +50,7 @@ export class DataStore {
 
 
     constructor() {
-        this.client = new DataClient("https://yetric.se/");
+        this.client = new DataClient("https://yetric.se");
     }
 
     @action
