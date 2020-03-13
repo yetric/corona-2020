@@ -19,7 +19,7 @@ export const Home = observer(() => {
     return (
         <>
             <div className="card">
-                <div className="card-header">{dataStore.data?.geo.country} {dataStore.data?.geo.province && dataStore.data?.geo.province}</div>
+                <div className="card-header">{dataStore.data?.geo.country}</div>
                 <div className="card-body">
                     <dl>
                         <dt>Confirmed</dt>
