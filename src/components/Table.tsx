@@ -31,7 +31,7 @@ export const Table = ({data, truncate = true}: TableProps) => {
         );
     });
 
-    const clsName = truncate ? "truncate" : "";
+    const clsName = truncate && rows.length > 10 ? "truncate" : "";
     return (
         <table className={clsName}>
             <thead>
