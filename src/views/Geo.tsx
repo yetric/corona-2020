@@ -133,6 +133,7 @@ export const Geo = observer(() => {
                             labels: dataSource.labels,
                             data: dataSource.data
                         }}
+                        truncate={truncate}
                     />
                     <small>
                         Only showing last 10 days in table{" "}
