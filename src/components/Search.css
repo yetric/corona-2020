@@ -1,0 +1,20 @@
+.search-component {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    background-color: var(--nord5);
+    color: var(--nord2);
+    left: 0;
+    right: 0;
+    top: 47px;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.search-result-item {
+    padding: 0 12px;
+    line-height: 48px;
+    border-bottom: 1px solid var(--nord4);
+}
