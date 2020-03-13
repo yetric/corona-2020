@@ -64,8 +64,8 @@ export const Geo = observer(() => {
             </div>
             <div className="row">
                 <div className="col">
-                    <h4>Accumulated</h4>
-                    <ul className={"toggle"}>
+                    <h4>Total</h4>
+                    <ul className={"toggle pull-right"}>
                         <li className={type === "confirmed" ? "active" : ""}>
                             <a
                                 href={"#confirmed"}

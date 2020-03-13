@@ -282,3 +282,10 @@ input[type="text"] {
     line-height: 42px;
     padding: 0 12px;
 }
+
+.toggle.pull-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+}
