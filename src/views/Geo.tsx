@@ -13,7 +13,15 @@ export const Geo = observer(() => {
     useEffect(() => {
         country && dataStore.loadCountry(parseInt(country));
     }, [country]);
+
+    useEffect(() => {
+        if (dataStore.data?.geo.country) {
+            document.title = dataStore.data?.geo.country + ' - Covid-19 - CoronaData.se';
+        }
+    });
+
     const [truncate, setTruncate] = useState(true);
+
 
     const chartOrLoading = dataStore.confirmed.data.length > 0 ? <Chart type={dataStore.renderType} labels={dataStore.confirmed.labels} data={dataStore.confirmed.data} name={"Confirmed"} /> : null;
     return (
