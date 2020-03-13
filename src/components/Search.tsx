@@ -45,7 +45,7 @@ export const Search = withRouter(
 
         return (
             <div className={"search-component"}>
-                <input type={"search"} value={query} onChange={onChange} placeholder={"Search for country/region"} />
+                <input type={"text"} value={query} onChange={onChange} placeholder={"Search for country/region"} />
                 {searchStore.result.length > 0 && <div className={"search-results"}>{searchResults}</div>}
             </div>
         );

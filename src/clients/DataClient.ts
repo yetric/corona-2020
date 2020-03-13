@@ -1,7 +1,7 @@
 export class DataClient {
     private base: string;
-    constructor(basePath: string) {
-        this.base = basePath;
+    constructor(basePath: string | undefined) {
+        this.base = basePath || "";
     }
 
     async getJSON(path: string) {

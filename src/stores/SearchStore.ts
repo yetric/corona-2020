@@ -10,7 +10,7 @@ export class SearchStore {
 
     constructor() {
         this.query = "";
-        this.client = new DataClient("https://yetric.se");
+        this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
 
     @action

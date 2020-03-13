@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 const dataStore = new DataStore();
 
-export const Home = observer(() => {
+export const Geo = observer(() => {
     let { country } = useParams();
     useEffect(() => {
         country && dataStore.loadCountry(parseInt(country));
