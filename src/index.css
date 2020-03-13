@@ -134,6 +134,13 @@ table ~ small {
     padding: 0;
 }
 
+.toggle.pull-right {
+    position: absolute;
+    right: 0;
+    top: -2px;
+    margin: 0;
+}
+
 @media screen and (min-width: 640px) {
     .row {
         display: flex;
@@ -146,6 +153,7 @@ table ~ small {
         flex-grow: 1;
         max-width: 100%;
         padding: 0 12px;
+        margin-top: 20px;
     }
 
     .col-sm {
@@ -160,6 +168,10 @@ table ~ small {
     .col:last-child,
     .col-sm:last-child {
         padding-right: 0;
+    }
+
+    .toggle.pull-right {
+        top: 20px;
     }
 }
 
@@ -281,11 +293,4 @@ input[type="text"] {
     display: block;
     line-height: 42px;
     padding: 0 12px;
-}
-
-.toggle.pull-right {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 0;
 }
