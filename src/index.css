@@ -252,6 +252,13 @@ dd small {
     line-height: 32px;
 }
 
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+}
+
 input[type="search"] {
     width: 100%;
     margin: 0 0 12px 0;
