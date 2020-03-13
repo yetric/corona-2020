@@ -7,9 +7,9 @@ interface DataProp {
 
 interface TableProps {
     data: DataProp;
-    truncate: boolean;
+    truncate?: boolean;
 }
-export const Table = ({data, truncate = true}: TableProps) => {
+export const Table = ({data, truncate = false}: TableProps) => {
     if(data.labels.length === 0 || data.data.length === 0) {
         return null;
     }

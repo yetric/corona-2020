@@ -44,8 +44,14 @@ export class DataStore {
         data: [],
         labels: []
     };
-    @observable deaths = [];
-    @observable recovered = [];
+    @observable deaths: TypeCollection = {
+        data: [],
+        labels: []
+    };
+    @observable recovered: TypeCollection = {
+        data: [],
+        labels: []
+    };
     private client: DataClient;
 
 
@@ -57,6 +63,8 @@ export class DataStore {
     async loadCountry(countryId: number) {
         this.data = await this.client.getJSON(`/api/corona/geo/${countryId}`);
         await this.loadConfirmed(countryId);
+        await this.loadDeaths(countryId);
+        await this.loadRecovered(countryId);
     }
 
     @action
@@ -78,12 +86,36 @@ export class DataStore {
 
     @action
     async loadDeaths(countryId: number) {
-        this.deaths = await this.client.getJSON(`/api/corona/geo/${countryId}/deaths`);
+        const json = await this.client.getJSON(`/api/corona/geo/${countryId}/deaths`);
+        const {deaths} = json;
+        let labels = deaths.map((item: Case) => {
+            return item.date;
+        });
+
+        let data = deaths.map((item: Case) => {
+            return parseInt(item.count);
+        });
+        this.deaths = {
+            labels,
+            data
+        };
     }
 
     @action
     async loadRecovered(countryId: number) {
-        this.recovered = await this.client.getJSON(`/api/corona/geo/${countryId}/recovered`);
+        const json = await this.client.getJSON(`/api/corona/geo/${countryId}/recovered`);
+        const {recovered} = json;
+        let labels = recovered.map((item: Case) => {
+            return item.date;
+        });
+
+        let data = recovered.map((item: Case) => {
+            return parseInt(item.count);
+        });
+        this.recovered = {
+            labels,
+            data
+        };
     }
 
     @action
