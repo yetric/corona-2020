@@ -28,8 +28,8 @@ export class SearchStore {
     @action
     async apiSearch() {
         if (this.query.length > 0) {
-            let response = await this.client.getJSON(`/api/corona/geo?query=${this.query}`);
-            this.result = response.geos;
+            let response = await this.client.getJSON(`/api/corona/country?query=${this.query}`);
+            this.result = response.countries;
         }
     }
 }

@@ -43,7 +43,7 @@ export const Geo = observer(() => {
     return (
         <>
             <div className="card">
-                <div className="card-header">{dataStore.data?.geo.country}</div>
+                <div className="card-header">{dataStore.data?.geo.country} <small>({dataStore.data?.geo.province || "All provinces"})</small></div>
                 <div className="card-body">
                     <dl>
                         <dt>Confirmed</dt>

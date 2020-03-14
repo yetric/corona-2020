@@ -52,6 +52,7 @@ export class DataStore {
         data: [],
         labels: []
     };
+    @observable provinces: any[] = [];
     private client: DataClient;
 
 
@@ -65,6 +66,7 @@ export class DataStore {
         await this.loadConfirmed(countryId);
         await this.loadDeaths(countryId);
         await this.loadRecovered(countryId);
+        await this.loadProvinces(countryId);
     }
 
     @action
@@ -127,4 +129,9 @@ export class DataStore {
         return ma(this.confirmed.data, 3);
     }
 
+    @action
+    async loadProvinces(geoId: number) {
+        let response = await this.client.getJSON(`/api/corona/country/${geoId}`);
+        this.provinces = response.country;
+    }
 }

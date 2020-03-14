@@ -24,8 +24,8 @@ export const Table = ({data, truncate = false}: TableProps) => {
         return (
             <tr key={index}>
                 <td>{label}</td>
-                <td>{change}</td>
                 <td>{total}</td>
+                <td>{change}</td>
                 <td>{changeRelative > 0 && isFinite(changeRelative) && Math.round(changeRelative * 100) + "%"}</td>
             </tr>
         );
@@ -37,8 +37,8 @@ export const Table = ({data, truncate = false}: TableProps) => {
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>New</th>
                     <th>Total</th>
+                    <th>New</th>
                     <th>Change</th>
                 </tr>
             </thead>
