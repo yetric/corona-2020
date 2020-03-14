@@ -317,6 +317,12 @@ input[type="text"] {
     border-bottom: none;
 }
 
+.list-group li.item-text {
+    line-height: 18px;
+    padding: 12px;
+    color: var(--nord3);
+}
+
 .list-group li.list-header {
     line-height: 18px;
     padding: 12px;
