@@ -81,7 +81,7 @@ table {
     margin: 0 0 12px 0;
 }
 
-small {
+.card-header small {
     color: var(--meta);
     text-align: right;
 }
@@ -204,19 +204,17 @@ table ~ small {
 }
 
 select {
-    width: 100%;
     line-height: 1.3em;
-    font-size: 16px;
-    padding: 0.6em 1.4em 0.5em 0.8em;
+    font-size: 14px;
     box-sizing: border-box;
-    margin: 0;
-    border: 1px solid #aaa;
-    box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+    color: var(--meta);
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-    background-color: #fff;
-    background-image: linear-gradient(to bottom, #ffffff 0%, var(--nord4) 100%);
+    background-color: transparent;
+    border: 1px solid var(--nord12);
+    padding: 6px 12px;
+    margin-left: 12px;
 }
 
 .card {
