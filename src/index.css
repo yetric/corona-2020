@@ -33,6 +33,7 @@ body {
     background: var(--nord0);
     color: var(--nord4);
     font-family: "IBM Plex Sans", sans-serif;
+    line-height: 1.5;
 }
 
 h1,
@@ -228,6 +229,7 @@ select {
 
 .card-body {
     padding: 20px;
+    color: var(--nord4);
 }
 
 .card-footer {
@@ -287,7 +289,7 @@ dd small {
 input[type="text"] {
     width: 100%;
     margin: 0 0 12px 0;
-    line-height: 32px;
+    line-height: 24px;
     padding: 12px;
     font-size: 16px;
     border-radius: 2px;
@@ -309,10 +311,17 @@ input[type="text"] {
     border-bottom: none;
 }
 
+.list-group li.list-header {
+    line-height: 18px;
+    padding: 12px;
+    text-transform: uppercase;
+    color: var(--nord4);
+}
+
 .list-group li a {
     display: block;
-    line-height: 42px;
-    padding: 0 12px;
+    line-height: 18px;
+    padding: 12px;
 }
 
 .toastify-center {
@@ -322,4 +331,27 @@ input[type="text"] {
 .toast-close {
     position: absolute;
     right: 12px;
+}
+
+ol {
+    list-style: none;
+    counter-reset: item;
+    padding: 0;
+}
+ol li {
+    counter-increment: item;
+    margin-bottom: 5px;
+    color: var(--nord4);
+}
+ol li:before {
+    margin-right: 10px;
+    content: counter(item);
+    background: var(--nord10);
+    border-radius: 100%;
+    font-size: 14px;
+    color: white;
+    width: 1.5em;
+    line-height: 1.5em;
+    text-align: center;
+    display: inline-block;
 }
