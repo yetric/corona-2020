@@ -4,11 +4,11 @@
 
 .search-results {
     position: absolute;
-    background-color: var(--nord5);
+    background-color: #fff;
     color: var(--nord2);
-    left: 0;
-    right: 0;
-    top: 47px;
+    left: 1px;
+    right: 1px;
+    top: 60px;
     max-height: 200px;
     overflow-y: scroll;
 }
@@ -17,4 +17,6 @@
     padding: 0 12px;
     line-height: 48px;
     border-bottom: 1px solid var(--nord4);
+    cursor: default;
+    color: var(--nord10);
 }

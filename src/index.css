@@ -43,9 +43,20 @@ h6 {
     font-weight: 400;
 }
 
-h2 {
+.header {
+    background-color: var(--nord1);
     text-align: center;
-    margin-top: 0;
+    padding: 12px 0;
+}
+.header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.header h3 {
+    margin: 0;
+    color: var(--nord4);
+    font-size: 14px;
 }
 
 a {
@@ -211,8 +222,7 @@ select {
     line-height: 48px;
     font-weight: 300;
     padding: 0 20px;
-    font-size: 21px;
-    text-transform: uppercase;
+    font-size: 18px;
 }
 
 .card-body {
@@ -231,10 +241,10 @@ dl {
 dt {
     flex-basis: 40%;
     font-weight: 300;
-    line-height: 54px;
+    line-height: 48px;
     padding: 0 20px 0 0;
     text-align: right;
-    color: var(--nord4);
+    color: var(--meta-light);
 }
 
 dd {
@@ -242,12 +252,12 @@ dd {
     margin: 0;
     padding: 0;
     font-size: 28px;
-    line-height: 54px;
+    line-height: 48px;
     color: var(--nord6);
 }
 
 dd small {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--meta);
     float: right;
 }

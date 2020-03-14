@@ -8,10 +8,14 @@ const App = () => {
     return (
         <Router>
             <Analytics id={"UA-103000963-8"}>
-                <div className={"chart"}>
+                <div className="header">
                     <h2>
                         <Link to={"/"}>Data on Corona</Link>
                     </h2>
+                    <h3>coronadata.se</h3>
+                </div>
+                <div className={"chart"}>
+
 
                     <Search />
 
