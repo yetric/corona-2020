@@ -6,6 +6,9 @@ import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
 import { useParams } from "react-router-dom";
 import { Share } from "../components/Share";
+import { Save } from "react-feather";
+import { favStore } from "../stores/FavStore";
+
 
 const dataStore = new DataStore();
 
@@ -66,6 +69,18 @@ export const Geo = observer(() => {
                     <Share />
                 </div>
             </div>
+
+            <a href={"#save"} onClick={(event:any) => {
+                event.preventDefault();
+                if (country && dataStore.data?.geo) {
+                    favStore.save({
+                        id: parseInt(country),
+                        name: dataStore.data?.geo.country
+                    });
+                }
+
+            }} className={"btn btn-block"}><Save size={16} /> Save {dataStore.data?.geo.country} for quick access</a>
+
             <div className="row">
                 <div className="col">
                     <h4>Total</h4>

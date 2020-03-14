@@ -221,6 +221,7 @@ select {
 
 .card {
     border: 1px solid var(--nord2);
+    margin: 0 0 20px 0;
 }
 
 .card-header {
@@ -359,4 +360,22 @@ ol li:before {
     line-height: 1.5em;
     text-align: center;
     display: inline-block;
+}
+
+.btn {
+    display: inline-block;
+    border: 1px solid var(--nord12);
+    color: var(--nord12);
+    line-height: 42px;
+    padding: 0 18px;
+}
+
+.btn.btn-block {
+    display: block;
+    text-align: center;
+}
+
+.btn svg {
+    position: relative;
+    top: 2px;
 }
