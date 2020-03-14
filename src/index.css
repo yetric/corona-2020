@@ -49,15 +49,20 @@ h6 {
     background-color: var(--nord1);
     text-align: center;
     padding: 12px 0;
+    border-bottom: 1px solid var(--nord3);
 }
 .header h2 {
     margin: 0;
     font-size: 18px;
 }
 
+.header a {
+    color: var(--nord12);
+}
+
 .header h3 {
     margin: 0;
-    color: var(--nord4);
+    color: var(--meta);
     font-size: 14px;
 }
 
@@ -346,8 +351,8 @@ ol li {
 ol li:before {
     margin-right: 10px;
     content: counter(item);
-    background: var(--nord13);
-    color: var(--nord3);
+    background: var(--nord12);
+    color: var(--nord0);
     border-radius: 100%;
     font-size: 14px;
     width: 1.5em;
