@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
 import { useParams } from "react-router-dom";
+import { Share } from "../components/Share";
 
 const dataStore = new DataStore();
 
@@ -60,6 +61,9 @@ export const Geo = observer(() => {
                             {dataStore.data?.recovered.count} <small>{dataStore.data?.recovered.date}</small>
                         </dd>
                     </dl>
+                </div>
+                <div className="card-footer">
+                    <Share />
                 </div>
             </div>
             <div className="row">

@@ -14,6 +14,7 @@
     --nord12: rgb(208, 135, 112);
     --nord13: #ebcb8b;
     --nord14: #a3be8c;
+    --nord14-dark: #798c68;
     --nord15: #b48ead;
 
     --meta: #6b7383;
@@ -227,6 +228,15 @@ select {
 
 .card-body {
     padding: 20px;
+}
+
+.card-footer {
+    border-top: 1px solid var(--nord2);
+    line-height: 32px;
+    font-weight: 300;
+    padding: 0 20px;
+    font-size: 14px;
+    text-align: right;
 }
 
 dl {
