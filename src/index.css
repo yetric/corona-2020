@@ -346,10 +346,10 @@ ol li {
 ol li:before {
     margin-right: 10px;
     content: counter(item);
-    background: var(--nord10);
+    background: var(--nord13);
+    color: var(--nord3);
     border-radius: 100%;
     font-size: 14px;
-    color: white;
     width: 1.5em;
     line-height: 1.5em;
     text-align: center;
