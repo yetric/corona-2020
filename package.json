@@ -25,6 +25,7 @@
     "react-router-dom": "^5.1.2",
     "react-router-ga": "^1.2.3",
     "react-scripts": "3.4.0",
+    "toastify-js": "^1.7.0",
     "typescript": "~3.7.2",
     "use-debounce": "^3.4.0"
   },

@@ -314,3 +314,12 @@ input[type="text"] {
     line-height: 42px;
     padding: 0 12px;
 }
+
+.toastify-center {
+    max-width: 80%;
+}
+
+.toast-close {
+    position: absolute;
+    right: 12px;
+}

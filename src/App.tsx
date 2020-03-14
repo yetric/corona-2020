@@ -4,6 +4,8 @@ import { Geo } from "./views/Geo";
 import { Search } from "./components/Search";
 import Analytics from "react-router-ga";
 
+import "./core/toaster";
+
 const App = () => {
     return (
         <Router>
