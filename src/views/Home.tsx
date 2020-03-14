@@ -1,4 +1,5 @@
 import React from "react";
+import { Share } from "../components/Share";
 
 export const Home = () => <div>
 
@@ -15,6 +16,9 @@ export const Home = () => <div>
                 <li>Do not visit people in risk groups</li>
                 <li>Stay safe</li>
             </ol>
+        </div>
+        <div className="card-footer">
+            <Share />
         </div>
     </div>
 
