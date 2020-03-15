@@ -9,7 +9,10 @@ interface NearbyProps {
 
 export const Nearby = observer(({ id }: NearbyProps) => {
     useEffect(() => {
-        geoStore.getNearby(id);
+        geoStore
+            .getNearby(id)
+            .then(() => {})
+            .catch(() => {});
     }, [id]);
 
     const getList = () => {

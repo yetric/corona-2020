@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
-import {ma} from "../core/stats";
+import { ma } from "../core/stats";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -11,7 +11,7 @@ interface ChartProps {
     type: string;
 }
 
-export const Chart = (props: ChartProps) => {
+export const Chart = memo((props: ChartProps) => {
     if (props.labels.length === 0 || props.data.length === 0) {
         return null;
     }
@@ -48,7 +48,7 @@ export const Chart = (props: ChartProps) => {
                 backgroundColor: "rgb(115, 115, 115)",
                 borderColor: "rgb(115, 115, 115)",
                 borderCapStyle: "butt",
-                borderDash: [5,10],
+                borderDash: [5, 10],
                 borderDashOffset: 0.0,
                 borderJoinStyle: "miter",
                 pointBorderColor: "rgb(115, 115, 115)",
@@ -79,26 +79,30 @@ export const Chart = (props: ChartProps) => {
                     type: props.type,
                     gridLines: false,
                     ticks: {
-                        autoSkip : false,
+                        autoSkip: false,
                         callback: (value: any, index: any, values: any) => {
                             return value % 20 === 0 ? value : "";
                         }
-                    },
+                    }
                 }
             ],
             xAxes: [
                 {
                     display: false,
                     ticks: {
-                        autoSkip : true
+                        autoSkip: true
                     },
-                    gridLines : {
-                        display : false,
+                    gridLines: {
+                        display: false
                     }
                 }
             ]
         }
     };
 
-    return <div className={"chart-line"}><Line redraw={true} data={chartDataset} options={options} /></div>;
-};
+    return (
+        <div className={"chart-line"}>
+            <Line redraw={true} data={chartDataset} options={options} />
+        </div>
+    );
+});

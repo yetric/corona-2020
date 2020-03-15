@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Bar } from "react-chartjs-2";
 
 interface BarsProps {
@@ -6,8 +6,7 @@ interface BarsProps {
     labels: string[];
 }
 
-export const Bars = ({ data, labels }: BarsProps) => {
-
+export const Bars = memo(({ data, labels }: BarsProps) => {
     let last = 0;
     const rows = data.map((count: any, index: number) => {
         const change = count - last;
@@ -21,29 +20,31 @@ export const Bars = ({ data, labels }: BarsProps) => {
                 label: "New",
                 data: rows,
                 backgroundColor: "rgb(208, 135, 112)",
-                borderColor: "rgb(208, 135, 112)",
-            }]
-    }
+                borderColor: "rgb(208, 135, 112)"
+            }
+        ]
+    };
 
     const options = {
-        responsive: true, maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             yAxes: [
                 {
                     display: true,
                     ticks: {
-                        autoSkip : true
-                    },
+                        autoSkip: true
+                    }
                 }
             ],
             xAxes: [
                 {
                     display: false,
                     ticks: {
-                        autoSkip : true
+                        autoSkip: true
                     },
-                    gridLines : {
-                        display : false,
+                    gridLines: {
+                        display: false
                     }
                 }
             ]
@@ -54,4 +55,4 @@ export const Bars = ({ data, labels }: BarsProps) => {
             <Bar data={barData} options={options} />
         </div>
     );
-};
+});
