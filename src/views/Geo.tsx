@@ -9,6 +9,7 @@ import { Share } from "../components/Share";
 import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
+import { trackEvent } from "../core/tracking";
 
 interface ProvinceProps {
     selected?: any;
@@ -126,6 +127,12 @@ export const Geo = withRouter(
                                     id: parseInt(country),
                                     name: dataStore.data?.geo.country,
                                     province: dataStore.data.geo.province
+                                });
+
+                                trackEvent({
+                                    category: "Fav",
+                                    action: "Save",
+                                    label: dataStore.data?.geo.country
                                 });
                             }
                         }}

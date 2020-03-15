@@ -4,6 +4,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { withRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import "./Search.css";
+import { trackEvent } from "../core/tracking";
 
 interface SearchProps {
     history: any;
@@ -11,13 +12,18 @@ interface SearchProps {
 
 const searchStore = new SearchStore();
 export const Search = withRouter(
-    observer(({history}: SearchProps) => {
+    observer(({ history }: SearchProps) => {
         const [query, setQuery] = useState("");
 
         const [debouncedCallback] = useDebouncedCallback(
             // function
             (query) => {
                 searchStore.search(query);
+                trackEvent({
+                    category: "Search",
+                    action: "Query",
+                    label: query
+                });
             },
             // delay in ms
             450
@@ -37,7 +43,7 @@ export const Search = withRouter(
                     event.preventDefault();
                     searchStore.clear();
                     setQuery("");
-                    history.push('/' + geo.id);
+                    history.push("/" + geo.id);
                 }}>
                 {geo.country} {geo.province && "(" + geo.province + ")"}
             </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./Share.css";
 import { Share2, Copy } from "react-feather";
 import Clipboard from "clipboard";
-import { showToast } from "../core/toaster";
+import { trackEvent } from "../core/tracking";
 
 export const Share = () => {
     const button: any | null = useRef(null);
@@ -11,17 +11,21 @@ export const Share = () => {
     newNavigator = window.navigator;
 
     useEffect(() => {
-            const clipboard = new Clipboard(button.current, {
-                text: function(trigger: any) {
-                    return window.location.href;
-                }
-            });
+        const clipboard = new Clipboard(button.current, {
+            text: function(trigger: any) {
+                return window.location.href;
+            }
+        });
 
-            clipboard.on("success", () => {
-                //alert("Link copied to clipboard"); // TODO Add toaster
+        clipboard.on("success", () => {
+            trackEvent({
+                category: "Share",
+                action: "Copy",
+                label: window.location.href
             });
+            //alert("Link copied to clipboard"); // TODO Add toaster
+        });
     });
-
 
     const onShare = async () => {
         await newNavigator
@@ -31,7 +35,11 @@ export const Share = () => {
             })
             .catch((e: any) => {})
             .then(() => {
-                console.log("Share successful");
+                trackEvent({
+                    category: "Share",
+                    action: "Native",
+                    label: window.location.href
+                });
             });
     };
 
