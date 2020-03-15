@@ -8,6 +8,7 @@ import { useParams, withRouter } from "react-router-dom";
 import { Share } from "../components/Share";
 import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
+import { Nearby } from "../components/Nearby";
 
 interface ProvinceProps {
     selected?: any;
@@ -219,6 +220,7 @@ export const Geo = withRouter(
                         </small>
                     </div>
                 </div>
+                {country && <Nearby id={parseInt(country)} />}
             </>
         );
     })

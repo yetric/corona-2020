@@ -328,6 +328,11 @@ input[type="text"] {
     color: var(--nord4);
 }
 
+.list-group li.list-header small {
+    color: var(--meta);
+    text-transform: none;
+}
+
 .list-group li a {
     display: block;
     line-height: 18px;
