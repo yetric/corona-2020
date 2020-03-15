@@ -70,6 +70,15 @@ export const Geo = withRouter(
             );
         };
 
+        let showSaveBtn = true;
+        if (country && dataStore.data?.geo) {
+            showSaveBtn = !favStore.has({
+                id: parseInt(country),
+                name: dataStore.data.geo.country,
+                province: dataStore.data.geo.province
+            });
+        }
+
         const provinces =
             dataStore.provinces.length > 0 ? getProvinceDropDown({ selected: dataStore.data?.geo.province }) : null;
 
@@ -106,20 +115,23 @@ export const Geo = withRouter(
                     </div>
                 </div>
 
-                <a
-                    href={"#save"}
-                    onClick={(event: any) => {
-                        event.preventDefault();
-                        if (country && dataStore.data?.geo) {
-                            favStore.save({
-                                id: parseInt(country),
-                                name: dataStore.data?.geo.country
-                            });
-                        }
-                    }}
-                    className={"btn btn-block"}>
-                    <Save size={16} /> Save {dataStore.data?.geo.country} {provinceName} for quick access
-                </a>
+                {showSaveBtn && (
+                    <a
+                        href={"#save"}
+                        onClick={(event: any) => {
+                            event.preventDefault();
+                            if (country && dataStore.data?.geo) {
+                                favStore.save({
+                                    id: parseInt(country),
+                                    name: dataStore.data?.geo.country,
+                                    province: dataStore.data.geo.province
+                                });
+                            }
+                        }}
+                        className={"btn btn-block"}>
+                        <Save size={16} /> Save {dataStore.data?.geo.country} {provinceName}
+                    </a>
+                )}
 
                 <div className="row">
                     <div className="col">

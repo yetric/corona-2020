@@ -334,6 +334,10 @@ input[type="text"] {
     padding: 12px;
 }
 
+.list-group li a small {
+    color: var(--meta);
+}
+
 .toastify-center {
     max-width: 80%;
 }
