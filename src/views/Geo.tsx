@@ -81,6 +81,17 @@ export const Geo = withRouter(
             });
         }
 
+        let activeCases = 0;
+        let activity = 0;
+
+        if (country && dataStore.data?.geo) {
+            let confirmed = parseInt(dataStore.data?.confirmed.count);
+            let deaths = parseInt(dataStore.data?.deaths.count);
+            let recovered = parseInt(dataStore.data?.recovered.count);
+            activeCases = confirmed - (deaths + recovered);
+            activity = Math.round((activeCases / confirmed) * 100);
+        }
+
         const provinces =
             dataStore.provinces.length > 0 ? getProvinceDropDown({ selected: dataStore.data?.geo.province }) : null;
 
@@ -95,22 +106,34 @@ export const Geo = withRouter(
                         {dataStore.data?.geo.country} {provinces}
                     </div>
                     <div className="card-body">
-                        <dl>
-                            <dt>Confirmed</dt>
-                            <dd>
-                                {dataStore.data?.confirmed.count} <small>{dataStore.data?.confirmed.date}</small>
-                            </dd>
+                        <div className="row">
+                            <div className="col">
+                                <dl>
+                                    <dt>Confirmed</dt>
+                                    <dd>
+                                        {dataStore.data?.confirmed.count}{" "}
+                                        <small>{dataStore.data?.confirmed.date}</small>
+                                    </dd>
 
-                            <dt>Deaths</dt>
-                            <dd>
-                                {dataStore.data?.deaths.count} <small>{dataStore.data?.deaths.date}</small>
-                            </dd>
+                                    <dt>Deaths</dt>
+                                    <dd>
+                                        {dataStore.data?.deaths.count} <small>{dataStore.data?.deaths.date}</small>
+                                    </dd>
 
-                            <dt>Recovered</dt>
-                            <dd>
-                                {dataStore.data?.recovered.count} <small>{dataStore.data?.recovered.date}</small>
-                            </dd>
-                        </dl>
+                                    <dt>Recovered</dt>
+                                    <dd>
+                                        {dataStore.data?.recovered.count}{" "}
+                                        <small>{dataStore.data?.recovered.date}</small>
+                                    </dd>
+
+                                    <dt>Active</dt>
+                                    <dd>
+                                        {activeCases.toLocaleString("sv-se")} <small>{activity}%</small>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div className="col"></div>
+                        </div>
                     </div>
                     <div className="card-footer">
                         <Share />
