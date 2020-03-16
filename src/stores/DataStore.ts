@@ -1,5 +1,5 @@
-import {action, computed, observable} from "mobx";
-import {ma} from "../core/stats";
+import { action, computed, observable } from "mobx";
+import { ma } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
 
 interface Case {
@@ -29,6 +29,12 @@ interface GeoOverview {
     confirmed: TypeCurrent;
     deaths: TypeCurrent;
     recovered: TypeCurrent;
+    active: {
+        count: number;
+        percentage: number;
+        deathRate: number;
+        recoveryRate: number;
+    };
 }
 
 interface TypeCollection {
@@ -55,7 +61,6 @@ export class DataStore {
     @observable provinces: any[] = [];
     private client: DataClient;
 
-
     constructor() {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
@@ -72,7 +77,7 @@ export class DataStore {
     @action
     async loadConfirmed(countryId: number) {
         const json = await this.client.getJSON(`/api/corona/geo/${countryId}/confirmed`);
-        const {confirmed} = json;
+        const { confirmed } = json;
         let labels = confirmed.map((item: Case) => {
             return item.date;
         });
@@ -89,7 +94,7 @@ export class DataStore {
     @action
     async loadDeaths(countryId: number) {
         const json = await this.client.getJSON(`/api/corona/geo/${countryId}/deaths`);
-        const {deaths} = json;
+        const { deaths } = json;
         let labels = deaths.map((item: Case) => {
             return item.date;
         });
@@ -106,7 +111,7 @@ export class DataStore {
     @action
     async loadRecovered(countryId: number) {
         const json = await this.client.getJSON(`/api/corona/geo/${countryId}/recovered`);
-        const {recovered} = json;
+        const { recovered } = json;
         let labels = recovered.map((item: Case) => {
             return item.date;
         });

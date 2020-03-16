@@ -81,17 +81,6 @@ export const Geo = withRouter(
             });
         }
 
-        let activeCases = 0;
-        let activity = 0;
-
-        if (country && dataStore.data?.geo) {
-            let confirmed = parseInt(dataStore.data?.confirmed.count);
-            let deaths = parseInt(dataStore.data?.deaths.count);
-            let recovered = parseInt(dataStore.data?.recovered.count);
-            activeCases = confirmed - (deaths + recovered);
-            activity = Math.round((activeCases / confirmed) * 100);
-        }
-
         const provinces =
             dataStore.provinces.length > 0 ? getProvinceDropDown({ selected: dataStore.data?.geo.province }) : null;
 
@@ -117,18 +106,20 @@ export const Geo = withRouter(
 
                                     <dt>Deaths</dt>
                                     <dd>
-                                        {dataStore.data?.deaths.count} <small>{dataStore.data?.deaths.date}</small>
+                                        {dataStore.data?.deaths.count}{" "}
+                                        <small>{dataStore.data?.active.deathRate}%</small>
                                     </dd>
 
                                     <dt>Recovered</dt>
                                     <dd>
                                         {dataStore.data?.recovered.count}{" "}
-                                        <small>{dataStore.data?.recovered.date}</small>
+                                        <small>{dataStore.data?.active.recoveryRate}%</small>
                                     </dd>
 
                                     <dt>Active</dt>
                                     <dd>
-                                        {activeCases.toLocaleString("sv-se")} <small>{activity}%</small>
+                                        {dataStore.data?.active.count}{" "}
+                                        <small>{dataStore.data?.active.percentage}%</small>
                                     </dd>
                                 </dl>
                             </div>
