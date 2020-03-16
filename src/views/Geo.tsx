@@ -4,13 +4,12 @@ import { Table } from "../components/Table";
 import React, { useEffect, useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
-import { useParams, withRouter } from "react-router-dom";
+import { Link, useParams, withRouter } from "react-router-dom";
 import { Share } from "../components/Share";
 import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
 import { trackEvent } from "../core/tracking";
-import { Loading } from "../components/Loading";
 
 interface ProvinceProps {
     selected?: any;
@@ -28,6 +27,7 @@ export const Geo = withRouter(
         let { country } = useParams();
         useEffect(() => {
             country && dataStore.loadCountry(parseInt(country));
+            window.scrollTo(0, 0);
         }, [country]);
 
         useEffect(() => {
@@ -86,8 +86,8 @@ export const Geo = withRouter(
 
         if (dataStore.metadata.population && dataStore.data?.confirmed.count) {
             let hundredK = parseInt(dataStore.metadata.population) / 100000;
-            let relative = Math.round(dataStore.data?.confirmed.count / hundredK);
-            casesPerHundraK = relative.toLocaleString("sv-se");
+            let relative = dataStore.data?.confirmed.count / hundredK;
+            casesPerHundraK = (Math.round(relative * 10) / 10).toLocaleString("sv-se");
         }
 
         const provinces =
@@ -98,8 +98,15 @@ export const Geo = withRouter(
                 <Chart type={dataStore.renderType} labels={dataSource.labels} data={dataSource.data} name={type} />
             ) : null;
         return (
-            <>
+            <div className={"geo-wrapper"}>
                 <div className="card">
+                    {dataStore.loading && (
+                        <div className="loading-overlay">
+                            <div>
+                                <span>Loading Country Data ...</span>
+                            </div>
+                        </div>
+                    )}
                     <div className="card-header">
                         {dataStore.data?.geo.country} {provinces}
                     </div>
@@ -138,6 +145,11 @@ export const Geo = withRouter(
                             <div className="col">
                                 <div className="card">
                                     <div className="card-header">
+                                        {dataStore.metadata &&
+                                            dataStore.metadata.flag &&
+                                            dataStore.metadata.flag.length > 0 && (
+                                                <img className={"flag"} alt={"flag"} src={dataStore.metadata.flag} />
+                                            )}
                                         {dataStore.data?.geo.country} ({dataStore.metadata.abbr})
                                     </div>
                                     <table>
@@ -155,11 +167,19 @@ export const Geo = withRouter(
                                             </tr>
                                             <tr>
                                                 <th>Continent</th>
-                                                <td>{dataStore.metadata.continent}</td>
+                                                <td>
+                                                    <Link to={"/continent/" + dataStore.metadata.continent}>
+                                                        {dataStore.metadata.continent}
+                                                    </Link>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Region</th>
-                                                <td>{dataStore.metadata.region}</td>
+                                                <td>
+                                                    <Link to={"/region/" + dataStore.metadata.region}>
+                                                        {dataStore.metadata.region}
+                                                    </Link>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Life Expectancy</th>
@@ -173,12 +193,17 @@ export const Geo = withRouter(
                                             </tr>
                                             <tr>
                                                 <th>Government</th>
-                                                <td>{dataStore.metadata.government}</td>
+                                                <td>
+                                                    <Link to={"/government/" + dataStore.metadata.government}>
+                                                        {dataStore.metadata.government}
+                                                    </Link>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <div className="col">dfsdf</div>
                         </div>
                     </div>
                     <div className="card-footer">
@@ -297,7 +322,7 @@ export const Geo = withRouter(
                     </div>
                 </div>
                 {country && <Nearby id={parseInt(country)} />}
-            </>
+            </div>
         );
     })
 );

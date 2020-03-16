@@ -58,6 +58,7 @@ interface CountryMetadata {
 }
 
 export class DataStore {
+    @observable loading = false;
     @observable labels = [];
     @observable renderType = "linear";
     @observable data: GeoOverview | null = null;
@@ -82,7 +83,24 @@ export class DataStore {
     }
 
     @action
+    reset() {
+        const defaultCases = {
+            data: [],
+            labels: []
+        };
+        this.data = null;
+        this.metadata = {};
+        this.labels = [];
+        this.confirmed = defaultCases;
+        this.deaths = defaultCases;
+        this.recovered = defaultCases;
+        this.provinces = [];
+    }
+
+    @action
     async loadCountry(countryId: number) {
+        this.loading = true;
+        this.reset();
         this.data = await this.client.getJSON(`/api/corona/geo/${countryId}`);
         await this.loadConfirmed(countryId);
         await this.loadDeaths(countryId);
@@ -91,8 +109,10 @@ export class DataStore {
 
         if (this.data && this.data.geo) {
             const { country_id } = this.data.geo;
-            this.loadCountryMetaData(country_id);
+            await this.loadCountryMetaData(country_id);
         }
+
+        this.loading = false;
     }
 
     @action

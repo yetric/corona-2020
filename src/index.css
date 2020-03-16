@@ -202,6 +202,11 @@ table ~ small {
 
 .col {
     position: relative;
+    margin-bottom: 20px;
+}
+
+.col:last-child {
+    margin-bottom: 0;
 }
 
 select {
@@ -432,4 +437,41 @@ ol li:before {
 
 .card .card {
     margin: 0;
+}
+
+.geo-wrapper {
+    position: relative;
+}
+
+.loading-overlay {
+    position: absolute;
+    background-color: rgba(59, 66, 82, 0.75);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding-top: 200px;
+}
+
+.loading-overlay span {
+    display: inline-block;
+    padding: 0 18px;
+    line-height: 32px;
+    border-radius: 2px;
+    background-color: var(--nord11);
+    color: var(--nord6);
+    font-size: 12px;
+}
+
+.flag {
+    align-self: baseline;
+    height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-right: 12px;
+    position: relative;
+    top: 3px;
 }

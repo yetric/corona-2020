@@ -6,6 +6,9 @@ import Analytics from "react-router-ga";
 
 import "./core/toaster";
 import { Home } from "./views/Home";
+import { Continent } from "./views/Continent";
+import { Region } from "./views/Region";
+import { Government } from "./views/Government";
 
 const App = () => {
     return (
@@ -18,11 +21,12 @@ const App = () => {
                     <h3>coronadata.se</h3>
                 </div>
                 <div className={"chart"}>
-
-
                     <Search />
 
                     <Switch>
+                        <Route path={"/continent/:continent"} component={Continent} />
+                        <Route path={"/region/:region"} component={Region} />
+                        <Route path={"/government/:government"} component={Government} />
                         <Route path={"/:country"} component={Geo} />
                         <Route path={"/"} exact component={Home} />
                     </Switch>

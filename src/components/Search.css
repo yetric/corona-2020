@@ -4,6 +4,7 @@
 
 .search-results {
     position: absolute;
+    z-index: 1001;
     background-color: #fff;
     color: var(--nord2);
     left: 1px;
