@@ -24,7 +24,12 @@ export const Nearby = observer(({ id }: NearbyProps) => {
                 {geoStore.nearby.map((near: any) => {
                     return (
                         <li key={"nearby-" + near.id}>
-                            <Link to={"/" + near.id}>{near.country}</Link>
+                            <Link to={"/" + near.id}>
+                                {near.country}
+                                {near.province.length > 0 && near.province !== near.country && (
+                                    <small> {near.province}</small>
+                                )}
+                            </Link>
                         </li>
                     );
                 })}
