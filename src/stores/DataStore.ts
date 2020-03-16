@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { action, computed, observable, toJS } from "mobx";
 import { ma } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
 
@@ -17,6 +17,7 @@ interface GeoLocation {
     country: string;
     lat: string;
     lng: string;
+    country_id: any;
 }
 
 interface TypeCurrent {
@@ -42,10 +43,25 @@ interface TypeCollection {
     data: number[];
 }
 
+interface CountryMetadata {
+    abbr?: string;
+    capital?: string;
+    continent?: string;
+    government?: string;
+    flag?: string;
+    life_expectancy?: string;
+    population?: string;
+    population_density?: string;
+    region?: string;
+    religion?: string;
+    average_temp?: string;
+}
+
 export class DataStore {
     @observable labels = [];
     @observable renderType = "linear";
     @observable data: GeoOverview | null = null;
+    @observable metadata: CountryMetadata = {};
     @observable confirmed: TypeCollection = {
         data: [],
         labels: []
@@ -72,6 +88,19 @@ export class DataStore {
         await this.loadDeaths(countryId);
         await this.loadRecovered(countryId);
         await this.loadProvinces(countryId);
+
+        if (this.data && this.data.geo) {
+            const { country_id } = this.data.geo;
+            this.loadCountryMetaData(country_id);
+        }
+    }
+
+    @action
+    async loadCountryMetaData(countryId: any) {
+        countryId = parseInt(countryId);
+        const json = await this.client.getJSON(`/api/corona/country/${countryId}/metadata`);
+        const { metadata } = json;
+        this.metadata = metadata;
     }
 
     @action

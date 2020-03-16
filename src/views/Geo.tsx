@@ -10,6 +10,7 @@ import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
 import { trackEvent } from "../core/tracking";
+import { Loading } from "../components/Loading";
 
 interface ProvinceProps {
     selected?: any;
@@ -81,6 +82,14 @@ export const Geo = withRouter(
             });
         }
 
+        let casesPerHundraK = "";
+
+        if (dataStore.metadata.population && dataStore.data?.confirmed.count) {
+            let hundredK = parseInt(dataStore.metadata.population) / 100000;
+            let relative = Math.round(dataStore.data?.confirmed.count / hundredK);
+            casesPerHundraK = relative.toLocaleString("sv-se");
+        }
+
         const provinces =
             dataStore.provinces.length > 0 ? getProvinceDropDown({ selected: dataStore.data?.geo.province }) : null;
 
@@ -121,9 +130,55 @@ export const Geo = withRouter(
                                         {dataStore.data?.active.count}{" "}
                                         <small>{dataStore.data?.active.percentage}%</small>
                                     </dd>
+
+                                    <dt>Cases/100K</dt>
+                                    <dd>{casesPerHundraK}</dd>
                                 </dl>
                             </div>
-                            <div className="col"></div>
+                            <div className="col">
+                                <div className="card">
+                                    <div className="card-header">
+                                        {dataStore.data?.geo.country} ({dataStore.metadata.abbr})
+                                    </div>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <th>Population</th>
+                                                <td>
+                                                    {dataStore.metadata.population &&
+                                                        parseInt(dataStore.metadata.population).toLocaleString("sv-se")}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Capital</th>
+                                                <td>{dataStore.metadata.capital}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Continent</th>
+                                                <td>{dataStore.metadata.continent}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Region</th>
+                                                <td>{dataStore.metadata.region}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Life Expectancy</th>
+                                                <td>{dataStore.metadata.life_expectancy} years</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Population Density</th>
+                                                <td>
+                                                    {dataStore.metadata.population_density} people/km<sup>2</sup>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Government</th>
+                                                <td>{dataStore.metadata.government}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="card-footer">
