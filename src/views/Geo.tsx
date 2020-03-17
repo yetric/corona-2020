@@ -11,6 +11,7 @@ import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
 import { trackEvent } from "../core/tracking";
 import { toast } from "../core/toaster";
+import { SaveBtn } from "../components/SaveBtn";
 
 interface ProvinceProps {
     selected?: any;
@@ -312,32 +313,12 @@ export const Geo = withRouter(
                     </div>
                 </div>
 
-                {showSaveBtn && (
-                    <a
-                        href={"#save"}
-                        onClick={(event: any) => {
-                            event.preventDefault();
-                            if (country && dataStore.data?.geo) {
-                                favStore.save({
-                                    id: parseInt(country),
-                                    name: dataStore.data?.geo.country,
-                                    province: dataStore.data.geo.province
-                                });
-
-                                trackEvent({
-                                    category: "Fav",
-                                    action: "Save",
-                                    label: dataStore.data?.geo.country
-                                });
-
-                                toast({
-                                    text: "saved"
-                                });
-                            }
-                        }}
-                        className={"btn btn-block"}>
-                        <Save size={16} /> Save {dataStore.data?.geo.country} {provinceName}
-                    </a>
+                {showSaveBtn && dataStore.data?.geo && country && (
+                    <SaveBtn
+                        id={parseInt(country)}
+                        countryName={dataStore.data?.geo.country}
+                        provinceName={dataStore.data?.geo.province}
+                    />
                 )}
             </div>
         );
