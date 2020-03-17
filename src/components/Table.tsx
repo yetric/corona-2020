@@ -84,7 +84,9 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                     <tr>
                         <th>Date</th>
                         <th className={"text-right"}>Total</th>
-                        <th className={"text-right"}>Daily</th>
+                        <th className={"text-right"} colSpan={3}>
+                            Daily
+                        </th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>

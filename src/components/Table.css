@@ -37,7 +37,16 @@ td small {
     display: block;
 }
 
-table ~ small {
+table.truncate tbody tr {
+    display: none;
+}
+table.truncate tbody tr:nth-last-of-type(10),
+table.truncate tbody tr:nth-last-of-type(10) ~ tr {
+    display: table-row;
+}
+
+table ~ small,
+.table-responsive ~ small {
     display: block;
     margin: 12px;
     text-align: right;
