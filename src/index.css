@@ -21,6 +21,19 @@
 
     --meta: #6b7383;
     --meta-light: #a2acc0;
+
+    /* Accent */
+    --accent: #2d7aad;
+    --accent1: #50a8e2;
+    --accent2: #4eb9e4;
+    --accent3: #83d3f3;
+
+    --blue: rgb(45, 122, 173);
+    --red: rgb(221, 87, 101);
+    --orange: rgb(233, 153, 88);
+    --yellow: rgb(235, 225, 139);
+    --green: rgb(156, 194, 122);
+    --purple: rgb(175, 122, 165);
 }
 
 * {
@@ -59,12 +72,12 @@ h6 {
 }
 
 .header a {
-    color: var(--nord12);
+    color: var(--accent1);
 }
 
 .header h3 {
     margin: 0;
-    color: var(--meta);
+    color: var(--meta-light);
     font-size: 14px;
 }
 
@@ -113,6 +126,15 @@ a {
     margin: 0;
 }
 
+.col {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.col:last-child {
+    margin-bottom: 0;
+}
+
 @media screen and (min-width: 640px) {
     .row {
         display: flex;
@@ -145,21 +167,23 @@ a {
     .toggle.pull-right {
         top: 20px;
     }
+
+    .col-2 {
+        flex-basis: 66.66666666%;
+    }
+    .col-1 {
+        flex-basis: 33.33333333%;
+    }
+
+    .col:last-child {
+        margin-bottom: 20px;
+    }
 }
 
 .footer {
     text-align: center;
     opacity: 0.4;
     font-size: 12px;
-}
-
-.col {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.col:last-child {
-    margin-bottom: 0;
 }
 
 select {
@@ -266,6 +290,7 @@ input[type="text"] {
 }
 
 .list-group li {
+    position: relative;
     border-bottom: 1px solid var(--nord3);
 }
 
@@ -284,6 +309,18 @@ input[type="text"] {
     padding: 12px;
     text-transform: uppercase;
     color: var(--nord4);
+}
+
+.list-header .action {
+    float: right;
+    color: #50a8e2;
+}
+
+.list-group li:not(.list-header) .action {
+    color: var(--meta);
+    position: absolute;
+    right: 12px;
+    top: 10px;
 }
 
 .list-group li.list-header small {
@@ -323,7 +360,7 @@ ol li {
 ol li:before {
     margin-right: 10px;
     content: counter(item);
-    background: var(--nord12);
+    background: var(--orange);
     color: var(--nord0);
     border-radius: 100%;
     font-size: 14px;
@@ -432,4 +469,25 @@ ol li:before {
 }
 .recovered {
     color: var(--nord14);
+}
+
+#toaster-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.toast {
+    margin: 10px auto;
+    width: 250px;
+    background: var(--accent);
+    text-align: left;
+    padding: 12px;
+    transition: opacity 1s;
+}
+
+.toast.hide {
+    opacity: 0;
 }

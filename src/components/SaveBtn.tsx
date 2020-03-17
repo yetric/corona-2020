@@ -28,7 +28,7 @@ export const SaveBtn = ({ id, countryName, provinceName }: SaveBtnProps) => (
             });
 
             toast({
-                text: "saved"
+                text: "Saved " + countryName + " for quick access"
             });
         }}
         className={"btn btn-block"}>

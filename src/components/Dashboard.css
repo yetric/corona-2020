@@ -1,0 +1,11 @@
+#dashboard {
+    min-height: 430px;
+}
+
+#dashboard-map {
+    background: #50a8e2;
+}
+
+#dashboard-countries {
+    background: #81a1c1;
+}

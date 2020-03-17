@@ -1,4 +1,4 @@
-export const colors = ["rgb(94, 129, 172)", "rgb(191, 97, 106)", "rgb(163, 190, 140)"];
+export const colors = ["#50a8e2", "rgb(221, 87, 101)", "rgb(156, 194, 122)"];
 
 export const blue = colors[0];
 export const red = colors[1];
