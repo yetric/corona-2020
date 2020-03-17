@@ -213,14 +213,8 @@ select {
     line-height: 1.3em;
     font-size: 14px;
     box-sizing: border-box;
-    color: var(--meta);
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    border: 1px solid var(--nord12);
-    padding: 6px 12px;
-    margin-left: 12px;
+    width: 100%;
+    padding: 4px;
 }
 
 .card {
@@ -235,6 +229,11 @@ select {
     font-weight: 300;
     padding: 0 20px;
     font-size: 18px;
+}
+
+.card-header select {
+    margin-left: 12px;
+    width: auto;
 }
 
 .card-body {

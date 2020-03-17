@@ -116,6 +116,72 @@ export const Geo = withRouter(
                     <div className="card-body">
                         <div className="row">
                             <div className="col">
+                                <h4>Accumulated</h4>
+                                <ul className={"toggle pull-right"}>
+                                    <li className={type === "confirmed" ? "active" : ""}>
+                                        <a
+                                            href={"#confirmed"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                setType("confirmed");
+                                            }}>
+                                            Confirmed
+                                        </a>
+                                    </li>
+                                    <li className={type === "deaths" ? "active" : ""}>
+                                        <a
+                                            href={"#deaths"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                setType("deaths");
+                                            }}>
+                                            Deaths
+                                        </a>
+                                    </li>
+                                    <li className={type === "recovered" ? "active" : ""}>
+                                        <a
+                                            href={"#recovered"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                setType("recovered");
+                                            }}>
+                                            Recovered
+                                        </a>
+                                    </li>
+                                </ul>
+                                {/* Check for empty*/}
+                                {chartOrLoading}
+                                <ul className={"toggle"}>
+                                    <li className={dataStore.renderType === "linear" ? "active" : ""}>
+                                        <a
+                                            href={"#linear"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setRenderType("linear");
+                                            }}>
+                                            Linear
+                                        </a>
+                                    </li>
+                                    <li className={dataStore.renderType === "logarithmic" ? "active" : ""}>
+                                        <a
+                                            href={"#logarithmic"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setRenderType("logarithmic");
+                                            }}>
+                                            Logarithmic
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="col">
+                                <h4>Daily</h4>
+                                <Bars data={[confirmed, deaths, recovered]} labels={dataSource.labels} />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
                                 <dl>
                                     <dt>Confirmed</dt>
                                     <dd>
@@ -202,11 +268,34 @@ export const Geo = withRouter(
                                                     </Link>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <th>Near-by</th>
+                                                <td>{country && <Nearby id={parseInt(country)} />}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div className="col">dfsdf</div>
+                            <div className="col">
+                                <Table
+                                    data={{
+                                        labels: dataSource.labels,
+                                        data: dataSource.data
+                                    }}
+                                    truncate={truncate}
+                                />
+                                <small>
+                                    Only showing last 10 days in table{" "}
+                                    <a
+                                        href={"#"}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            setTruncate(!truncate);
+                                        }}>
+                                        Show all
+                                    </a>
+                                </small>
+                            </div>
                         </div>
                     </div>
                     <div className="card-footer">
@@ -241,94 +330,6 @@ export const Geo = withRouter(
                         <Save size={16} /> Save {dataStore.data?.geo.country} {provinceName}
                     </a>
                 )}
-
-                <div className="row">
-                    <div className="col">
-                        <h4>Accumulated</h4>
-                        <ul className={"toggle pull-right"}>
-                            <li className={type === "confirmed" ? "active" : ""}>
-                                <a
-                                    href={"#confirmed"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setType("confirmed");
-                                    }}>
-                                    Confirmed
-                                </a>
-                            </li>
-                            <li className={type === "deaths" ? "active" : ""}>
-                                <a
-                                    href={"#deaths"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setType("deaths");
-                                    }}>
-                                    Deaths
-                                </a>
-                            </li>
-                            <li className={type === "recovered" ? "active" : ""}>
-                                <a
-                                    href={"#recovered"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setType("recovered");
-                                    }}>
-                                    Recovered
-                                </a>
-                            </li>
-                        </ul>
-                        {/* Check for empty*/}
-                        {chartOrLoading}
-                        <ul className={"toggle"}>
-                            <li className={dataStore.renderType === "linear" ? "active" : ""}>
-                                <a
-                                    href={"#linear"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        dataStore.setRenderType("linear");
-                                    }}>
-                                    Linear
-                                </a>
-                            </li>
-                            <li className={dataStore.renderType === "logarithmic" ? "active" : ""}>
-                                <a
-                                    href={"#logarithmic"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        dataStore.setRenderType("logarithmic");
-                                    }}>
-                                    Logarithmic
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="col">
-                        <h4>Daily</h4>
-                        <Bars data={[confirmed, deaths, recovered]} labels={dataSource.labels} />
-                    </div>
-                    <div className="col">
-                        <h4>Overview</h4>
-                        <Table
-                            data={{
-                                labels: dataSource.labels,
-                                data: dataSource.data
-                            }}
-                            truncate={truncate}
-                        />
-                        <small>
-                            Only showing last 10 days in table{" "}
-                            <a
-                                href={"#"}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setTruncate(!truncate);
-                                }}>
-                                Show all
-                            </a>
-                        </small>
-                    </div>
-                </div>
-                {country && <Nearby id={parseInt(country)} />}
             </div>
         );
     })
