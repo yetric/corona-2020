@@ -1,0 +1,38 @@
+.favs {
+    list-style: none;
+    padding: 0;
+    border: 1px solid var(--nord1);
+}
+
+.favs > li {
+    position: relative;
+    padding: 5px 12px;
+    border-bottom: 1px solid var(--nord1);
+}
+
+.favs > li ul {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+    color: var(--meta);
+    display: flex;
+}
+
+.favs > li ul span {
+    font-size: 16px;
+}
+
+.favs > li ul li {
+    flex-grow: 1;
+}
+
+.favs li:last-child {
+    border-bottom: none;
+}
+
+.favs li:not(.list-header) .action {
+    color: var(--meta);
+    position: absolute;
+    right: 12px;
+    top: 10px;
+}

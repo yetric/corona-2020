@@ -324,13 +324,6 @@ input[type="text"] {
     color: #50a8e2;
 }
 
-.list-group li:not(.list-header) .action {
-    color: var(--meta);
-    position: absolute;
-    right: 12px;
-    top: 10px;
-}
-
 .list-group li.list-header small {
     color: var(--meta);
     text-transform: none;
