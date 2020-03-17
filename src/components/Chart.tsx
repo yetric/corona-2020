@@ -49,7 +49,7 @@ export const Chart = memo((props: ChartProps) => {
         labels: props.labels,
         datasets
     };
-
+    const isLogarithmic = props.type === "logarithmic";
     const options = {
         maintainAspectRatio: false,
         skipXLabels: 2,
@@ -61,10 +61,14 @@ export const Chart = memo((props: ChartProps) => {
                     type: props.type,
                     gridLines: false,
                     ticks: {
-                        autoSkip: false,
-                        callback: (value: any, index: any, values: any) => {
-                            return value % 20 === 0 ? value : "";
-                        }
+                        autoSkip: !isLogarithmic,
+                        callback: isLogarithmic
+                            ? (value: any, index: any, values: any) => {
+                                  return index % 5 === 0 && value % 2 === 0 ? value : "";
+                              }
+                            : (value: any, index: any, values: any) => {
+                                  return value % 1 === 0 ? value : "";
+                              }
                     }
                 }
             ],
