@@ -65,3 +65,7 @@ table ~ small,
     max-width: 100%;
     overflow-x: auto;
 }
+
+.dimmed {
+    color: var(--meta);
+}
