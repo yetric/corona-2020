@@ -38,9 +38,10 @@ interface GeoOverview {
     };
 }
 
-interface TypeCollection {
+export interface TypeCollection {
     labels: string[];
     data: number[];
+    name?: string;
 }
 
 interface CountryMetadata {
@@ -136,7 +137,8 @@ export class DataStore {
         });
         this.confirmed = {
             labels,
-            data
+            data,
+            name: "Confirmed"
         };
     }
 
@@ -153,7 +155,8 @@ export class DataStore {
         });
         this.deaths = {
             labels,
-            data
+            data,
+            name: "Deaths"
         };
     }
 
@@ -170,7 +173,8 @@ export class DataStore {
         });
         this.recovered = {
             labels,
-            data
+            data,
+            name: "Recovered"
         };
     }
 

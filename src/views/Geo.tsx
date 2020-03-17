@@ -10,6 +10,7 @@ import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
 import { trackEvent } from "../core/tracking";
+import { toast } from "../core/toaster";
 
 interface ProvinceProps {
     selected?: any;
@@ -72,6 +73,8 @@ export const Geo = withRouter(
                 </>
             );
         };
+
+        const { confirmed, deaths, recovered } = dataStore;
 
         let showSaveBtn = true;
         if (country && dataStore.data?.geo) {
@@ -228,6 +231,10 @@ export const Geo = withRouter(
                                     action: "Save",
                                     label: dataStore.data?.geo.country
                                 });
+
+                                toast({
+                                    text: "saved"
+                                });
                             }
                         }}
                         className={"btn btn-block"}>
@@ -237,7 +244,7 @@ export const Geo = withRouter(
 
                 <div className="row">
                     <div className="col">
-                        <h4>Total</h4>
+                        <h4>Accumulated</h4>
                         <ul className={"toggle pull-right"}>
                             <li className={type === "confirmed" ? "active" : ""}>
                                 <a
@@ -296,8 +303,8 @@ export const Geo = withRouter(
                         </ul>
                     </div>
                     <div className="col">
-                        <h4>New cases</h4>
-                        <Bars data={dataSource.data} labels={dataSource.labels} />
+                        <h4>Daily</h4>
+                        <Bars data={[confirmed, deaths, recovered]} labels={dataSource.labels} />
                     </div>
                     <div className="col">
                         <h4>Overview</h4>
