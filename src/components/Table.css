@@ -2,6 +2,8 @@ table {
     border-collapse: collapse;
     width: 100%;
     margin: 0 0 12px 0;
+    border-top: 1px solid var(--nord1);
+    border-bottom: 1px solid var(--nord1);
 }
 
 .card-header small {
@@ -12,10 +14,12 @@ table {
 table td,
 table th {
     padding: 5px;
-    border-bottom: 1px solid var(--nord2);
+    border-bottom: 1px solid var(--nord1);
     font-size: 13px;
     text-align: left;
     white-space: nowrap;
+    border-right: 1px solid var(--nord1);
+    vertical-align: top;
 }
 
 table th {
@@ -56,7 +60,6 @@ table ~ small,
     margin: 0;
 }
 
-.card table tr:last-child th,
 .card table tr:last-child td {
     border-bottom: none;
 }
@@ -68,4 +71,15 @@ table ~ small,
 
 .dimmed {
     color: var(--meta);
+}
+
+caption {
+    font-size: 12px;
+    width: 100%;
+    padding: 10px;
+}
+
+caption span {
+    display: inline-block;
+    padding: 4px;
 }

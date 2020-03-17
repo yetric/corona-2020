@@ -419,6 +419,10 @@ ol li:before {
     text-align: right;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .confirmed {
     color: var(--nord10);
 }
