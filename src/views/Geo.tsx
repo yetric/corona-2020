@@ -98,7 +98,12 @@ export const Geo = withRouter(
 
         const chartOrLoading =
             dataStore.confirmed.data.length > 0 ? (
-                <Chart type={dataStore.renderType} labels={dataSource.labels} data={dataSource.data} name={type} />
+                <Chart
+                    type={dataStore.renderType}
+                    labels={dataSource.labels}
+                    data={[confirmed, deaths, recovered]}
+                    name={type}
+                />
             ) : null;
         return (
             <div className={"geo-wrapper"}>
@@ -117,39 +122,7 @@ export const Geo = withRouter(
                         <div className="row">
                             <div className="col">
                                 <h4>Accumulated</h4>
-                                <ul className={"toggle pull-right"}>
-                                    <li className={type === "confirmed" ? "active" : ""}>
-                                        <a
-                                            href={"#confirmed"}
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                setType("confirmed");
-                                            }}>
-                                            Confirmed
-                                        </a>
-                                    </li>
-                                    <li className={type === "deaths" ? "active" : ""}>
-                                        <a
-                                            href={"#deaths"}
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                setType("deaths");
-                                            }}>
-                                            Deaths
-                                        </a>
-                                    </li>
-                                    <li className={type === "recovered" ? "active" : ""}>
-                                        <a
-                                            href={"#recovered"}
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                setType("recovered");
-                                            }}>
-                                            Recovered
-                                        </a>
-                                    </li>
-                                </ul>
-                                {/* Check for empty*/}
+
                                 {chartOrLoading}
                                 <ul className={"toggle"}>
                                     <li className={dataStore.renderType === "linear" ? "active" : ""}>
@@ -176,7 +149,33 @@ export const Geo = withRouter(
                             </div>
                             <div className="col">
                                 <h4>Daily</h4>
-                                <Bars data={[confirmed, deaths, recovered]} labels={dataSource.labels} />
+                                <Bars
+                                    type={dataStore.barType}
+                                    data={[confirmed, deaths, recovered]}
+                                    labels={dataSource.labels}
+                                />
+                                <ul className={"toggle"}>
+                                    <li className={dataStore.barType === "stacked" ? "active" : ""}>
+                                        <a
+                                            href={"#stacked"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setBarChartType("stacked");
+                                            }}>
+                                            Stacked
+                                        </a>
+                                    </li>
+                                    <li className={dataStore.barType === "normal" ? "active" : ""}>
+                                        <a
+                                            href={"#normal"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setBarChartType("normal");
+                                            }}>
+                                            Normal
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 

@@ -17,11 +17,15 @@ const NearbyObserver = observer(({ id, history }: any) => {
     }, [id]);
 
     const navigate = (event: any) => {
-        history.push("/" + event.target.value);
+        const countryId = event.target.value;
+        if (countryId > 0) {
+            history.push("/" + event.target.value);
+        }
     };
 
     return (
         <select onChange={navigate}>
+            <option value={-1}>Nearby Countries</option>
             {geoStore.nearby.map((near: any) => {
                 const province =
                     near.province.length > 0 && near.province !== near.country ? near.province + ", " : null;

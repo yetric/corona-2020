@@ -62,6 +62,7 @@ export class DataStore {
     @observable loading = false;
     @observable labels = [];
     @observable renderType = "linear";
+    @observable barType = "normal";
     @observable data: GeoOverview | null = null;
     @observable metadata: CountryMetadata = {};
     @observable confirmed: TypeCollection = {
@@ -181,6 +182,11 @@ export class DataStore {
     @action
     setRenderType(renderType: string) {
         this.renderType = renderType;
+    }
+
+    @action
+    setBarChartType(barType: string) {
+        this.barType = barType;
     }
 
     @computed get movingAvg() {
