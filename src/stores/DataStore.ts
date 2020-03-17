@@ -38,9 +38,10 @@ interface GeoOverview {
     };
 }
 
-interface TypeCollection {
+export interface TypeCollection {
     labels: string[];
     data: number[];
+    name?: string;
 }
 
 interface CountryMetadata {
@@ -58,8 +59,10 @@ interface CountryMetadata {
 }
 
 export class DataStore {
+    @observable loading = false;
     @observable labels = [];
     @observable renderType = "linear";
+    @observable barType = "normal";
     @observable data: GeoOverview | null = null;
     @observable metadata: CountryMetadata = {};
     @observable confirmed: TypeCollection = {
@@ -82,7 +85,24 @@ export class DataStore {
     }
 
     @action
+    reset() {
+        const defaultCases = {
+            data: [],
+            labels: []
+        };
+        this.data = null;
+        this.metadata = {};
+        this.labels = [];
+        this.confirmed = defaultCases;
+        this.deaths = defaultCases;
+        this.recovered = defaultCases;
+        this.provinces = [];
+    }
+
+    @action
     async loadCountry(countryId: number) {
+        this.loading = true;
+        this.reset();
         this.data = await this.client.getJSON(`/api/corona/geo/${countryId}`);
         await this.loadConfirmed(countryId);
         await this.loadDeaths(countryId);
@@ -91,8 +111,10 @@ export class DataStore {
 
         if (this.data && this.data.geo) {
             const { country_id } = this.data.geo;
-            this.loadCountryMetaData(country_id);
+            await this.loadCountryMetaData(country_id);
         }
+
+        this.loading = false;
     }
 
     @action
@@ -116,7 +138,8 @@ export class DataStore {
         });
         this.confirmed = {
             labels,
-            data
+            data,
+            name: "Confirmed"
         };
     }
 
@@ -133,7 +156,8 @@ export class DataStore {
         });
         this.deaths = {
             labels,
-            data
+            data,
+            name: "Deaths"
         };
     }
 
@@ -150,13 +174,19 @@ export class DataStore {
         });
         this.recovered = {
             labels,
-            data
+            data,
+            name: "Recovered"
         };
     }
 
     @action
     setRenderType(renderType: string) {
         this.renderType = renderType;
+    }
+
+    @action
+    setBarChartType(barType: string) {
+        this.barType = barType;
     }
 
     @computed get movingAvg() {

@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { geoStore } from "../stores/GeoStore";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 interface NearbyProps {
     id: number;
+    history: any;
 }
 
-export const Nearby = observer(({ id }: NearbyProps) => {
+const NearbyObserver = observer(({ id, history }: any) => {
     useEffect(() => {
         geoStore
             .getNearby(id)
@@ -15,27 +16,28 @@ export const Nearby = observer(({ id }: NearbyProps) => {
             .catch(() => {});
     }, [id]);
 
-    const getList = () => {
-        return (
-            <ul className={"list-group"}>
-                <li className={"list-header"}>
-                    Countries near-by <small>(Country center)</small>
-                </li>
-                {geoStore.nearby.map((near: any) => {
-                    return (
-                        <li key={"nearby-" + near.id}>
-                            <Link to={"/" + near.id}>
-                                {near.country}
-                                {near.province.length > 0 && near.province !== near.country && (
-                                    <small> {near.province}</small>
-                                )}
-                            </Link>
-                        </li>
-                    );
-                })}
-            </ul>
-        );
+    const navigate = (event: any) => {
+        const countryId = event.target.value;
+        if (countryId > 0) {
+            history.push("/" + event.target.value);
+        }
     };
 
-    return geoStore.nearby.length > 0 ? getList() : null;
+    return (
+        <select onChange={navigate}>
+            <option value={-1}>Nearby Countries</option>
+            {geoStore.nearby.map((near: any) => {
+                const province =
+                    near.province.length > 0 && near.province !== near.country ? near.province + ", " : null;
+                return (
+                    <option value={near.id} key={"nearby-" + near.id}>
+                        {province}
+                        {near.country}
+                    </option>
+                );
+            })}
+        </select>
+    );
 });
+
+export const Nearby = withRouter(NearbyObserver);

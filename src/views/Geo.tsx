@@ -4,13 +4,13 @@ import { Table } from "../components/Table";
 import React, { useEffect, useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
-import { useParams, withRouter } from "react-router-dom";
+import { Link, useParams, withRouter } from "react-router-dom";
 import { Share } from "../components/Share";
 import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
 import { trackEvent } from "../core/tracking";
-import { Loading } from "../components/Loading";
+import { toast } from "../core/toaster";
 
 interface ProvinceProps {
     selected?: any;
@@ -28,6 +28,7 @@ export const Geo = withRouter(
         let { country } = useParams();
         useEffect(() => {
             country && dataStore.loadCountry(parseInt(country));
+            window.scrollTo(0, 0);
         }, [country]);
 
         useEffect(() => {
@@ -73,6 +74,8 @@ export const Geo = withRouter(
             );
         };
 
+        const { confirmed, deaths, recovered } = dataStore;
+
         let showSaveBtn = true;
         if (country && dataStore.data?.geo) {
             showSaveBtn = !favStore.has({
@@ -86,8 +89,8 @@ export const Geo = withRouter(
 
         if (dataStore.metadata.population && dataStore.data?.confirmed.count) {
             let hundredK = parseInt(dataStore.metadata.population) / 100000;
-            let relative = Math.round(dataStore.data?.confirmed.count / hundredK);
-            casesPerHundraK = relative.toLocaleString("sv-se");
+            let relative = dataStore.data?.confirmed.count / hundredK;
+            casesPerHundraK = (Math.round(relative * 10) / 10).toLocaleString("sv-se");
         }
 
         const provinces =
@@ -95,49 +98,131 @@ export const Geo = withRouter(
 
         const chartOrLoading =
             dataStore.confirmed.data.length > 0 ? (
-                <Chart type={dataStore.renderType} labels={dataSource.labels} data={dataSource.data} name={type} />
+                <Chart
+                    type={dataStore.renderType}
+                    labels={dataSource.labels}
+                    data={[confirmed, deaths, recovered]}
+                    name={type}
+                />
             ) : null;
         return (
-            <>
+            <div className={"geo-wrapper"}>
                 <div className="card">
+                    {dataStore.loading && (
+                        <div className="loading-overlay">
+                            <div>
+                                <span>Loading Country Data ...</span>
+                            </div>
+                        </div>
+                    )}
                     <div className="card-header">
                         {dataStore.data?.geo.country} {provinces}
                     </div>
                     <div className="card-body">
                         <div className="row">
                             <div className="col">
-                                <dl>
-                                    <dt>Confirmed</dt>
-                                    <dd>
-                                        {dataStore.data?.confirmed.count}{" "}
-                                        <small>{dataStore.data?.confirmed.date}</small>
-                                    </dd>
+                                <h4>Accumulated</h4>
 
-                                    <dt>Deaths</dt>
-                                    <dd>
-                                        {dataStore.data?.deaths.count}{" "}
-                                        <small>{dataStore.data?.active.deathRate}%</small>
-                                    </dd>
+                                {chartOrLoading}
+                                <ul className={"toggle"}>
+                                    <li className={dataStore.renderType === "linear" ? "active" : ""}>
+                                        <a
+                                            href={"#linear"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setRenderType("linear");
+                                            }}>
+                                            Linear
+                                        </a>
+                                    </li>
+                                    <li className={dataStore.renderType === "logarithmic" ? "active" : ""}>
+                                        <a
+                                            href={"#logarithmic"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setRenderType("logarithmic");
+                                            }}>
+                                            Logarithmic
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="col">
+                                <h4>Daily</h4>
+                                <Bars
+                                    type={dataStore.barType}
+                                    data={[confirmed, deaths, recovered]}
+                                    labels={dataSource.labels}
+                                />
+                                <ul className={"toggle"}>
+                                    <li className={dataStore.barType === "stacked" ? "active" : ""}>
+                                        <a
+                                            href={"#stacked"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setBarChartType("stacked");
+                                            }}>
+                                            Stacked
+                                        </a>
+                                    </li>
+                                    <li className={dataStore.barType === "normal" ? "active" : ""}>
+                                        <a
+                                            href={"#normal"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                dataStore.setBarChartType("normal");
+                                            }}>
+                                            Normal
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                                    <dt>Recovered</dt>
-                                    <dd>
-                                        {dataStore.data?.recovered.count}{" "}
-                                        <small>{dataStore.data?.active.recoveryRate}%</small>
-                                    </dd>
+                        <div className="row">
+                            <div className="col">
+                                <div className="card">
+                                    <div className="card-header">Right now</div>
+                                    <div className="card-body">
+                                        <dl>
+                                            <dt>Confirmed</dt>
+                                            <dd>
+                                                {dataStore.data?.confirmed.count}{" "}
+                                                <small>{dataStore.data?.confirmed.date}</small>
+                                            </dd>
 
-                                    <dt>Active</dt>
-                                    <dd>
-                                        {dataStore.data?.active.count}{" "}
-                                        <small>{dataStore.data?.active.percentage}%</small>
-                                    </dd>
+                                            <dt>Deaths</dt>
+                                            <dd>
+                                                {dataStore.data?.deaths.count}{" "}
+                                                <small>{dataStore.data?.active.deathRate}%</small>
+                                            </dd>
 
-                                    <dt>Cases/100K</dt>
-                                    <dd>{casesPerHundraK}</dd>
-                                </dl>
+                                            <dt>Recovered</dt>
+                                            <dd>
+                                                {dataStore.data?.recovered.count}{" "}
+                                                <small>{dataStore.data?.active.recoveryRate}%</small>
+                                            </dd>
+
+                                            <dt>Active</dt>
+                                            <dd>
+                                                {dataStore.data?.active.count}{" "}
+                                                <small>{dataStore.data?.active.percentage}%</small>
+                                            </dd>
+
+                                            <dt>Cases/100K</dt>
+                                            <dd>{casesPerHundraK}</dd>
+                                        </dl>
+                                    </div>
+                                </div>
                             </div>
                             <div className="col">
                                 <div className="card">
                                     <div className="card-header">
+                                        {dataStore.metadata &&
+                                            dataStore.metadata.flag &&
+                                            dataStore.metadata.flag.length > 0 && (
+                                                <img className={"flag"} alt={"flag"} src={dataStore.metadata.flag} />
+                                            )}
                                         {dataStore.data?.geo.country} ({dataStore.metadata.abbr})
                                     </div>
                                     <table>
@@ -155,11 +240,19 @@ export const Geo = withRouter(
                                             </tr>
                                             <tr>
                                                 <th>Continent</th>
-                                                <td>{dataStore.metadata.continent}</td>
+                                                <td>
+                                                    <Link to={"/continent/" + dataStore.metadata.continent}>
+                                                        {dataStore.metadata.continent}
+                                                    </Link>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Region</th>
-                                                <td>{dataStore.metadata.region}</td>
+                                                <td>
+                                                    <Link to={"/region/" + dataStore.metadata.region}>
+                                                        {dataStore.metadata.region}
+                                                    </Link>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Life Expectancy</th>
@@ -173,10 +266,43 @@ export const Geo = withRouter(
                                             </tr>
                                             <tr>
                                                 <th>Government</th>
-                                                <td>{dataStore.metadata.government}</td>
+                                                <td>
+                                                    <Link to={"/government/" + dataStore.metadata.government}>
+                                                        {dataStore.metadata.government}
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Near-by</th>
+                                                <td>{country && <Nearby id={parseInt(country)} />}</td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="card">
+                                    <div className="card-header">By Date</div>
+                                    <Table
+                                        data={{
+                                            labels: dataSource.labels,
+                                            confirmed,
+                                            deaths,
+                                            recovered
+                                        }}
+                                        truncate={truncate}
+                                    />
+                                    <small>
+                                        Only showing last 10 days in table{" "}
+                                        <a
+                                            href={"#"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                setTruncate(!truncate);
+                                            }}>
+                                            Show all
+                                        </a>
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -203,101 +329,17 @@ export const Geo = withRouter(
                                     action: "Save",
                                     label: dataStore.data?.geo.country
                                 });
+
+                                toast({
+                                    text: "saved"
+                                });
                             }
                         }}
                         className={"btn btn-block"}>
                         <Save size={16} /> Save {dataStore.data?.geo.country} {provinceName}
                     </a>
                 )}
-
-                <div className="row">
-                    <div className="col">
-                        <h4>Total</h4>
-                        <ul className={"toggle pull-right"}>
-                            <li className={type === "confirmed" ? "active" : ""}>
-                                <a
-                                    href={"#confirmed"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setType("confirmed");
-                                    }}>
-                                    Confirmed
-                                </a>
-                            </li>
-                            <li className={type === "deaths" ? "active" : ""}>
-                                <a
-                                    href={"#deaths"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setType("deaths");
-                                    }}>
-                                    Deaths
-                                </a>
-                            </li>
-                            <li className={type === "recovered" ? "active" : ""}>
-                                <a
-                                    href={"#recovered"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setType("recovered");
-                                    }}>
-                                    Recovered
-                                </a>
-                            </li>
-                        </ul>
-                        {/* Check for empty*/}
-                        {chartOrLoading}
-                        <ul className={"toggle"}>
-                            <li className={dataStore.renderType === "linear" ? "active" : ""}>
-                                <a
-                                    href={"#linear"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        dataStore.setRenderType("linear");
-                                    }}>
-                                    Linear
-                                </a>
-                            </li>
-                            <li className={dataStore.renderType === "logarithmic" ? "active" : ""}>
-                                <a
-                                    href={"#logarithmic"}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        dataStore.setRenderType("logarithmic");
-                                    }}>
-                                    Logarithmic
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="col">
-                        <h4>New cases</h4>
-                        <Bars data={dataSource.data} labels={dataSource.labels} />
-                    </div>
-                    <div className="col">
-                        <h4>Overview</h4>
-                        <Table
-                            data={{
-                                labels: dataSource.labels,
-                                data: dataSource.data
-                            }}
-                            truncate={truncate}
-                        />
-                        <small>
-                            Only showing last 10 days in table{" "}
-                            <a
-                                href={"#"}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setTruncate(!truncate);
-                                }}>
-                                Show all
-                            </a>
-                        </small>
-                    </div>
-                </div>
-                {country && <Nearby id={parseInt(country)} />}
-            </>
+            </div>
         );
     })
 );
