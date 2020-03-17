@@ -77,53 +77,6 @@ a {
     padding: 12px;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 0 0 12px 0;
-}
-
-.card-header small {
-    color: var(--meta);
-    text-align: right;
-}
-
-table td,
-table th {
-    text-align: right;
-    padding: 8px;
-    border-bottom: 1px solid var(--nord2);
-    font-size: 14px;
-}
-
-table th {
-    font-weight: normal;
-    text-transform: uppercase;
-    color: var(--meta-light);
-}
-
-table tr td:first-child,
-table tr th:first-child {
-    text-align: left;
-}
-
-table tbody tr:nth-child(even) {
-    background-color: var(--odd);
-}
-
-table.truncate tbody tr {
-    display: none;
-}
-table.truncate tbody tr:nth-last-of-type(10),
-table.truncate tbody tr:nth-last-of-type(10) ~ tr {
-    display: table-row;
-}
-
-table ~ small {
-    display: block;
-    text-align: right;
-}
-
 .toggle {
     list-style: none;
     padding: 0;
@@ -421,19 +374,6 @@ ol li:before {
     border-bottom: none;
 }
 
-.card table {
-    margin: 0;
-}
-
-.card table td {
-    text-align: left;
-}
-
-.card table tr:last-child th,
-.card table tr:last-child td {
-    border-bottom: none;
-}
-
 .card .card {
     margin: 0;
 }
@@ -473,4 +413,19 @@ ol li:before {
     margin-right: 12px;
     position: relative;
     top: 3px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.confirmed {
+    color: var(--nord10);
+}
+
+.deaths {
+    color: var(--nord11);
+}
+.recovered {
+    color: var(--nord14);
 }

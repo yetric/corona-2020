@@ -1,0 +1,58 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 0 12px 0;
+}
+
+.card-header small {
+    color: var(--meta);
+    text-align: right;
+}
+
+table td,
+table th {
+    padding: 5px;
+    border-bottom: 1px solid var(--nord2);
+    font-size: 13px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+table th {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--nord13);
+}
+
+tbody tr th {
+    text-align: right;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: var(--odd);
+}
+
+td small {
+    color: var(--meta-light);
+    display: block;
+}
+
+table ~ small {
+    display: block;
+    margin: 12px;
+    text-align: right;
+}
+
+.card table {
+    margin: 0;
+}
+
+.card table tr:last-child th,
+.card table tr:last-child td {
+    border-bottom: none;
+}
+
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}

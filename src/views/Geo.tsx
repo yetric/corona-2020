@@ -181,34 +181,39 @@ export const Geo = withRouter(
 
                         <div className="row">
                             <div className="col">
-                                <dl>
-                                    <dt>Confirmed</dt>
-                                    <dd>
-                                        {dataStore.data?.confirmed.count}{" "}
-                                        <small>{dataStore.data?.confirmed.date}</small>
-                                    </dd>
+                                <div className="card">
+                                    <div className="card-header">Right now</div>
+                                    <div className="card-body">
+                                        <dl>
+                                            <dt>Confirmed</dt>
+                                            <dd>
+                                                {dataStore.data?.confirmed.count}{" "}
+                                                <small>{dataStore.data?.confirmed.date}</small>
+                                            </dd>
 
-                                    <dt>Deaths</dt>
-                                    <dd>
-                                        {dataStore.data?.deaths.count}{" "}
-                                        <small>{dataStore.data?.active.deathRate}%</small>
-                                    </dd>
+                                            <dt>Deaths</dt>
+                                            <dd>
+                                                {dataStore.data?.deaths.count}{" "}
+                                                <small>{dataStore.data?.active.deathRate}%</small>
+                                            </dd>
 
-                                    <dt>Recovered</dt>
-                                    <dd>
-                                        {dataStore.data?.recovered.count}{" "}
-                                        <small>{dataStore.data?.active.recoveryRate}%</small>
-                                    </dd>
+                                            <dt>Recovered</dt>
+                                            <dd>
+                                                {dataStore.data?.recovered.count}{" "}
+                                                <small>{dataStore.data?.active.recoveryRate}%</small>
+                                            </dd>
 
-                                    <dt>Active</dt>
-                                    <dd>
-                                        {dataStore.data?.active.count}{" "}
-                                        <small>{dataStore.data?.active.percentage}%</small>
-                                    </dd>
+                                            <dt>Active</dt>
+                                            <dd>
+                                                {dataStore.data?.active.count}{" "}
+                                                <small>{dataStore.data?.active.percentage}%</small>
+                                            </dd>
 
-                                    <dt>Cases/100K</dt>
-                                    <dd>{casesPerHundraK}</dd>
-                                </dl>
+                                            <dt>Cases/100K</dt>
+                                            <dd>{casesPerHundraK}</dd>
+                                        </dl>
+                                    </div>
+                                </div>
                             </div>
                             <div className="col">
                                 <div className="card">
@@ -276,24 +281,29 @@ export const Geo = withRouter(
                                 </div>
                             </div>
                             <div className="col">
-                                <Table
-                                    data={{
-                                        labels: dataSource.labels,
-                                        data: dataSource.data
-                                    }}
-                                    truncate={truncate}
-                                />
-                                <small>
-                                    Only showing last 10 days in table{" "}
-                                    <a
-                                        href={"#"}
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            setTruncate(!truncate);
-                                        }}>
-                                        Show all
-                                    </a>
-                                </small>
+                                <div className="card">
+                                    <div className="card-header">By Date</div>
+                                    <Table
+                                        data={{
+                                            labels: dataSource.labels,
+                                            confirmed,
+                                            deaths,
+                                            recovered
+                                        }}
+                                        truncate={truncate}
+                                    />
+                                    <small>
+                                        Only showing last 10 days in table{" "}
+                                        <a
+                                            href={"#"}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                setTruncate(!truncate);
+                                            }}>
+                                            Show all
+                                        </a>
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </div>
