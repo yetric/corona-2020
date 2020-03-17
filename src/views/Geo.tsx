@@ -117,7 +117,7 @@ export const Geo = withRouter(
                         </div>
                     )}
                     <div className="card-header">
-                        {dataStore.data?.geo.country} {provinces}
+                        {dataStore.data?.geo.country} {provinceName} {provinces}
                     </div>
                     <div className="card-body">
                         <div className="row">
@@ -294,7 +294,7 @@ export const Geo = withRouter(
                                         truncate={truncate}
                                     />
                                     <small>
-                                        Only showing last 10 days in table{" "}
+                                        Only showing last 7 days in table{" "}
                                         <a
                                             href={"#"}
                                             onClick={(event) => {

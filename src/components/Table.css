@@ -44,8 +44,8 @@ td small {
 table.truncate tbody tr {
     display: none;
 }
-table.truncate tbody tr:nth-last-of-type(10),
-table.truncate tbody tr:nth-last-of-type(10) ~ tr {
+table.truncate tbody tr:nth-last-of-type(7),
+table.truncate tbody tr:nth-last-of-type(7) ~ tr {
     display: table-row;
 }
 

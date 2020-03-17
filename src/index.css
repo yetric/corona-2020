@@ -208,9 +208,17 @@ select {
     font-size: 18px;
 }
 
+.card-header small {
+    font-weight: 400;
+    font-size: 14px;
+}
+
 .card-header select {
     margin-left: 12px;
     width: auto;
+    float: right;
+    position: relative;
+    top: 10px;
 }
 
 .card-body {
