@@ -20,7 +20,13 @@ export const Region = observer(() => {
 
     return (
         <>
-            <LocationList locations={regionStore.locations} title={"Region / " + region} />
+            <LocationList
+                confirmed={regionStore.confirmed}
+                deaths={regionStore.deaths}
+                recovered={regionStore.recovered}
+                locations={regionStore.locations}
+                title={"Region / " + region}
+            />
         </>
     );
 });

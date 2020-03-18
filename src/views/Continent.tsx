@@ -20,7 +20,13 @@ export const Continent = observer(() => {
 
     return (
         <>
-            <LocationList locations={continentStore.locations} title={"Continent / " + continent} />
+            <LocationList
+                recovered={continentStore.recovered}
+                deaths={continentStore.deaths}
+                confirmed={continentStore.confirmed}
+                locations={continentStore.locations}
+                title={"Continent / " + continent}
+            />
         </>
     );
 });

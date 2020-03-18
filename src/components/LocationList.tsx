@@ -6,6 +6,9 @@ import "./LocationList.css";
 interface LocationListProps {
     locations: GeoLocation[];
     title: string;
+    confirmed: number;
+    deaths: number;
+    recovered: number;
 }
 
 interface LocationListItemProps {
@@ -17,9 +20,9 @@ export const LocationListItem = ({ item }: LocationListItemProps) => (
         <th>
             <Link to={"/" + item.id}>{item.country}</Link>
         </th>
-        <td className={"confirmed text-right"}>{item.confirmed.count}</td>
-        <td className={"deaths text-right"}>{item.deaths.count}</td>
-        <td className={"recovered text-right"}>{item.recovered.count}</td>
+        <td className={"confirmed text-right"}>{item.confirmed.count.toLocaleString()}</td>
+        <td className={"deaths text-right"}>{item.deaths.count.toLocaleString()}</td>
+        <td className={"recovered text-right"}>{item.recovered.count.toLocaleString()}</td>
     </tr>
 );
 
@@ -27,7 +30,24 @@ export const LocationList = (props: LocationListProps) => {
     return (
         <div className="card">
             <div className="card-header">{props.title}</div>
+            <div className="card-body">
+                <dl>
+                    <dt>Confirmed</dt>
+                    <dd>
+                        {props.confirmed} <small>dsf</small>
+                    </dd>
 
+                    <dt>Deaths</dt>
+                    <dd>
+                        {props.deaths} <small>dsf</small>
+                    </dd>
+
+                    <dt>Recovered</dt>
+                    <dd>
+                        {props.recovered} <small>dsf</small>
+                    </dd>
+                </dl>
+            </div>
             <div className="table-responsive">
                 <table className={"location-list"}>
                     <thead>

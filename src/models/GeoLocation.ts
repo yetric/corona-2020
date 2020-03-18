@@ -1,15 +1,15 @@
 export interface Confirmed {
-    count: number;
+    count: any;
     date: string;
 }
 
 export interface Deaths {
-    count: number;
+    count: any;
     date: string;
 }
 
 export interface Recovered {
-    count: number;
+    count: any;
     date: string;
 }
 

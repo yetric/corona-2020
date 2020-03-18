@@ -6,6 +6,9 @@ const continentCache: any = {};
 
 export class ContinentStore {
     @observable locations: GeoLocation[] = [];
+    @observable confirmed: number = 0;
+    @observable deaths: number = 0;
+    @observable recovered: number = 0;
     private client: DataClient;
     private readonly continent: string;
 
@@ -30,5 +33,18 @@ export class ContinentStore {
             this.locations = all;
             continentCache[url] = all;
         }
+        let confirmed = 0;
+        let deaths = 0;
+        let recovered = 0;
+
+        this.locations.forEach((value: GeoLocation) => {
+            recovered += parseInt(value.recovered.count);
+            deaths += parseInt(value.deaths.count);
+            confirmed += parseInt(value.confirmed.count);
+        });
+
+        this.confirmed = confirmed;
+        this.deaths = deaths;
+        this.recovered = recovered;
     }
 }
