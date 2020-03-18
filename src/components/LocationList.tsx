@@ -3,6 +3,7 @@ import { GeoLocation } from "../models/GeoLocation";
 import { Link } from "react-router-dom";
 import "./LocationList.css";
 import { relativeToPercentage } from "../core/functions";
+import { Share } from "./Share";
 
 interface LocationListProps {
     locations: GeoLocation[];
@@ -31,6 +32,8 @@ export const LocationList = (props: LocationListProps) => {
     let deathRate = props.confirmed > 0 && props.deaths > 0 ? props.deaths / props.confirmed : null;
     let recoveryRate = props.confirmed > 0 && props.recovered > 0 ? props.recovered / props.confirmed : null;
 
+    let active = props.confirmed > 0 ? props.confirmed - (props.deaths + props.recovered) : null;
+    let activePercentage = active ? active / props.confirmed : null;
     const sort = (sortType: string) => {
         console.log("Sort", sortType);
     };
@@ -40,18 +43,26 @@ export const LocationList = (props: LocationListProps) => {
             <div className="card-body">
                 <dl>
                     <dt>Confirmed</dt>
-                    <dd>{props.confirmed}</dd>
+                    <dd>{props.confirmed.toLocaleString("sv-se")}</dd>
 
                     <dt>Deaths</dt>
                     <dd>
-                        {props.deaths} <small>{relativeToPercentage(deathRate)}</small>
+                        {props.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
                     </dd>
 
                     <dt>Recovered</dt>
                     <dd>
-                        {props.recovered} <small>{relativeToPercentage(recoveryRate)}</small>
+                        {props.recovered.toLocaleString("sv-se")} <small>{relativeToPercentage(recoveryRate)}</small>
+                    </dd>
+                    <dt>Active</dt>
+                    <dd>
+                        {active && active.toLocaleString("sv-se")}{" "}
+                        <small>{relativeToPercentage(activePercentage)}</small>
                     </dd>
                 </dl>
+            </div>
+            <div className="card-footer">
+                <Share />
             </div>
             <div className="table-responsive">
                 <table className={"location-list"}>
@@ -89,10 +100,12 @@ export const LocationList = (props: LocationListProps) => {
                         ))}
                     </tbody>
                     <tfoot>
-                        <td>Total</td>
-                        <td>{props.confirmed}</td>
-                        <td>{props.deaths}</td>
-                        <td>{props.recovered}</td>
+                        <tr>
+                            <th>Total</th>
+                            <td>{props.confirmed}</td>
+                            <td>{props.deaths}</td>
+                            <td>{props.recovered}</td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>

@@ -6,3 +6,15 @@ table.location-list th {
 table.location-list tbody th {
     text-align: left;
 }
+
+table.location-list thead th {
+    text-align: right;
+}
+
+table.location-list thead tr th:first-child {
+    text-align: left;
+}
+
+.location-list-item td {
+    width: 22%;
+}
