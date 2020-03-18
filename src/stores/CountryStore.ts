@@ -8,11 +8,13 @@ export class CountryStore {
     @observable deaths: string = "";
     @observable recovered: string = "";
     private client: DataClient;
-    private id: number;
+    private readonly id: number;
     constructor(id: number) {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.id = id;
-        this.loadCountry();
+        (async () => {
+            await this.loadCountry();
+        })();
     }
 
     @action
