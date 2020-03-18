@@ -13,7 +13,7 @@ export const Expectancy = observer(() => {
     }
 
     useEffect(() => {
-        document.title = expectancy + " - Covid-19 - CoronaData.se";
+        document.title = "Life Expectancy " + expectancy + " (+-5%) - Covid-19 - CoronaData.se";
     });
 
     expectancyStore = new ExpectancyStore(parseFloat(expectancy));
