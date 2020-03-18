@@ -1,4 +1,4 @@
-import { action, computed, observable, toJS } from "mobx";
+import { action, computed, observable } from "mobx";
 import { ma } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
 
