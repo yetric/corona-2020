@@ -26,6 +26,7 @@ export const Government = observer(() => {
                 recovered={governmentStore.recovered}
                 locations={governmentStore.locations}
                 title={"Government / " + government}
+                loading={governmentStore.loading}
             />
         </>
     );

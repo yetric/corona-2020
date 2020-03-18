@@ -11,6 +11,8 @@ interface LocationListProps {
     confirmed: number;
     deaths: number;
     recovered: number;
+    onSort?: any;
+    loading: boolean;
 }
 
 interface LocationListItemProps {
@@ -36,9 +38,19 @@ export const LocationList = (props: LocationListProps) => {
     let activePercentage = active ? active / props.confirmed : null;
     const sort = (sortType: string) => {
         console.log("Sort", sortType);
+        if (props.onSort) {
+            props.onSort(sortType);
+        }
     };
     return (
         <div className="card">
+            {props.loading && (
+                <div className="loading-overlay">
+                    <div>
+                        <span>Loading Location Data ...</span>
+                    </div>
+                </div>
+            )}
             <div className="card-header">{props.title}</div>
             <div className="card-body">
                 <dl>

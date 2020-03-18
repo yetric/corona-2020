@@ -26,6 +26,7 @@ export const Region = observer(() => {
                 recovered={regionStore.recovered}
                 locations={regionStore.locations}
                 title={"Region / " + region}
+                loading={regionStore.loading}
             />
         </>
     );

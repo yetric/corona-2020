@@ -9,6 +9,7 @@ export class ContinentStore {
     @observable confirmed: number = 0;
     @observable deaths: number = 0;
     @observable recovered: number = 0;
+    @observable loading: boolean = false;
     private client: DataClient;
     private readonly continent: string;
 
@@ -22,6 +23,7 @@ export class ContinentStore {
 
     @action
     async loadContinent() {
+        this.loading = true;
         const url = `/api/corona/continent/${this.continent}`;
         if (continentCache.hasOwnProperty(url)) {
             this.locations = continentCache[url];
@@ -46,5 +48,17 @@ export class ContinentStore {
         this.confirmed = confirmed;
         this.deaths = deaths;
         this.recovered = recovered;
+        this.loading = false;
+    }
+
+    @action
+    sort(sortKey: string) {
+        //this.locations = [];
+        const clone = this.locations.slice();
+        clone.sort((a: GeoLocation, b: GeoLocation) => {
+            return -1;
+        });
+        console.log(clone);
+        //this.locations.replace(clone);
     }
 }

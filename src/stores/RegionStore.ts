@@ -9,6 +9,7 @@ export class RegionStore {
     @observable confirmed: number = 0;
     @observable deaths: number = 0;
     @observable recovered: number = 0;
+    @observable loading: boolean = false;
     private client: DataClient;
     private readonly region: string;
 
@@ -22,6 +23,7 @@ export class RegionStore {
 
     @action
     async loadRegion() {
+        this.loading = true;
         const url = `/api/corona/region/${this.region}`;
         if (regionCache.hasOwnProperty(url)) {
             this.locations = regionCache[url];
@@ -47,5 +49,6 @@ export class RegionStore {
         this.confirmed = confirmed;
         this.deaths = deaths;
         this.recovered = recovered;
+        this.loading = false;
     }
 }

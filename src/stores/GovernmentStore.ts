@@ -9,6 +9,7 @@ export class GovernmentStore {
     @observable confirmed: number = 0;
     @observable deaths: number = 0;
     @observable recovered: number = 0;
+    @observable loading: boolean = false;
     private client: DataClient;
     private readonly governmentType: string;
 
@@ -22,6 +23,7 @@ export class GovernmentStore {
 
     @action
     async loadRegion() {
+        this.loading = true;
         const url = `/api/corona/government/${this.governmentType}`;
         if (governmentCache.hasOwnProperty(url)) {
             this.locations = governmentCache[url];
@@ -47,5 +49,6 @@ export class GovernmentStore {
         this.confirmed = confirmed;
         this.deaths = deaths;
         this.recovered = recovered;
+        this.loading = false;
     }
 }

@@ -26,6 +26,8 @@ export const Continent = observer(() => {
                 confirmed={continentStore.confirmed}
                 locations={continentStore.locations}
                 title={"Continent / " + continent}
+                onSort={continentStore.sort}
+                loading={continentStore.loading}
             />
         </>
     );
