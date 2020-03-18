@@ -11,9 +11,7 @@ export class FavStore {
 
     constructor() {
         const favJSON = localStorage.getItem("cd_favs");
-        if (favJSON) {
-            this.favorites = JSON.parse(favJSON);
-        }
+        this.favorites = favJSON ? JSON.parse(favJSON) : [];
     }
 
     has(fav: Fav) {
@@ -29,10 +27,7 @@ export class FavStore {
     @action
     save(fav: Fav) {
         const favJSON = localStorage.getItem("cd_favs");
-        let favs = [];
-        if (favJSON) {
-            favs = JSON.parse(favJSON);
-        }
+        let favs = favJSON ? JSON.parse(favJSON) : [];
         if (!this.has(fav)) {
             favs.unshift(fav);
             localStorage.setItem("cd_favs", JSON.stringify(favs));
