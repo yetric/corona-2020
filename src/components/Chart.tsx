@@ -42,7 +42,8 @@ export const Chart = memo((props: ChartProps) => {
             pointHoverBorderWidth: 1,
             pointRadius: 0,
             pointHitRadius: 10,
-            borderWidth: 2
+            borderWidth: 2,
+            datasetKeyProvider: collection.name
         });
     });
     const chartDataset = {
