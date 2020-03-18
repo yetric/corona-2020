@@ -13,3 +13,8 @@ export const debounce = (func, wait, immediate) => {
         if (callNow) func.apply(context, args);
     };
 };
+
+export const relativeToPercentage = (number) => {
+    let percentage = number * 100;
+    return Math.round(percentage * 100) / 100 + "%";
+};

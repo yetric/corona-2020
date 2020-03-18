@@ -2,6 +2,7 @@ import React from "react";
 import { GeoLocation } from "../models/GeoLocation";
 import { Link } from "react-router-dom";
 import "./LocationList.css";
+import { relativeToPercentage } from "../core/functions";
 
 interface LocationListProps {
     locations: GeoLocation[];
@@ -27,24 +28,28 @@ export const LocationListItem = ({ item }: LocationListItemProps) => (
 );
 
 export const LocationList = (props: LocationListProps) => {
+    let deathRate = props.confirmed > 0 && props.deaths > 0 ? props.deaths / props.confirmed : null;
+    let recoveryRate = props.confirmed > 0 && props.recovered > 0 ? props.recovered / props.confirmed : null;
+
+    const sort = (sortType: string) => {
+        console.log("Sort", sortType);
+    };
     return (
         <div className="card">
             <div className="card-header">{props.title}</div>
             <div className="card-body">
                 <dl>
                     <dt>Confirmed</dt>
-                    <dd>
-                        {props.confirmed} <small>dsf</small>
-                    </dd>
+                    <dd>{props.confirmed}</dd>
 
                     <dt>Deaths</dt>
                     <dd>
-                        {props.deaths} <small>dsf</small>
+                        {props.deaths} <small>{relativeToPercentage(deathRate)}</small>
                     </dd>
 
                     <dt>Recovered</dt>
                     <dd>
-                        {props.recovered} <small>dsf</small>
+                        {props.recovered} <small>{relativeToPercentage(recoveryRate)}</small>
                     </dd>
                 </dl>
             </div>
@@ -52,10 +57,30 @@ export const LocationList = (props: LocationListProps) => {
                 <table className={"location-list"}>
                     <thead>
                         <tr>
-                            <th>Country</th>
-                            <th>Confirmed</th>
-                            <th>Deaths</th>
-                            <th>Recovered</th>
+                            <th
+                                onClick={() => {
+                                    sort("country");
+                                }}>
+                                Country
+                            </th>
+                            <th
+                                onClick={() => {
+                                    sort("confirmed");
+                                }}>
+                                Confirmed
+                            </th>
+                            <th
+                                onClick={() => {
+                                    sort("deaths");
+                                }}>
+                                Deaths
+                            </th>
+                            <th
+                                onClick={() => {
+                                    sort("recovered");
+                                }}>
+                                Recovered
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +88,12 @@ export const LocationList = (props: LocationListProps) => {
                             <LocationListItem item={item} />
                         ))}
                     </tbody>
+                    <tfoot>
+                        <td>Total</td>
+                        <td>{props.confirmed}</td>
+                        <td>{props.deaths}</td>
+                        <td>{props.recovered}</td>
+                    </tfoot>
                 </table>
             </div>
         </div>
