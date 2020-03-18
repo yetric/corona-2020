@@ -9,6 +9,9 @@ import { Home } from "./views/Home";
 import { Continent } from "./views/Continent";
 import { Region } from "./views/Region";
 import { Government } from "./views/Government";
+import { Expectancy } from "./views/Expectancy";
+
+const NoMatchPage = () => <div>File not found</div>;
 
 const App = () => {
     return (
@@ -24,11 +27,13 @@ const App = () => {
                     <Search />
 
                     <Switch>
-                        <Route path={"/continent/:continent"} component={Continent} />
-                        <Route path={"/region/:region"} component={Region} />
-                        <Route path={"/government/:government"} component={Government} />
-                        <Route path={"/:country"} component={Geo} />
-                        <Route path={"/"} exact component={Home} />
+                        <Route exact path={"/continent/:continent"} component={Continent} />
+                        <Route exact path={"/region/:region"} component={Region} />
+                        <Route exact path={"/government/:government"} component={Government} />
+                        <Route exact path={"/expectancy/:expectancy"} component={Expectancy} />
+                        <Route exact path={"/:country"} component={Geo} />
+                        <Route exact path={"/"} component={Home} />
+                        <Route component={NoMatchPage} />
                     </Switch>
 
                     <p className={"footer"}>

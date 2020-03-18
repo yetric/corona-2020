@@ -254,12 +254,28 @@ export const Geo = withRouter(
                                             </tr>
                                             <tr>
                                                 <th>Life Expectancy</th>
-                                                <td>{dataStore.metadata.life_expectancy} years</td>
+                                                <td>
+                                                    <Link to={"/expectancy/" + dataStore.metadata.life_expectancy}>
+                                                        {dataStore.metadata.life_expectancy}
+                                                    </Link>{" "}
+                                                    years
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Population Density</th>
                                                 <td>
-                                                    {dataStore.metadata.population_density} people/km<sup>2</sup>
+                                                    <Link to={"/density/" + dataStore.metadata.population_density}>
+                                                        {dataStore.metadata.population_density}
+                                                    </Link>{" "}
+                                                    people/km<sup>2</sup>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Avg Temp</th>
+                                                <td>
+                                                    <Link to={"/temperature/" + dataStore.metadata.average_temp}>
+                                                        {dataStore.metadata.average_temp}
+                                                    </Link>
                                                 </td>
                                             </tr>
                                             <tr>
