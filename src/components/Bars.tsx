@@ -25,7 +25,8 @@ export const Bars = memo(({ data, labels, type }: BarsProps) => {
             label: collection.name,
             data: rows,
             backgroundColor: colors[index],
-            borderColor: colors[index]
+            borderColor: colors[index],
+            datasetKeyProvider: collection.name
         });
     });
 
