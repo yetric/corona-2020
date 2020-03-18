@@ -6,11 +6,8 @@ import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
 import { Link, useParams, withRouter } from "react-router-dom";
 import { Share } from "../components/Share";
-import { Save } from "react-feather";
 import { favStore } from "../stores/FavStore";
 import { Nearby } from "../components/Nearby";
-import { trackEvent } from "../core/tracking";
-import { toast } from "../core/toaster";
 import { SaveBtn } from "../components/SaveBtn";
 
 interface ProvinceProps {

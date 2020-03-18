@@ -1,0 +1,8 @@
+table.location-list td,
+table.location-list th {
+    white-space: normal;
+}
+
+table.location-list tbody th {
+    text-align: left;
+}

@@ -1,3 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react";
+import { useParams } from "react-router-dom";
+import { ContinentStore } from "../stores/ContinentStore";
+import { LocationList } from "../components/LocationList";
 
-export const Continent = () => <div>Continent</div>;
+export const Continent = observer(() => {
+    let { continent } = useParams();
+    let continentStore: ContinentStore;
+
+    if (!continent) {
+        return null;
+    }
+
+    useEffect(() => {
+        document.title = continent + " - Covid-19 - CoronaData.se";
+    });
+
+    continentStore = new ContinentStore(continent);
+
+    return (
+        <>
+            <LocationList locations={continentStore.locations} title={"Continent / " + continent} />
+        </>
+    );
+});
