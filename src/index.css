@@ -494,3 +494,13 @@ ol li:before {
 .toast.hide {
     opacity: 0;
 }
+
+.label {
+    font-size: 12px;
+    color: var(--nord4);
+    display: inline-block;
+    padding: 0 6px;
+    background: var(--nord11);
+    line-height: 18px;
+    border-radius: 3px;
+}
