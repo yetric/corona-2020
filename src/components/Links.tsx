@@ -46,5 +46,17 @@ export const Links = () => (
                 Folkhälsomyndigheten
             </a>
         </li>
+        <li className={"list-header"}>International Links</li>
+        <li>
+            <a
+                href={"https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases"}
+                target={"_blank"}
+                rel="noopener noreferrer">
+                European Centre for Disease Prevention and Control
+            </a>
+        </li>
+        <li>
+            <a href={"https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports"}>WHO</a>
+        </li>
     </ul>
 );
