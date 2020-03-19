@@ -1,6 +1,7 @@
 import { action, computed, observable } from "mobx";
 import { ma } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
+import { relativeToPercentage } from "../core/functions";
 
 interface Case {
     count: string;
@@ -132,7 +133,7 @@ export class DataStore {
         let labels = confirmed.map((item: Case) => {
             return item.date;
         });
-
+        this.labels = labels;
         let data = confirmed.map((item: Case) => {
             return parseInt(item.count);
         });
@@ -197,5 +198,52 @@ export class DataStore {
     async loadProvinces(geoId: number) {
         let response = await this.client.getJSON(`/api/corona/country/${geoId}`);
         this.provinces = response.country;
+    }
+
+    @computed get active(): TypeCollection {
+        const data = this.confirmed.data.map((item, index) => {
+            return item - (this.deaths.data[index] + this.recovered.data[index]);
+        });
+        return {
+            data,
+            labels: this.labels,
+            name: "Active"
+        };
+    }
+
+    @computed get deathRate(): TypeCollection {
+        const deathRate = this.confirmed.data.map((item, index) => {
+            const deaths = this.deaths.data[index];
+            return deaths === 0 ? 0 : relativeToPercentage(deaths / item, false);
+        });
+        return {
+            data: deathRate,
+            labels: this.labels,
+            name: "Death Rate"
+        };
+    }
+
+    @computed get recoveryRate(): TypeCollection {
+        const recoveryRate = this.confirmed.data.map((item, index) => {
+            const recovered = this.recovered.data[index];
+            return recovered === 0 ? 0 : relativeToPercentage(recovered / item, false);
+        });
+        return {
+            data: recoveryRate,
+            labels: this.labels,
+            name: "Recovery Rate"
+        };
+    }
+
+    @computed get activityRate(): TypeCollection {
+        const actitityRate = this.confirmed.data.map((item, index) => {
+            const active = this.active.data[index];
+            return active === 0 ? 0 : relativeToPercentage(active / item, false);
+        });
+        return {
+            data: actitityRate,
+            labels: this.labels,
+            name: "Activity Rate"
+        };
     }
 }

@@ -15,7 +15,7 @@
     --nord13: rgb(235, 203, 139);
     --nord14: rgb(163, 190, 140);
     --nord14-dark: #798c68;
-    --nord15: #b48ead;
+    --nord15: rgb(180, 142, 173);
 
     --odd: #313644;
 
@@ -137,7 +137,7 @@ a {
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 1024px) {
     .row {
         display: flex;
         flex-wrap: wrap;

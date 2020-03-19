@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { ListFavs } from "../components/ListFavs";
-import { Dashboard } from "../components/Dashboard";
 import { Links } from "../components/Links";
 import { Advice } from "../components/Advice";
 import { About } from "../components/About";

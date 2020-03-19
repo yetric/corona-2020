@@ -14,7 +14,7 @@ export const debounce = (func, wait, immediate) => {
     };
 };
 
-export const relativeToPercentage = (number) => {
+export const relativeToPercentage = (number, toString = true) => {
     let percentage = number * 100;
-    return Math.round(percentage * 100) / 100 + "%";
+    return Math.round(percentage * 100) / 100 + (toString ? "%" : 0);
 };

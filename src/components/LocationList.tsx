@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./LocationList.css";
 import { relativeToPercentage } from "../core/functions";
 import { Share } from "./Share";
+import { LoadOverlay } from "./LoadOverlay";
 
 interface LocationListProps {
     locations: GeoLocation[];
@@ -44,13 +45,7 @@ export const LocationList = (props: LocationListProps) => {
     };
     return (
         <div className="card">
-            {props.loading && (
-                <div className="loading-overlay">
-                    <div>
-                        <span>Loading Location Data ...</span>
-                    </div>
-                </div>
-            )}
+            <LoadOverlay loading={props.loading} text={"Loading Location Data ..."} />
             <div className="card-header">{props.title}</div>
             <div className="card-body">
                 <dl>
