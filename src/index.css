@@ -137,7 +137,7 @@ a {
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 768px) {
     .row {
         display: flex;
         flex-wrap: wrap;
@@ -339,6 +339,10 @@ input[type="text"] {
 
 .list-group li a small {
     color: var(--meta);
+}
+
+.col > .list-group {
+    margin-top: 0;
 }
 
 .toastify-center {
