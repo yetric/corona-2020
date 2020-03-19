@@ -56,7 +56,20 @@ export const Links = () => (
             </a>
         </li>
         <li>
-            <a href={"https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports"}>WHO</a>
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={"https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports"}>
+                WHO
+            </a>
+        </li>
+        <li>
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={"https://pages.semanticscholar.org/coronavirus-research"}>
+                COVID-19 Open Research Dataset (CORD-19)
+            </a>
         </li>
     </ul>
 );
