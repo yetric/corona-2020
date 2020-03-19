@@ -246,4 +246,21 @@ export class DataStore {
             name: "Activity Rate"
         };
     }
+
+    @computed get growthRate(): TypeCollection {
+        const growthRate: number[] = [];
+        let last = 0;
+        this.confirmed.data.forEach((item, index) => {
+            let change = item - last;
+            let changeRelative = change > 0 && last > 0 ? relativeToPercentage(change / last, false) : 0;
+            last = item;
+            growthRate.push(changeRelative);
+        });
+
+        return {
+            data: ma(growthRate, 10),
+            labels: this.labels,
+            name: "Daily Growth Rate"
+        };
+    }
 }

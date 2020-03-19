@@ -12,7 +12,12 @@ export const ActivityRate = ({ dataStore }: ActivityRateProps) => {
     return (
         <div>
             <h4>Activity</h4>
-            <Chart type={type} labels={dataStore.labels} data={[dataStore.activityRate]} name={"Activity Rate"} />
+            <Chart
+                type={type}
+                labels={dataStore.labels}
+                data={[dataStore.activityRate, dataStore.growthRate]}
+                name={"Activity Rate"}
+            />
             <Toggle
                 items={[
                     {
