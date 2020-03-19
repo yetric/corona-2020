@@ -298,7 +298,7 @@ export const Geo = withRouter(
                                     <small>
                                         Only showing last 7 days in table{" "}
                                         <a
-                                            href={"#"}
+                                            href={"#toggle-truncate"}
                                             onClick={(event) => {
                                                 event.preventDefault();
                                                 setTruncate(!truncate);

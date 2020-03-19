@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { favStore } from "../stores/FavStore";
 import { MinusSquare } from "react-feather";
 import React from "react";
