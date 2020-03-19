@@ -9,23 +9,27 @@ interface FavItemProp {
     edit: any;
     item: any;
     store: CountryStore;
+    onClick: (countryId: string) => void;
 }
 
-export const FavItem = observer(({ edit, item, store }: FavItemProp) => {
+export const FavItem = observer(({ edit, item, store, onClick }: FavItemProp) => {
     return (
-        <li key={item.id}>
-            <Link to={`/${item.id}`}>
-                {item.name} {item.province && <small>({item.province})</small>}
-            </Link>
+        <li
+            key={item.id}
+            onClick={(event) => {
+                event.preventDefault();
+                onClick(item.country_id);
+            }}>
+            {item.name} {item.province && <small>({item.province})</small>}
             <ul>
                 <li>
-                    Confirmed: <span className={"confirmed"}>{store.confirmed}</span>
+                    Confirmed <span className={"confirmed"}>{store.confirmed}</span>
                 </li>
                 <li className={"text-center"}>
-                    Deaths: <span className={"deaths"}>{store.deaths}</span>
+                    Deaths <span className={"deaths"}>{store.deaths}</span>
                 </li>
                 <li className={"text-right"}>
-                    Recovered: <span className={"recovered"}>{store.recovered}</span>
+                    Recovered <span className={"recovered"}>{store.recovered}</span>
                 </li>
             </ul>
             {edit && (

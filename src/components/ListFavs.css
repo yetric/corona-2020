@@ -25,6 +25,8 @@
 
 .favs > li ul li {
     flex-grow: 1;
+    padding-right: 12px;
+    text-align: center;
 }
 
 .favs li:last-child {

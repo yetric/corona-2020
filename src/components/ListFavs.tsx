@@ -8,6 +8,9 @@ import { CountryStore } from "../stores/CountryStore";
 
 export const ListFavs = observer(() => {
     const [edit, canEdit] = useState(false);
+    const onCountryChange = (countryId: string) => {
+        alert(countryId);
+    };
     return (
         <ul className={"favs"}>
             <li key={"jeaderfavss"} className={"list-header"}>
@@ -22,7 +25,13 @@ export const ListFavs = observer(() => {
                 </span>
             </li>
             {favStore.favorites.map((item: Fav) => (
-                <FavItem key={"fav-" + item.id} edit={edit} item={item} store={new CountryStore(item.id)} />
+                <FavItem
+                    key={"fav-" + item.id}
+                    edit={edit}
+                    item={item}
+                    store={new CountryStore(item.id)}
+                    onClick={onCountryChange}
+                />
             ))}
             {favStore.favorites.length === 0 && (
                 <li key={"sdf"} className={"item-text"}>
