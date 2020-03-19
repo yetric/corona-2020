@@ -5,11 +5,16 @@ import { Edit } from "react-feather";
 import "./ListFavs.css";
 import { FavItem } from "./FavItem";
 import { CountryStore } from "../stores/CountryStore";
+import { MapStore } from "../stores/MapStore";
 
-export const ListFavs = observer(() => {
+interface ListFavsProps {
+    store: MapStore;
+}
+
+export const ListFavs = observer(({ store }: ListFavsProps) => {
     const [edit, canEdit] = useState(false);
-    const onCountryChange = (countryId: string) => {
-        alert(countryId);
+    const onCountryChange = (geo: any) => {
+        store.load(geo.country_id);
     };
     return (
         <ul className={"favs"}>

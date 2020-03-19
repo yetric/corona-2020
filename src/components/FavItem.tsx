@@ -17,7 +17,7 @@ export const FavItem = observer(({ edit, item, store, onClick }: FavItemProp) =>
             key={item.id}
             onClick={(event) => {
                 event.preventDefault();
-                onClick(item.country_id);
+                onClick(store.data && store.data.geo);
             }}>
             {item.name} {item.province && <small>({item.province})</small>}
             <ul>

@@ -7,6 +7,7 @@ export class CountryStore {
     @observable confirmed: string = "";
     @observable deaths: string = "";
     @observable recovered: string = "";
+    @observable data: any = null;
     private client: DataClient;
     private readonly id: number;
     constructor(id: number) {
@@ -27,5 +28,6 @@ export class CountryStore {
         this.deaths = data.deaths.count;
         this.recovered = data.recovered.count;
         countryCache[url] = data;
+        this.data = data;
     }
 }

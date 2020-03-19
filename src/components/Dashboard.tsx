@@ -18,10 +18,16 @@ export const Dashboard = observer(() => {
                         </div>
                     </div>
                 )}
-                <CoronaMap lat={46.8182} lng={8.2275} zoom={2} geoJSON={mapStore.geometry} />
+                <CoronaMap
+                    coord={mapStore.coord}
+                    lat={mapStore.lat}
+                    lng={mapStore.lng}
+                    zoom={mapStore.zoom}
+                    geoJSON={mapStore.geometry}
+                />
             </div>
             <div className="col col-1" id={"dashboard-countries"}>
-                <ListFavs />
+                <ListFavs store={mapStore} />
             </div>
         </div>
     );
