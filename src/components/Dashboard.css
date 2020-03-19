@@ -1,11 +1,17 @@
 #dashboard {
-    min-height: 430px;
+    min-height: 380px;
+    margin: 0;
+    position: relative;
 }
 
-#dashboard-map {
-    background: #50a8e2;
+#dashboard .col {
+    margin: 0;
 }
 
-#dashboard-countries {
-    background: #81a1c1;
+.map-holder {
+    min-height: 380px;
+}
+
+#dashboard-countries .list-group {
+    margin: 0;
 }

@@ -12,6 +12,7 @@ export const Home = observer(() => {
     });
     return (
         <>
+            <Dashboard />
             <div className={"row"}>
                 <div className="col">
                     <ListFavs />

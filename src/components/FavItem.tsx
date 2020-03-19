@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { favStore } from "../stores/FavStore";
 import { MinusSquare } from "react-feather";
-import React, { useEffect } from "react";
+import React from "react";
 import { observer } from "mobx-react";
 import { CountryStore } from "../stores/CountryStore";
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SearchStore } from "../stores/SearchStore";
 import { useDebouncedCallback } from "use-debounce";
 import { withRouter } from "react-router-dom";

@@ -424,15 +424,15 @@ ol li:before {
 
 .loading-overlay {
     position: absolute;
-    background-color: rgba(59, 66, 82, 0.75);
+    background-color: rgba(59, 66, 82, 0.85);
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
-    z-index: 1;
     display: flex;
     justify-content: center;
     padding-top: 200px;
+    z-index: 100000000000;
 }
 
 .loading-overlay span {

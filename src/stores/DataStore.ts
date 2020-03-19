@@ -132,6 +132,7 @@ export class DataStore {
         let labels = confirmed.map((item: Case) => {
             return item.date;
         });
+        this.labels = labels;
 
         let data = confirmed.map((item: Case) => {
             return parseInt(item.count);

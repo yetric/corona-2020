@@ -22,30 +22,9 @@ const dataStore = new DataStore();
 
 export const Geo = withRouter(
     observer(({ history }: GeoProps) => {
-        const [type, setType] = useState("confirmed");
         let { country } = useParams();
-        useEffect(() => {
-            country && dataStore.loadCountry(parseInt(country));
-            window.scrollTo(0, 0);
-        }, [country]);
-
-        useEffect(() => {
-            if (dataStore.data?.geo.country) {
-                document.title = dataStore.data?.geo.country + " - Covid-19 - CoronaData.se";
-            }
-        });
-
         const [truncate, setTruncate] = useState(true);
-
-        let dataSource = dataStore.confirmed;
-        if (type === "deaths") {
-            dataSource = dataStore.deaths;
-        } else if (type === "recovered") {
-            dataSource = dataStore.recovered;
-        }
-
         const provinceName = dataStore.provinces.length > 0 ? <small>({dataStore.data?.geo.province})</small> : null;
-
         const getProvinceDropDown = ({ selected }: ProvinceProps) => {
             const options = dataStore.provinces.map((province) => {
                 return (
@@ -71,10 +50,20 @@ export const Geo = withRouter(
                 </>
             );
         };
-
         const { confirmed, deaths, recovered } = dataStore;
-
         let showSaveBtn = true;
+
+        useEffect(() => {
+            country && dataStore.loadCountry(parseInt(country));
+            window.scrollTo(0, 0);
+        }, [country]);
+
+        useEffect(() => {
+            if (dataStore.data?.geo.country) {
+                document.title = dataStore.data?.geo.country + " - Covid-19 - CoronaData.se";
+            }
+        });
+
         if (country && dataStore.data?.geo) {
             showSaveBtn = !favStore.has({
                 id: parseInt(country),
@@ -98,9 +87,9 @@ export const Geo = withRouter(
             dataStore.confirmed.data.length > 0 ? (
                 <Chart
                     type={dataStore.renderType}
-                    labels={dataSource.labels}
+                    labels={dataStore.labels}
                     data={[confirmed, deaths, recovered]}
-                    name={type}
+                    name={"Corona Cases"}
                 />
             ) : null;
         return (
@@ -150,7 +139,7 @@ export const Geo = withRouter(
                                 <Bars
                                     type={dataStore.barType}
                                     data={[confirmed, deaths, recovered]}
-                                    labels={dataSource.labels}
+                                    labels={dataStore.labels}
                                 />
                                 <ul className={"toggle"}>
                                     <li className={dataStore.barType === "stacked" ? "active" : ""}>
@@ -299,7 +288,7 @@ export const Geo = withRouter(
                                     <div className="card-header">By Date</div>
                                     <Table
                                         data={{
-                                            labels: dataSource.labels,
+                                            labels: dataStore.labels,
                                             confirmed,
                                             deaths,
                                             recovered
