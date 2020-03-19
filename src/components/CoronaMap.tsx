@@ -31,9 +31,9 @@ export const CoronaMap = ({ lat, lng, zoom, geoJSON, coord }: CoronaMapProps) =>
                     style={(feature) => {
                         return {
                             fillColor: "rgb(208, 135, 112)",
-                            weight: 0.3,
-                            opacity: 1,
-                            fillOpacity: 0.4
+                            weight: 1,
+                            opacity: 0.1,
+                            fillOpacity: 0.2
                         };
                     }}
                 />
