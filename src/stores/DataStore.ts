@@ -260,7 +260,7 @@ export class DataStore {
         return {
             data: ma(growthRate, 10),
             labels: this.labels,
-            name: "Daily Growth Rate"
+            name: "Growth Rate (running avg - 10 days)"
         };
     }
 }
