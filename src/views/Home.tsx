@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
-import { ListFavs } from "../components/ListFavs";
 import { Dashboard } from "../components/Dashboard";
 import { Links } from "../components/Links";
 import { Advice } from "../components/Advice";
@@ -15,19 +14,15 @@ export const Home = observer(() => {
             <Dashboard />
             <div className={"row"}>
                 <div className="col">
-                    <ListFavs />
-                </div>
-                <div className="col">
-                    <Links />
-                </div>
-            </div>
-            <div className={"row"}>
-                <div className="col">
                     <Advice />
                 </div>
 
                 <div className="col">
                     <About />
+                </div>
+
+                <div className="col">
+                    <Links />
                 </div>
             </div>
         </>
