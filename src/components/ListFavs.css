@@ -2,6 +2,7 @@
     list-style: none;
     padding: 0;
     border: 1px solid var(--nord1);
+    margin-top: 0;
 }
 
 .favs > li {
