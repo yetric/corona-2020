@@ -127,10 +127,10 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
                     <tfoot>
                         <tr>
                             <th>Total</th>
-                            <td>{store.confirmed}</td>
-                            <td>{store.deaths}</td>
-                            <td>{store.recovered}</td>
-                            <td>{store.confirmed - (store.deaths + store.recovered)}</td>
+                            <td>{store.confirmed.toLocaleString("sv-se")}</td>
+                            <td>{store.deaths.toLocaleString("sv-se")}</td>
+                            <td>{store.recovered.toLocaleString("sv-se")}</td>
+                            <td>{(store.confirmed - (store.deaths + store.recovered)).toLocaleString("sv-se")}</td>
                             <td>{relativeToPercentage(store.deaths / store.confirmed)}</td>
                             <td>{active && relativeToPercentage(active / store.confirmed)}</td>
                             <td>{relativeToPercentage(store.recovered / store.confirmed)}</td>
