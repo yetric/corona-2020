@@ -22,7 +22,3 @@ table.location-list thead th {
 table.location-list thead tr th:first-child {
     text-align: left;
 }
-
-.location-list-item td {
-    width: 22%;
-}
