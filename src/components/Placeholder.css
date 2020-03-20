@@ -1,8 +1,22 @@
 .placeholder {
     display: inline-block;
     line-height: 1;
-
-    background: rgba(204, 204, 204, 0.05);
     color: transparent;
     border-radius: 4px;
+    animation-name: color;
+    animation-duration: 2s;
+    animation-iteration-count: 2;
+    background-color: transparent;
+}
+
+@keyframes color {
+    0% {
+        background-color: rgba(204, 204, 204, 0.01);
+    }
+    50% {
+        background-color: rgba(204, 204, 204, 0.08);
+    }
+    100% {
+        background-color: rgba(204, 204, 204, 0.01);
+    }
 }
