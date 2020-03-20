@@ -263,4 +263,31 @@ export class DataStore {
             name: "Growth Rate (running avg - 10 days)"
         };
     }
+
+    @computed get activeTotal() {
+        return this.data?.active.count;
+    }
+
+    @computed get deathRateTotal() {
+        let rate = 0;
+        if (this.data?.confirmed.count && this.data?.deaths.count && this.data?.deaths.count > 0) {
+            rate = this.data?.deaths.count / this.data?.confirmed.count;
+        }
+        return rate;
+    }
+
+    @computed get recoveryRateTotal() {
+        let rate = 0;
+        if (this.data?.confirmed.count && this.data?.recovered.count && this.data?.recovered.count > 0) {
+            rate = this.data?.recovered.count / this.data?.confirmed.count;
+        }
+        return rate;
+    }
+
+    @computed get activityRateTotal() {
+        if (this.activeTotal && this.data?.confirmed.count) {
+            return this.activeTotal / this.data?.confirmed.count;
+        }
+        return 0;
+    }
 }

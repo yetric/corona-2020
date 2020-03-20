@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, computed, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
 import { sortLocation } from "../core/helpers";
@@ -7,7 +7,6 @@ let continentCache: any = {};
 
 export class ContinentStore {
     @observable locations: GeoLocation[] = [];
-    @observable testArray: any[];
     @observable confirmed: number = 0;
     @observable deaths: number = 0;
     @observable recovered: number = 0;
@@ -18,7 +17,6 @@ export class ContinentStore {
     constructor(continentName: string) {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.continent = continentName;
-        this.testArray = [1, 3, 4, 5, 6, 7, 9];
         this.locations = [];
         (async () => {
             await this.loadContinent();
@@ -58,5 +56,36 @@ export class ContinentStore {
     @action
     async sort(sortKey: string) {
         this.locations = sortLocation(this.locations, sortKey);
+    }
+
+    @computed get deathTotal() {
+        let total = 0;
+        this.locations.forEach((a: GeoLocation) => {
+            total += parseInt(a.deaths.count);
+        });
+
+        return total;
+    }
+
+    @computed get confirmedTotal() {
+        let total = 0;
+        this.locations.forEach((a: GeoLocation) => {
+            total += parseInt(a.confirmed.count);
+        });
+
+        return total;
+    }
+
+    @computed get recoveredTotal() {
+        let total = 0;
+        this.locations.forEach((a: GeoLocation) => {
+            total += parseInt(a.recovered.count);
+        });
+
+        return total;
+    }
+
+    @computed get activeTotal() {
+        return this.confirmedTotal - (this.deathTotal + this.recoveredTotal);
     }
 }
