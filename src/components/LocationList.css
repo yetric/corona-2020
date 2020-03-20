@@ -3,6 +3,14 @@ table.location-list th {
     white-space: normal;
 }
 
+table.location-list td:not(.recovered):not(.deaths):not(.confirmed) {
+    color: var(--meta-light);
+}
+
+table.location-list tfoot td {
+    color: var(--nord4) !important;
+}
+
 table.location-list tbody th {
     text-align: left;
 }
