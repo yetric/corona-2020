@@ -17,12 +17,24 @@ const App = () => {
     return (
         <Router>
             <Analytics id={"UA-103000963-8"}>
+                <div className="announce">
+                    Any ideas on how to make this app better? Please send your ideas to us using{" "}
+                    <a
+                        href={
+                            "https://docs.google.com/forms/d/e/1FAIpQLSfluefXvUfS336A-0-vWNB_zFNNyR_bLuwQhcWty4Z8f52KTQ/viewform?usp=sf_link"
+                        }
+                        target={"_blank"}
+                        rel="noopener noreferrer">
+                        this form
+                    </a>
+                </div>
                 <div className="header">
                     <h2>
                         <Link to={"/"}>Data on Corona</Link>
                     </h2>
                     <h3>coronadata.se</h3>
                 </div>
+
                 <div className={"chart"}>
                     <Search />
 

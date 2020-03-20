@@ -267,7 +267,7 @@ dl {
 }
 
 dt {
-    flex-basis: 40%;
+    flex-basis: 35%;
     font-weight: 300;
     line-height: 48px;
     padding: 0 20px 0 0;
@@ -276,7 +276,7 @@ dt {
 }
 
 dd {
-    flex-basis: 60%;
+    flex-basis: 65%;
     margin: 0;
     padding: 0;
     font-size: 28px;
@@ -522,4 +522,17 @@ ol li:before {
     background: var(--nord11);
     line-height: 18px;
     border-radius: 3px;
+}
+
+.announce {
+    background-color: var(--nord13);
+    color: var(--nord1);
+    font-size: 13px;
+    line-height: 1.3;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.announce a {
+    color: var(--accent);
 }

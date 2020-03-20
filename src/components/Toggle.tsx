@@ -13,7 +13,7 @@ interface ToggleProps {
 export const Toggle = ({ items, selected, onSelect }: ToggleProps) => {
     const toggles = items.map((toggle: ToggleProp) => {
         return (
-            <li className={toggle.key === selected ? "active" : ""}>
+            <li key={toggle.key} className={toggle.key === selected ? "active" : ""}>
                 <a
                     href={"#" + toggle.key}
                     onClick={(event) => {

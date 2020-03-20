@@ -1,6 +1,5 @@
 import { action, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
-import { relativeToPercentage } from "../core/functions";
 
 export class WorldStore {
     @observable confirmed: number = 0;
