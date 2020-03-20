@@ -142,18 +142,20 @@ a {
 .col:last-child {
     margin-bottom: 0;
 }
+@media screen and (min-width: 1024px) {
+    .cards {
+        display: flex;
+    }
 
-.cards {
-    display: flex;
-}
+    .cards .card {
+        flex-basis: 0;
+        flex-grow: 1;
+        margin-left: 6px;
+    }
 
-.cards .card {
-    flex-basis: 0;
-    flex-grow: 1;
-    margin-left: 6px;
-}
-.cards .card:first-child {
-    margin-left: 0;
+    .cards .card:first-child {
+        margin-left: 0;
+    }
 }
 
 @media screen and (min-width: 1024px) {
