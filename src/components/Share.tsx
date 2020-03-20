@@ -3,6 +3,7 @@ import "./Share.css";
 import { Share2, Copy } from "react-feather";
 import Clipboard from "clipboard";
 import { trackEvent } from "../core/tracking";
+import { toast } from "../core/toaster";
 
 export const Share = () => {
     const button: any | null = useRef(null);
@@ -23,7 +24,10 @@ export const Share = () => {
                 action: "Copy",
                 label: window.location.href
             });
-            //alert("Link copied to clipboard"); // TODO Add toaster
+            toast({
+                text: "Link copied to clipboard",
+                duration: 2000
+            });
         });
     });
 
@@ -39,6 +43,10 @@ export const Share = () => {
                     category: "Share",
                     action: "Native",
                     label: window.location.href
+                });
+                toast({
+                    text: "Thanks for sharing",
+                    duration: 2000
                 });
             });
     };
