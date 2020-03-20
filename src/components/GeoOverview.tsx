@@ -4,8 +4,10 @@ import { ContinentStore } from "../stores/ContinentStore";
 import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { DataStore } from "../stores/DataStore";
+import { WorldStore } from "../stores/WorldStore";
 const dataStore = new DataStore();
 dataStore.loadCountry(18);
+const worldStore = new WorldStore();
 export const GeoOverview = observer(() => {
     const europeStore = new ContinentStore("Europe");
 
@@ -14,9 +16,18 @@ export const GeoOverview = observer(() => {
             <div className="card">
                 <div className="card-header">World</div>
                 <div className="card-body">
-                    <CasesList />
+                    <CasesList
+                        confirmed={worldStore.confirmed}
+                        deaths={worldStore.deaths}
+                        recovered={worldStore.recovered}
+                        active={worldStore.active}
+                        activityRate={worldStore.activityRate}
+                        deathRate={worldStore.deathRate}
+                        recoveryRate={worldStore.recoveryRate}
+                        updated={worldStore.date}
+                    />
                 </div>
-                <div className="card-footer">WiP - Coming</div>
+                <div className="card-footer">Based on data from Johns Hopkins</div>
             </div>
 
             <div className="card">
