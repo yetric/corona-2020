@@ -1,6 +1,7 @@
 import { action, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
+import { sortLocation } from "../core/helpers";
 
 const regionCache: any = {};
 
@@ -50,5 +51,10 @@ export class RegionStore {
         this.deaths = deaths;
         this.recovered = recovered;
         this.loading = false;
+    }
+
+    @action
+    async sort(sortKey: string) {
+        this.locations = sortLocation(this.locations, sortKey);
     }
 }

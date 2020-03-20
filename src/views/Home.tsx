@@ -4,6 +4,7 @@ import { ListFavs } from "../components/ListFavs";
 import { Links } from "../components/Links";
 import { Advice } from "../components/Advice";
 import { About } from "../components/About";
+import { GeoOverview } from "../components/GeoOverview";
 
 export const Home = observer(() => {
     useEffect(() => {
@@ -11,6 +12,7 @@ export const Home = observer(() => {
     });
     return (
         <>
+            <GeoOverview />
             <div className={"row"}>
                 <div className="col">
                     <ListFavs />

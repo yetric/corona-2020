@@ -40,6 +40,12 @@
     box-sizing: border-box;
 }
 
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
@@ -137,6 +143,19 @@ a {
     margin-bottom: 0;
 }
 
+.cards {
+    display: flex;
+}
+
+.cards .card {
+    flex-basis: 0;
+    flex-grow: 1;
+    margin-left: 6px;
+}
+.cards .card:first-child {
+    margin-left: 0;
+}
+
 @media screen and (min-width: 1024px) {
     .row {
         display: flex;
@@ -149,7 +168,6 @@ a {
         flex-grow: 1;
         max-width: 100%;
         padding: 0 12px;
-        margin-top: 20px;
     }
 
     .col-sm {
@@ -294,7 +312,6 @@ input[type="text"] {
 .list-group {
     list-style: none;
     padding: 0;
-    margin: 20px 0;
     border: 1px solid var(--nord3);
     color: var(--nord5);
 }

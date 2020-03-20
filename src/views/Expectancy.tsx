@@ -20,14 +20,7 @@ export const Expectancy = observer(() => {
 
     return (
         <>
-            <LocationList
-                confirmed={expectancyStore.confirmed}
-                deaths={expectancyStore.deaths}
-                recovered={expectancyStore.recovered}
-                locations={expectancyStore.locations}
-                title={"Life Expectancy / " + expectancy + " (+-5%)"}
-                loading={expectancyStore.loading}
-            />
+            <LocationList store={expectancyStore} title={"Life Expectancy / " + expectancy + " (+-5%)"} />
         </>
     );
 });

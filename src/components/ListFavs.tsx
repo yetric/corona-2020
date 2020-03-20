@@ -22,7 +22,7 @@ export const ListFavs = observer(() => {
                 </span>
             </li>
             {favStore.favorites.map((item: Fav) => (
-                <FavItem edit={edit} item={item} store={new CountryStore(item.id)} />
+                <FavItem key={item.id} edit={edit} item={item} store={new CountryStore(item.id)} />
             ))}
             {favStore.favorites.length === 0 && <li className={"item-text"}>Saved items will appear here</li>}
         </ul>

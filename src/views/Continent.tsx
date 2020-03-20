@@ -6,29 +6,16 @@ import { LocationList } from "../components/LocationList";
 
 export const Continent = observer(() => {
     let { continent } = useParams();
-    let continentStore: ContinentStore;
-
-    if (!continent) {
-        return null;
-    }
+    if (!continent) return null;
+    let continentStore = new ContinentStore(continent);
 
     useEffect(() => {
         document.title = continent + " - Covid-19 - CoronaData.se";
     });
 
-    continentStore = new ContinentStore(continent);
-
     return (
         <>
-            <LocationList
-                recovered={continentStore.recovered}
-                deaths={continentStore.deaths}
-                confirmed={continentStore.confirmed}
-                locations={continentStore.locations}
-                title={"Continent / " + continent}
-                onSort={continentStore.sort}
-                loading={continentStore.loading}
-            />
+            <LocationList store={continentStore} title={"Continent / " + continent} />
         </>
     );
 });

@@ -1,11 +1,13 @@
 import { action, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
+import { sortLocation } from "../core/helpers";
 
-const continentCache: any = {};
+let continentCache: any = {};
 
 export class ContinentStore {
     @observable locations: GeoLocation[] = [];
+    @observable testArray: any[];
     @observable confirmed: number = 0;
     @observable deaths: number = 0;
     @observable recovered: number = 0;
@@ -16,6 +18,8 @@ export class ContinentStore {
     constructor(continentName: string) {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.continent = continentName;
+        this.testArray = [1, 3, 4, 5, 6, 7, 9];
+        this.locations = [];
         (async () => {
             await this.loadContinent();
         })();
@@ -52,13 +56,7 @@ export class ContinentStore {
     }
 
     @action
-    sort(sortKey: string) {
-        //this.locations = [];
-        const clone = this.locations.slice();
-        clone.sort((a: GeoLocation, b: GeoLocation) => {
-            return -1;
-        });
-        console.log(clone);
-        //this.locations.replace(clone);
+    async sort(sortKey: string) {
+        this.locations = sortLocation(this.locations, sortKey);
     }
 }

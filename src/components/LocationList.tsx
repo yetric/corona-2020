@@ -5,15 +5,15 @@ import "./LocationList.css";
 import { relativeToPercentage } from "../core/functions";
 import { Share } from "./Share";
 import { LoadOverlay } from "./LoadOverlay";
+import { observer } from "mobx-react";
+import { ContinentStore } from "../stores/ContinentStore";
+import { RegionStore } from "../stores/RegionStore";
+import { GovernmentStore } from "../stores/GovernmentStore";
+import { ExpectancyStore } from "../stores/ExpectancyStore";
 
 interface LocationListProps {
-    locations: GeoLocation[];
+    store: ContinentStore | RegionStore | GovernmentStore | ExpectancyStore;
     title: string;
-    confirmed: number;
-    deaths: number;
-    recovered: number;
-    onSort?: any;
-    loading: boolean;
 }
 
 interface LocationListItemProps {
@@ -31,35 +31,32 @@ export const LocationListItem = ({ item }: LocationListItemProps) => (
     </tr>
 );
 
-export const LocationList = (props: LocationListProps) => {
-    let deathRate = props.confirmed > 0 && props.deaths > 0 ? props.deaths / props.confirmed : null;
-    let recoveryRate = props.confirmed > 0 && props.recovered > 0 ? props.recovered / props.confirmed : null;
+export const LocationList = observer(({ store, title }: LocationListProps) => {
+    let deathRate = store.confirmed > 0 && store.deaths > 0 ? store.deaths / store.confirmed : null;
+    let recoveryRate = store.confirmed > 0 && store.recovered > 0 ? store.recovered / store.confirmed : null;
 
-    let active = props.confirmed > 0 ? props.confirmed - (props.deaths + props.recovered) : null;
-    let activePercentage = active ? active / props.confirmed : null;
+    let active = store.confirmed > 0 ? store.confirmed - (store.deaths + store.recovered) : null;
+    let activePercentage = active ? active / store.confirmed : null;
     const sort = (sortType: string) => {
-        console.log("Sort", sortType);
-        if (props.onSort) {
-            props.onSort(sortType);
-        }
+        store.sort(sortType);
     };
     return (
         <div className="card">
-            <LoadOverlay loading={props.loading} text={"Loading Location Data ..."} />
-            <div className="card-header">{props.title}</div>
+            <LoadOverlay loading={store.loading} text={"Loading Location Data ..."} />
+            <div className="card-header">{title}</div>
             <div className="card-body">
                 <dl>
                     <dt>Confirmed</dt>
-                    <dd>{props.confirmed.toLocaleString("sv-se")}</dd>
+                    <dd>{store.confirmed.toLocaleString("sv-se")}</dd>
 
                     <dt>Deaths</dt>
                     <dd>
-                        {props.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
+                        {store.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
                     </dd>
 
                     <dt>Recovered</dt>
                     <dd>
-                        {props.recovered.toLocaleString("sv-se")} <small>{relativeToPercentage(recoveryRate)}</small>
+                        {store.recovered.toLocaleString("sv-se")} <small>{relativeToPercentage(recoveryRate)}</small>
                     </dd>
                     <dt>Active</dt>
                     <dd>
@@ -102,20 +99,20 @@ export const LocationList = (props: LocationListProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.locations.map((item: GeoLocation) => (
-                            <LocationListItem item={item} />
+                        {store.locations.map((item: GeoLocation) => (
+                            <LocationListItem key={item.id} item={item} />
                         ))}
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Total</th>
-                            <td>{props.confirmed}</td>
-                            <td>{props.deaths}</td>
-                            <td>{props.recovered}</td>
+                            <td>{store.confirmed}</td>
+                            <td>{store.deaths}</td>
+                            <td>{store.recovered}</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
     );
-};
+});

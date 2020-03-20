@@ -20,14 +20,7 @@ export const Government = observer(() => {
 
     return (
         <>
-            <LocationList
-                confirmed={governmentStore.confirmed}
-                deaths={governmentStore.deaths}
-                recovered={governmentStore.recovered}
-                locations={governmentStore.locations}
-                title={"Government / " + government}
-                loading={governmentStore.loading}
-            />
+            <LocationList store={governmentStore} title={"Government / " + government} />
         </>
     );
 });
