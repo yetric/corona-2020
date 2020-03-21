@@ -268,7 +268,7 @@ dl {
 
 dt {
     flex-basis: 35%;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 48px;
     padding: 0 20px 0 0;
     text-align: right;
@@ -279,8 +279,8 @@ dd {
     flex-basis: 65%;
     margin: 0;
     padding: 0;
-    font-size: 28px;
-    line-height: 48px;
+    font-size: 21px;
+    line-height: 30px;
     color: var(--nord6);
 }
 
@@ -491,6 +491,10 @@ ol li:before {
 }
 .recovered {
     color: var(--nord14);
+}
+
+.active {
+    color: var(--purple);
 }
 
 #toaster-wrapper {

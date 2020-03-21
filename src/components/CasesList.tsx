@@ -1,6 +1,7 @@
 import React from "react";
 import { Placeholder } from "./Placeholder";
 import { relativeToPercentage } from "../core/functions";
+import "./CasesList.css";
 import CountUp from "react-countup";
 
 interface CasesListProps {
@@ -13,6 +14,11 @@ interface CasesListProps {
     deathRate?: number | null;
     recoveryRate?: number | null;
     activityRate?: number | null;
+
+    confirmedCompare?: number | null;
+    deathsCompare?: number | null;
+    recoveredCompare?: number | null;
+    activeCompare?: number | null;
 }
 
 const getRandomFloat = (min: number, max: number) => {
@@ -24,12 +30,14 @@ const rndCount = () => getRandomFloat(1.5, 3);
 export const CasesList = (props: CasesListProps) => (
     <dl>
         <dt>Confirmed</dt>
-        <dd>
+        <dd className={"confirmed"}>
             {(props.confirmed && <CountUp separator={" "} end={props.confirmed} />) || <Placeholder />}{" "}
             <small>{props.updated || <Placeholder />}</small>
+            <span className={"compare"}>{props.confirmedCompare && relativeToPercentage(props.confirmedCompare)}</span>
         </dd>
+
         <dt>Deaths</dt>
-        <dd>
+        <dd className={"deaths"}>
             {(props.deaths && <CountUp end={props.deaths} duration={rndCount()} separator={" "} />) || <Placeholder />}{" "}
             <small>
                 {(props.deathRate && (
@@ -41,9 +49,10 @@ export const CasesList = (props: CasesListProps) => (
                     />
                 )) || <Placeholder />}
             </small>
+            <span className={"compare"}>{props.deathsCompare && relativeToPercentage(props.deathsCompare)}</span>
         </dd>
         <dt>Recovered</dt>
-        <dd>
+        <dd className={"recovered"}>
             {(props.recovered && <CountUp end={props.recovered} duration={rndCount()} separator={" "} />) || (
                 <Placeholder />
             )}{" "}
@@ -57,9 +66,10 @@ export const CasesList = (props: CasesListProps) => (
                     />
                 )) || <Placeholder />}
             </small>
+            <span className={"compare"}>{props.recoveredCompare && relativeToPercentage(props.recoveredCompare)}</span>
         </dd>
         <dt>Active</dt>
-        <dd>
+        <dd className={"active"}>
             {(props.active && <CountUp duration={rndCount()} end={props.active} separator={" "} />) || <Placeholder />}{" "}
             <small>
                 {(props.activityRate && (
@@ -71,6 +81,7 @@ export const CasesList = (props: CasesListProps) => (
                     />
                 )) || <Placeholder />}
             </small>
+            <span className={"compare"}>{props.activeCompare && relativeToPercentage(props.activeCompare)}</span>
         </dd>
     </dl>
 );

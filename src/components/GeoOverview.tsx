@@ -8,9 +8,8 @@ import { WorldStore } from "../stores/WorldStore";
 const dataStore = new DataStore();
 dataStore.loadCountry(18);
 const worldStore = new WorldStore();
+const europeStore = new ContinentStore("Europe");
 export const GeoOverview = observer(() => {
-    const europeStore = new ContinentStore("Europe");
-
     return (
         <div className={"cards"}>
             <div className="card">
@@ -18,9 +17,13 @@ export const GeoOverview = observer(() => {
                 <div className="card-body">
                     <CasesList
                         confirmed={worldStore.confirmed}
+                        confirmedCompare={worldStore.confirmedCompare}
                         deaths={worldStore.deaths}
+                        deathsCompare={worldStore.deathsCompared}
                         recovered={worldStore.recovered}
+                        recoveredCompare={worldStore.recoveredCompared}
                         active={worldStore.active}
+                        activeCompare={worldStore.activeCompared}
                         activityRate={worldStore.activityRate}
                         deathRate={worldStore.deathRate}
                         recoveryRate={worldStore.recoveryRate}

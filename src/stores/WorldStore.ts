@@ -11,6 +11,10 @@ export class WorldStore {
     @observable activityRate: number = 0;
     @observable date: string = "";
     private client: DataClient;
+    @observable confirmedCompare: any = null;
+    @observable deathsCompared: any = null;
+    @observable recoveredCompared: any = null;
+    @observable activeCompared: any = null;
 
     constructor() {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
@@ -25,6 +29,10 @@ export class WorldStore {
         this.recovered = response.recovered;
         this.active = response.active;
         this.date = response.updated;
+        this.confirmedCompare = (response.confirmed - response.confirmed_compare) / response.confirmed_compare;
+        this.deathsCompared = (response.deaths - response.deaths_compare) / response.deaths_compare;
+        this.recoveredCompared = (response.recovered - response.recovered_compare) / response.recovered_compare;
+        this.activeCompared = (response.active - response.active_compare) / response.active_compare;
 
         this.deathRate = response.deaths / response.confirmed;
         this.recoveryRate = response.recovered / response.confirmed;
