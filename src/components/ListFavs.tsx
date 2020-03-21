@@ -21,23 +21,24 @@ export const ListFavs = observer(() => {
                     <Edit size={16} />
                 </span>
             </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Place</th>
-                        <th>Confirmed</th>
-                        <th>Deaths</th>
-                        <th>Recovered</th>
-                        <th>Active</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {favStore.favorites.map((item: Fav) => (
-                        <FavItem key={item.id} edit={edit} item={item} store={new CountryStore(item.id)} />
-                    ))}
-                </tbody>
-            </table>
+            <div className="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Place</th>
+                            <th>Confirmed</th>
+                            <th>Deaths</th>
+                            <th>Recovered</th>
+                            <th>Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {favStore.favorites.map((item: Fav) => (
+                            <FavItem key={item.id} edit={edit} item={item} store={new CountryStore(item.id)} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             {favStore.favorites.length === 0 && (
                 <div className={"card-body muted"}>Saved places will automagically appear here</div>
             )}
