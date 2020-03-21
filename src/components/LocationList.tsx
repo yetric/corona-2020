@@ -59,25 +59,31 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
             <LoadOverlay loading={store.loading} text={"Loading Location Data ..."} />
             <div className="card-header">{title}</div>
             <div className="card-body">
-                <dl>
-                    <dt>Confirmed</dt>
-                    <dd>{store.confirmed.toLocaleString("sv-se")}</dd>
+                <div className="row">
+                    <div className="col">[GRAPH COMING - WiP]</div>
+                    <div className="col">
+                        <dl>
+                            <dt>Confirmed</dt>
+                            <dd className={"confirmed"}>{store.confirmed.toLocaleString("sv-se")}</dd>
 
-                    <dt>Deaths</dt>
-                    <dd>
-                        {store.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
-                    </dd>
+                            <dt>Deaths</dt>
+                            <dd className={"deaths"}>
+                                {store.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
+                            </dd>
 
-                    <dt>Recovered</dt>
-                    <dd>
-                        {store.recovered.toLocaleString("sv-se")} <small>{relativeToPercentage(recoveryRate)}</small>
-                    </dd>
-                    <dt>Active</dt>
-                    <dd>
-                        {active && active.toLocaleString("sv-se")}{" "}
-                        <small>{relativeToPercentage(activePercentage)}</small>
-                    </dd>
-                </dl>
+                            <dt>Recovered</dt>
+                            <dd className={"recovered"}>
+                                {store.recovered.toLocaleString("sv-se")}{" "}
+                                <small>{relativeToPercentage(recoveryRate)}</small>
+                            </dd>
+                            <dt>Active</dt>
+                            <dd className={"active"}>
+                                {active && active.toLocaleString("sv-se")}{" "}
+                                <small>{relativeToPercentage(activePercentage)}</small>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
             </div>
             <div className="card-footer">
                 <Share />
