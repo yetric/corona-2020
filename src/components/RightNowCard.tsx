@@ -12,27 +12,27 @@ export const RightNowCard = ({ dataStore, casesPerHundraK }: RightNowCardProps) 
         <div className="card-body">
             <dl>
                 <dt>Confirmed</dt>
-                <dd>
+                <dd className={"confirmed"}>
                     {dataStore.data?.confirmed.count} <small>{dataStore.data?.confirmed.date}</small>
                 </dd>
 
                 <dt>Deaths</dt>
-                <dd>
+                <dd className={"deaths"}>
                     {dataStore.data?.deaths.count} <small>{dataStore.data?.active.deathRate}%</small>
                 </dd>
 
                 <dt>Recovered</dt>
-                <dd>
+                <dd className={"recovered"}>
                     {dataStore.data?.recovered.count} <small>{dataStore.data?.active.recoveryRate}%</small>
                 </dd>
 
                 <dt>Active</dt>
-                <dd>
+                <dd className={"active"}>
                     {dataStore.data?.active.count} <small>{dataStore.data?.active.percentage}%</small>
                 </dd>
 
                 <dt>Cases/100K</dt>
-                <dd>{casesPerHundraK}</dd>
+                <dd className={"muted"}>{casesPerHundraK}</dd>
             </dl>
         </div>
     </div>
