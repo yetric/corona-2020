@@ -504,6 +504,10 @@ ol li:before {
     color: var(--purple);
 }
 
+.muted {
+    color: var(--meta-light);
+}
+
 #toaster-wrapper {
     position: fixed;
     top: 0;

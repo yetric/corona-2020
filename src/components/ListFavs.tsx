@@ -38,7 +38,9 @@ export const ListFavs = observer(() => {
                     ))}
                 </tbody>
             </table>
-            {favStore.favorites.length === 0 && <li className={"item-text"}>Saved items will appear here</li>}
+            {favStore.favorites.length === 0 && (
+                <div className={"card-body muted"}>Saved places will automagically appear here</div>
+            )}
         </div>
     );
 });
