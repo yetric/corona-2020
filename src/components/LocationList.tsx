@@ -30,14 +30,14 @@ export const LocationListItem = ({ item }: LocationListItemProps) => {
     let recoveryRate = recovered > 0 ? recovered / confirmed : 0;
 
     return (
-        <tr className={"location-list-item"} key={item.id}>
+        <tr className={"location-list-item important-column"} key={item.id}>
             <th>
                 <Link to={"/" + item.id}>{item.country}</Link>
             </th>
             <td className={"confirmed text-right"}>{confirmed.toLocaleString("sv-se")}</td>
             <td className={"deaths text-right"}>{deaths.toLocaleString("sv-se")}</td>
             <td className={"recovered text-right"}>{recovered.toLocaleString()}</td>
-            <td className={"text-right"}>{active.toLocaleString("sv-se")}</td>
+            <td className={"active text-right"}>{active.toLocaleString("sv-se")}</td>
             <td className={"text-right"}>{relativeToPercentage(deathRate)}</td>
             <td className={"text-right"}>{relativeToPercentage(activityRate)}</td>
             <td className={"text-right"}>{relativeToPercentage(recoveryRate)}</td>
@@ -116,7 +116,9 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
                                 }}>
                                 Active
                             </th>
-                            <th colSpan={3}>Death / Activity / Recovery</th>
+                            <th className={"text-center"} colSpan={3}>
+                                Rates - Death / Activity / Recovery
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

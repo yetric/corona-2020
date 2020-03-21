@@ -59,6 +59,8 @@ interface CountryMetadata {
     average_temp?: string;
 }
 
+const countryCache: any = {};
+
 export class DataStore {
     @observable loading = false;
     @observable labels = [];

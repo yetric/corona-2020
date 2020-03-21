@@ -4,6 +4,7 @@ import { MinusSquare } from "react-feather";
 import React from "react";
 import { observer } from "mobx-react";
 import { CountryStore } from "../stores/CountryStore";
+import { toast } from "../core/toaster";
 
 interface FavItemProp {
     edit: any;
@@ -13,31 +14,31 @@ interface FavItemProp {
 
 export const FavItem = observer(({ edit, item, store }: FavItemProp) => {
     return (
-        <li key={item.id}>
-            <Link to={`/${item.id}`}>
-                {item.name} {item.province && <small>({item.province})</small>}
-            </Link>
-            <ul>
-                <li>
-                    Confirmed: <span className={"confirmed"}>{store.confirmed}</span>
-                </li>
-                <li className={"text-center"}>
-                    Deaths: <span className={"deaths"}>{store.deaths}</span>
-                </li>
-                <li className={"text-right"}>
-                    Recovered: <span className={"recovered"}>{store.recovered}</span>
-                </li>
-            </ul>
+        <tr key={item.id}>
+            <td className={"important-column"}>
+                <Link to={`/${item.id}`}>
+                    {item.name} {item.province && <>({item.province})</>}
+                </Link>
+            </td>
+            <td className={"text-right confirmed"}>{store.confirmed}</td>
+            <td className={"text-right deaths"}>{store.deaths}</td>
+            <td className={"text-right recovered"}>{store.recovered}</td>
+            <td className={"text-right active"}>
+                {parseInt(store.confirmed) - (parseInt(store.recovered) + parseInt(store.deaths))}
+            </td>
             {edit && (
-                <span
+                <td
                     onClick={(event) => {
                         event.preventDefault();
                         favStore.remove(item.id);
-                    }}
-                    className={"action"}>
+                        toast({
+                            text: "Saved place removed from list",
+                            duration: 1500
+                        });
+                    }}>
                     <MinusSquare size={16} />
-                </span>
+                </td>
             )}
-        </li>
+        </tr>
     );
 });

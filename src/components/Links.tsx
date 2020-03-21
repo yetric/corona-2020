@@ -1,14 +1,26 @@
 import React from "react";
 
 export const Links = () => (
-    <ul className={"list-group"}>
+    <ul className={"list-group compact"}>
+        <li className={"list-header"}>Links</li>
+        <li>
+            <a
+                href={
+                    "https://docs.google.com/forms/d/e/1FAIpQLSfluefXvUfS336A-0-vWNB_zFNNyR_bLuwQhcWty4Z8f52KTQ/viewform?usp=sf_link"
+                }
+                target={"_blank"}
+                rel="noopener noreferrer">
+                Give us feeback and send us ideas/bug-reports <span className={"label"}>New</span>
+            </a>
+        </li>
         <li className={"list-header"}>Swedish links</li>
         <li>
             <a target={"_blank"} rel="noopener noreferrer" href={"https://corona.sll.se/"}>
-                Behöver jag ringa vården?
-                <br />
-                Självskattning (Region Stockholm) <span className={"label"}>New</span>
+                Behöver jag ringa vården? Självskattning (Region Stockholm)
             </a>
+        </li>
+        <li>
+            <a href={"https://www.krisinformation.se/"}>Krisinformation.se</a>
         </li>
         <li>
             <a

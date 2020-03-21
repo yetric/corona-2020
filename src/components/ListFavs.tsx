@@ -9,8 +9,8 @@ import { CountryStore } from "../stores/CountryStore";
 export const ListFavs = observer(() => {
     const [edit, canEdit] = useState(false);
     return (
-        <ul className={"favs"}>
-            <li className={"list-header"}>
+        <div className={"card"}>
+            <div className="card-header">
                 Saved places
                 <span
                     className={"action"}
@@ -20,11 +20,25 @@ export const ListFavs = observer(() => {
                     }}>
                     <Edit size={16} />
                 </span>
-            </li>
-            {favStore.favorites.map((item: Fav) => (
-                <FavItem key={item.id} edit={edit} item={item} store={new CountryStore(item.id)} />
-            ))}
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Place</th>
+                        <th>Confirmed</th>
+                        <th>Deaths</th>
+                        <th>Recovered</th>
+                        <th>Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {favStore.favorites.map((item: Fav) => (
+                        <FavItem key={item.id} edit={edit} item={item} store={new CountryStore(item.id)} />
+                    ))}
+                </tbody>
+            </table>
             {favStore.favorites.length === 0 && <li className={"item-text"}>Saved items will appear here</li>}
-        </ul>
+        </div>
     );
 });

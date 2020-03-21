@@ -3,7 +3,7 @@ table.location-list th {
     white-space: normal;
 }
 
-table.location-list td:not(.recovered):not(.deaths):not(.confirmed) {
+table.location-list td:not(.recovered):not(.deaths):not(.confirmed):not(.active) {
     color: var(--meta-light);
 }
 
@@ -21,4 +21,8 @@ table.location-list thead th {
 
 table.location-list thead tr th:first-child {
     text-align: left;
+}
+
+th.text-center {
+    text-align: center !important;
 }

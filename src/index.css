@@ -222,6 +222,7 @@ select {
 }
 
 .card-header {
+    position: relative;
     background-color: var(--nord1);
     border-bottom: 1px solid var(--nord2);
     line-height: 48px;
@@ -332,6 +333,12 @@ input[type="text"] {
     padding: 12px;
     color: var(--nord3);
 }
+.list-group.compact li.list-header,
+.list-group.compact li a {
+    font-size: 13px;
+    line-height: 14px;
+    padding: 6px 12px;
+}
 
 .list-group li.list-header {
     line-height: 18px;
@@ -340,7 +347,7 @@ input[type="text"] {
     color: var(--nord4);
 }
 
-.list-header .action {
+.card-header .action {
     float: right;
     color: #50a8e2;
 }
@@ -543,4 +550,8 @@ ol li:before {
 
 .announce a {
     color: var(--accent);
+}
+
+td.important-column {
+    width: 100%;
 }
