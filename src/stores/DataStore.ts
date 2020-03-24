@@ -249,7 +249,7 @@ export class DataStore {
         };
     }
 
-    @computed get growthRate(): TypeCollection {
+    getGrowthRate(name: string, expAvg: boolean = true): TypeCollection {
         const growthRate: number[] = [];
         let last = 0;
         this.confirmed.data.forEach((item, index) => {
@@ -260,10 +260,18 @@ export class DataStore {
         });
 
         return {
-            data: ma(growthRate, 10),
+            data: expAvg ? ma(growthRate, 10) : growthRate,
             labels: this.labels,
-            name: "Growth Rate (running avg - 10 days)"
+            name
         };
+    }
+
+    @computed get growthRate(): TypeCollection {
+        return this.getGrowthRate("Growth Rate (running avg - 10 days)");
+    }
+
+    @computed get growthRatePlain(): TypeCollection {
+        return this.getGrowthRate("Growth Rate", false);
     }
 
     @computed get activeTotal() {

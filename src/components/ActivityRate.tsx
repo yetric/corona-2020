@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { Chart } from "./Chart";
 import { Toggle } from "./Toggle";
+import { gray, green, orange, red, yellow } from "../core/colors";
 
 interface ActivityRateProps {
     dataStore: DataStore;
@@ -15,7 +16,8 @@ export const ActivityRate = ({ dataStore }: ActivityRateProps) => {
             <Chart
                 type={type}
                 labels={dataStore.labels}
-                data={[dataStore.activityRate, dataStore.growthRate]}
+                data={[dataStore.activityRate, dataStore.growthRate, dataStore.growthRatePlain]}
+                colors={[yellow, red, "#404040"]}
                 name={"Activity Rate"}
             />
             <Toggle

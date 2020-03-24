@@ -10,6 +10,7 @@ interface ChartProps {
     data: TypeCollection[];
     name: string;
     type: string;
+    colors?: string[];
 }
 
 export const Chart = memo((props: ChartProps) => {
@@ -27,17 +28,17 @@ export const Chart = memo((props: ChartProps) => {
             lineTension: 0,
             label: collection.name,
             data: rows,
-            backgroundColor: colors[index],
-            borderColor: colors[index],
+            backgroundColor: (props.colors && props.colors[index]) || colors[index],
+            borderColor: (props.colors && props.colors[index]) || colors[index],
             borderCapStyle: "butt",
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: "miter",
-            pointBorderColor: colors[index],
-            pointBackgroundColor: colors[index],
+            pointBorderColor: (props.colors && props.colors[index]) || colors[index],
+            pointBackgroundColor: (props.colors && props.colors[index]) || colors[index],
             pointBorderWidth: 1,
             pointHoverRadius: 10,
-            pointHoverBackgroundColor: colors[index],
+            pointHoverBackgroundColor: (props.colors && props.colors[index]) || colors[index],
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 1,
             pointRadius: 0,
