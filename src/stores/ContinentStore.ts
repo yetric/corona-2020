@@ -42,7 +42,8 @@ export class ContinentStore {
         let recovered = 0;
 
         this.locations.forEach((value: GeoLocation) => {
-            recovered += parseInt(value.recovered.count);
+            let rec = (value.recovered && value.recovered.count && parseInt(value.recovered.count)) || 0;
+            recovered += rec;
             deaths += parseInt(value.deaths.count);
             confirmed += parseInt(value.confirmed.count);
         });
@@ -79,7 +80,8 @@ export class ContinentStore {
     @computed get recoveredTotal() {
         let total = 0;
         this.locations.forEach((a: GeoLocation) => {
-            total += parseInt(a.recovered.count);
+            let count = (a.recovered && a.recovered.count && parseInt(a.recovered.count)) || 0;
+            total += count;
         });
 
         return total;

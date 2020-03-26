@@ -47,8 +47,7 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                 <td>{label}</td>
                 <td className={"text-right dimmed"}>
                     <span className={"confirmed"}>{totalConfirmed}</span> /{" "}
-                    <span className={"deaths"}>{totalDeaths}</span> /{" "}
-                    <span className={"recovered"}>{totalRecovered}</span>
+                    <span className={"deaths"}>{totalDeaths}</span>
                 </td>
                 <td className={"text-right confirmed"}>
                     {changeConfirmed}{" "}
@@ -64,14 +63,6 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                             Math.round(changeRelativeDeath * 100) + "%"}
                     </small>
                 </td>
-                <td className={"text-right recovered"}>
-                    {changeRecovered}{" "}
-                    <small>
-                        {changeRelativeRecovered > 0 &&
-                            isFinite(changeRelativeRecovered) &&
-                            Math.round(changeRelativeRecovered * 100) + "%"}
-                    </small>
-                </td>
             </tr>
         );
     });
@@ -84,7 +75,7 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                     <tr>
                         <th>Date</th>
                         <th className={"text-right"}>Total</th>
-                        <th className={"text-center"} colSpan={3}>
+                        <th className={"text-center"} colSpan={2}>
                             Daily
                         </th>
                     </tr>
@@ -93,7 +84,6 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                 <caption>
                     <span className={"confirmed"}>Confirmed</span>
                     <span className={"deaths"}>Deaths</span>
-                    <span className={"recovered"}>Recovered</span>
                 </caption>
             </table>
         </div>

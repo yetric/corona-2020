@@ -12,12 +12,7 @@ export const Growth = ({ dataStore }: GrowthProps) => {
     return (
         <div>
             <h4>Rates</h4>
-            <Chart
-                type={type}
-                labels={dataStore.labels}
-                data={[dataStore.recoveryRate, dataStore.deathRate]}
-                name={"Death Rate"}
-            />
+            <Chart type={type} labels={dataStore.labels} data={[dataStore.deathRate]} name={"Death Rate"} />
             <Toggle
                 items={[
                     {

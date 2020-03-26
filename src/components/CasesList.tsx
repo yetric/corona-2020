@@ -51,37 +51,5 @@ export const CasesList = (props: CasesListProps) => (
             </small>
             <span className={"compare"}>{props.deathsCompare && relativeToPercentage(props.deathsCompare)}</span>
         </dd>
-        <dt>Recovered</dt>
-        <dd className={"recovered"}>
-            {(props.recovered && <CountUp end={props.recovered} duration={rndCount()} separator={" "} />) || (
-                <Placeholder />
-            )}{" "}
-            <small>
-                {(props.recoveryRate && (
-                    <CountUp
-                        duration={rndCount()}
-                        end={relativeToPercentage(props.recoveryRate, false)}
-                        decimals={2}
-                        suffix={"%"}
-                    />
-                )) || <Placeholder />}
-            </small>
-            <span className={"compare"}>{props.recoveredCompare && relativeToPercentage(props.recoveredCompare)}</span>
-        </dd>
-        <dt>Active</dt>
-        <dd className={"active"}>
-            {(props.active && <CountUp duration={rndCount()} end={props.active} separator={" "} />) || <Placeholder />}{" "}
-            <small>
-                {(props.activityRate && (
-                    <CountUp
-                        duration={rndCount()}
-                        end={relativeToPercentage(props.activityRate, false)}
-                        decimals={2}
-                        suffix={"%"}
-                    />
-                )) || <Placeholder />}
-            </small>
-            <span className={"compare"}>{props.activeCompare && relativeToPercentage(props.activeCompare)}</span>
-        </dd>
     </dl>
 );

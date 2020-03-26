@@ -10,11 +10,7 @@ interface DailyBarsProps {
 export const DailyBars = observer(({ dataStore }: DailyBarsProps) => (
     <>
         <h4>Daily</h4>
-        <Bars
-            type={dataStore.barType}
-            data={[dataStore.confirmed, dataStore.deaths, dataStore.recovered]}
-            labels={dataStore.labels}
-        />
+        <Bars type={dataStore.barType} data={[dataStore.confirmed, dataStore.deaths]} labels={dataStore.labels} />
         <ul className={"toggle"}>
             <li className={dataStore.barType === "stacked" ? "active" : ""}>
                 <a
