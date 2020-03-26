@@ -17,7 +17,7 @@ export const ActivityRate = ({ dataStore }: ActivityRateProps) => {
                 type={type}
                 labels={dataStore.labels}
                 data={[dataStore.growthRate, dataStore.growthRatePlain]}
-                colors={[yellow, "#555555"]}
+                colors={[orange, "#555555"]}
                 name={"Activity Rate"}
             />
             <Toggle

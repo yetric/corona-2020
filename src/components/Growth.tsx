@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { Chart } from "./Chart";
 import { Toggle } from "./Toggle";
+import { red, yellow } from "../core/colors";
 
 interface GrowthProps {
     dataStore: DataStore;
@@ -12,7 +13,13 @@ export const Growth = ({ dataStore }: GrowthProps) => {
     return (
         <div>
             <h4>Rates</h4>
-            <Chart type={type} labels={dataStore.labels} data={[dataStore.deathRate]} name={"Death Rate"} />
+            <Chart
+                type={type}
+                labels={dataStore.labels}
+                data={[dataStore.deathRate]}
+                colors={[red, "#555555"]}
+                name={"Death Rate"}
+            />
             <Toggle
                 items={[
                     {
