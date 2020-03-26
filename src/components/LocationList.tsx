@@ -23,7 +23,7 @@ interface LocationListItemProps {
 export const LocationListItem = ({ item }: LocationListItemProps) => {
     let confirmed = parseInt(item.confirmed.count);
     let deaths = parseInt(item.deaths.count);
-    let recovered = parseInt(item.recovered.count);
+    let recovered = (item.recovered && item.recovered.count && parseInt(item.recovered.count)) || 0;
     let active = confirmed - (recovered + deaths);
     let deathRate = deaths > 0 ? deaths / confirmed : 0;
     let activityRate = active > 0 ? active / confirmed : 0;
@@ -36,11 +36,7 @@ export const LocationListItem = ({ item }: LocationListItemProps) => {
             </th>
             <td className={"confirmed text-right"}>{confirmed.toLocaleString("sv-se")}</td>
             <td className={"deaths text-right"}>{deaths.toLocaleString("sv-se")}</td>
-            <td className={"recovered text-right"}>{recovered.toLocaleString()}</td>
-            <td className={"active text-right"}>{active.toLocaleString("sv-se")}</td>
             <td className={"text-right"}>{relativeToPercentage(deathRate)}</td>
-            <td className={"text-right"}>{relativeToPercentage(activityRate)}</td>
-            <td className={"text-right"}>{relativeToPercentage(recoveryRate)}</td>
         </tr>
     );
 };
@@ -69,17 +65,6 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
                             <dt>Deaths</dt>
                             <dd className={"deaths"}>
                                 {store.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
-                            </dd>
-
-                            <dt>Recovered</dt>
-                            <dd className={"recovered"}>
-                                {store.recovered.toLocaleString("sv-se")}{" "}
-                                <small>{relativeToPercentage(recoveryRate)}</small>
-                            </dd>
-                            <dt>Active</dt>
-                            <dd className={"active"}>
-                                {active && active.toLocaleString("sv-se")}{" "}
-                                <small>{relativeToPercentage(activePercentage)}</small>
                             </dd>
                         </dl>
                     </div>
@@ -110,20 +95,8 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
                                 }}>
                                 Deaths
                             </th>
-                            <th
-                                onClick={() => {
-                                    sort("recovered");
-                                }}>
-                                Recovered
-                            </th>
-                            <th
-                                onClick={() => {
-                                    sort("active");
-                                }}>
-                                Active
-                            </th>
                             <th className={"text-center"} colSpan={3}>
-                                Rates - Death / Activity / Recovery
+                                Rates - Death
                             </th>
                         </tr>
                     </thead>
@@ -137,11 +110,7 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
                             <th>Total</th>
                             <td>{store.confirmed.toLocaleString("sv-se")}</td>
                             <td>{store.deaths.toLocaleString("sv-se")}</td>
-                            <td>{store.recovered.toLocaleString("sv-se")}</td>
-                            <td>{(store.confirmed - (store.deaths + store.recovered)).toLocaleString("sv-se")}</td>
                             <td>{relativeToPercentage(store.deaths / store.confirmed)}</td>
-                            <td>{active && relativeToPercentage(active / store.confirmed)}</td>
-                            <td>{relativeToPercentage(store.recovered / store.confirmed)}</td>
                         </tr>
                     </tfoot>
                 </table>
