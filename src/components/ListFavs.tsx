@@ -28,6 +28,8 @@ export const ListFavs = observer(() => {
                             <th>Place</th>
                             <th>Confirmed</th>
                             <th>Deaths</th>
+                            <th>Recovered</th>
+                            <th>Active</th>
                         </tr>
                     </thead>
                     <tbody>

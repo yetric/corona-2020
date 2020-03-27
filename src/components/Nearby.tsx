@@ -28,7 +28,9 @@ const NearbyObserver = observer(({ id, history }: any) => {
             <option value={-1}>Nearby Countries</option>
             {geoStore.nearby.map((near: any) => {
                 const province =
-                    near.province.length > 0 && near.province !== near.country ? near.province + ", " : null;
+                    near.province && near.province.length > 0 && near.province !== near.country
+                        ? near.province + ", "
+                        : null;
                 return (
                     <option value={near.id} key={"nearby-" + near.id}>
                         {province}

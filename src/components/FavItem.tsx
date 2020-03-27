@@ -22,6 +22,10 @@ export const FavItem = observer(({ edit, item, store }: FavItemProp) => {
             </td>
             <td className={"text-right confirmed"}>{store.confirmed}</td>
             <td className={"text-right deaths"}>{store.deaths}</td>
+            <td className={"text-right recovered"}>{store.recovered}</td>
+            <td className={"text-right active"}>
+                {parseInt(store.confirmed) - (parseInt(store.recovered) + parseInt(store.deaths))}
+            </td>
             {edit && (
                 <td
                     onClick={(event) => {

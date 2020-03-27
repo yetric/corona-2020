@@ -1,5 +1,4 @@
 import React from "react";
-import "./Table.css";
 import { TypeCollection } from "../stores/DataStore";
 
 interface DataProp {
@@ -48,6 +47,7 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                 <td className={"text-right dimmed"}>
                     <span className={"confirmed"}>{totalConfirmed}</span> /{" "}
                     <span className={"deaths"}>{totalDeaths}</span>
+                    <span className={"recovered"}>{totalRecovered}</span>
                 </td>
                 <td className={"text-right confirmed"}>
                     {changeConfirmed}{" "}
@@ -63,6 +63,14 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                             Math.round(changeRelativeDeath * 100) + "%"}
                     </small>
                 </td>
+                <td className={"text-right recovered"}>
+                    {changeRecovered}{" "}
+                    <small>
+                        {changeRelativeRecovered > 0 &&
+                            isFinite(changeRelativeRecovered) &&
+                            Math.round(changeRelativeRecovered * 100) + "%"}
+                    </small>
+                </td>
             </tr>
         );
     });
@@ -75,7 +83,7 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                     <tr>
                         <th>Date</th>
                         <th className={"text-right"}>Total</th>
-                        <th className={"text-center"} colSpan={2}>
+                        <th className={"text-center"} colSpan={3}>
                             Daily
                         </th>
                     </tr>
