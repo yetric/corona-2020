@@ -13,7 +13,7 @@ export const AccumulatedGraph = observer(({ dataStore }: AccumulatedGraphProps) 
             <Chart
                 type={dataStore.renderType}
                 labels={dataStore.labels}
-                data={[dataStore.confirmed, dataStore.deaths]}
+                data={[dataStore.confirmed, dataStore.deaths, dataStore.recovered, dataStore.active]}
                 name={dataStore.renderType}
             />
         ) : null;

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { ExpectancyStore } from "../stores/ExpectancyStore";
 import { LocationList } from "../components/LocationList";
 
-export const Expectancy = observer(() => {
+const Expectancy = observer(() => {
     let { expectancy } = useParams();
     let expectancyStore: ExpectancyStore;
 
@@ -24,3 +24,5 @@ export const Expectancy = observer(() => {
         </>
     );
 });
+
+export default Expectancy;

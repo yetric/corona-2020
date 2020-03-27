@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { GovernmentStore } from "../stores/GovernmentStore";
 import { LocationList } from "../components/LocationList";
 
-export const Government = observer(() => {
+const Government = observer(() => {
     let { government } = useParams();
     let governmentStore: GovernmentStore;
 
@@ -24,3 +24,5 @@ export const Government = observer(() => {
         </>
     );
 });
+
+export default Government;

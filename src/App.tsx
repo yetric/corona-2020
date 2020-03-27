@@ -1,17 +1,27 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Geo } from "./views/Geo";
 import { Search } from "./components/Search";
 import Analytics from "react-router-ga";
 
 import "./core/toaster";
 import { Home } from "./views/Home";
-import { Continent } from "./views/Continent";
-import { Region } from "./views/Region";
-import { Government } from "./views/Government";
-import { Expectancy } from "./views/Expectancy";
+
+const Geo = lazy(() => import("./views/Geo"));
+const Continent = lazy(() => import("./views/Continent"));
+const Region = lazy(() => import("./views/Region"));
+const Government = lazy(() => import("./views/Government"));
+const Expectancy = lazy(() => import("./views/Expectancy"));
+const Country = lazy(() => import("./views/Country"));
 
 const NoMatchPage = () => <div>File not found</div>;
+
+const WaitingComponent = (Component: any) => {
+    return (props: any) => (
+        <Suspense fallback={<div>Loading...</div>}>
+            <Component {...props} />
+        </Suspense>
+    );
+};
 
 const App = () => {
     return (
@@ -28,11 +38,12 @@ const App = () => {
                     <Search />
 
                     <Switch>
-                        <Route exact path={"/continent/:continent"} component={Continent} />
-                        <Route exact path={"/region/:region"} component={Region} />
-                        <Route exact path={"/government/:government"} component={Government} />
-                        <Route exact path={"/expectancy/:expectancy"} component={Expectancy} />
-                        <Route exact path={"/:country"} component={Geo} />
+                        <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
+                        <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
+                        <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
+                        <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
+                        <Route exact path={"/c/:country"} component={WaitingComponent(Country)} />
+                        <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
                         <Route exact path={"/"} component={Home} />
                         <Route component={NoMatchPage} />
                     </Switch>

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { ContinentStore } from "../stores/ContinentStore";
 import { LocationList } from "../components/LocationList";
 
-export const Continent = observer(() => {
+const Continent = observer(() => {
     let { continent } = useParams();
     if (!continent) return null;
     let continentStore = new ContinentStore(continent);
@@ -19,3 +19,5 @@ export const Continent = observer(() => {
         </>
     );
 });
+
+export default Continent;

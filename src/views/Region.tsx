@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { RegionStore } from "../stores/RegionStore";
 import { LocationList } from "../components/LocationList";
 
-export const Region = observer(() => {
+const Region = observer(() => {
     let { region } = useParams();
     let regionStore: RegionStore;
 
@@ -24,3 +24,5 @@ export const Region = observer(() => {
         </>
     );
 });
+
+export default Region;

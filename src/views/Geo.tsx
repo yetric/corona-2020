@@ -24,7 +24,7 @@ interface GeoProps {
 
 const dataStore = new DataStore();
 
-export const Geo = withRouter(
+const Geo = withRouter(
     observer(({ history }: GeoProps) => {
         let { country } = useParams();
         useEffect(() => {
@@ -140,3 +140,5 @@ export const Geo = withRouter(
         );
     })
 );
+
+export default Geo;
