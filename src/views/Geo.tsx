@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
 import { useParams, withRouter } from "react-router-dom";
@@ -13,6 +13,7 @@ import { CountryCard } from "../components/CountryCard";
 import { TabularData } from "../components/TabularData";
 import { Growth } from "../components/Growth";
 import { ActivityRate } from "../components/ActivityRate";
+import { Modal } from "../components/Modal";
 
 interface ProvinceProps {
     selected?: any;
@@ -27,6 +28,7 @@ const dataStore = new DataStore();
 const Geo = withRouter(
     observer(({ history }: GeoProps) => {
         let { country } = useParams();
+        const [showCompare, setShowCompare] = useState(false);
         useEffect(() => {
             country && dataStore.loadCountry(parseInt(country));
             window.scrollTo(0, 0);
@@ -39,6 +41,11 @@ const Geo = withRouter(
         });
 
         const provinceName = dataStore.provinces.length > 0 ? <small>({dataStore.data?.geo.province})</small> : null;
+
+        const showCompareModal = (event: any) => {
+            event.preventDefault();
+            setShowCompare(!showCompare);
+        };
 
         const getProvinceDropDown = ({ selected }: ProvinceProps) => {
             const options = dataStore.provinces.map((province) => {
@@ -92,6 +99,9 @@ const Geo = withRouter(
                     <LoadOverlay loading={dataStore.loading} text={"Loading graphs"} />
                     <div className="card-header">
                         {dataStore.data?.geo.country} {provinceName} {provinces}
+                        <a href={"#compare"} onClick={showCompareModal} className={"btn"}>
+                            Compare
+                        </a>
                     </div>
                     <div className="card-body">
                         <div className="row">
@@ -136,6 +146,11 @@ const Geo = withRouter(
                         provinceName={dataStore.data?.geo.province}
                     />
                 )}
+
+                <Modal
+                    show={showCompare}
+                    header={"Compare " + dataStore.data?.geo.country + " with another location"}
+                    footer={"Select the location you want to compare with " + dataStore.data?.geo.country}></Modal>
             </div>
         );
     })

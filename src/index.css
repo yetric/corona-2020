@@ -407,6 +407,15 @@ ol li:before {
     padding: 0 18px;
 }
 
+.card-header .btn {
+    line-height: 28px;
+    padding: 0 12px;
+    font-size: 0.75em;
+    border: 1px solid var(--green);
+    color: var(--green);
+    margin-left: 20px;
+}
+
 .btn.btn-block {
     display: block;
     text-align: center;
