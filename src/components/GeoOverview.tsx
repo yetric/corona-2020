@@ -5,6 +5,8 @@ import { observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { DataStore } from "../stores/DataStore";
 import { WorldStore } from "../stores/WorldStore";
+import { Edit } from "react-feather";
+
 const dataStore = new DataStore();
 dataStore.loadCountry(18);
 const worldStore = new WorldStore();
@@ -34,7 +36,12 @@ export const GeoOverview = observer(() => {
             </div>
 
             <div className="card">
-                <div className="card-header">Europe</div>
+                <div className="card-header">
+                    Europe
+                    <span className={"action"}>
+                        <Edit size={16} />
+                    </span>
+                </div>
                 <div className="card-body">
                     <CasesList
                         deaths={europeStore.deathTotal}
@@ -52,7 +59,12 @@ export const GeoOverview = observer(() => {
             </div>
 
             <div className="card">
-                <div className="card-header">Sweden</div>
+                <div className="card-header">
+                    Sweden
+                    <span className={"action"}>
+                        <Edit size={16} />
+                    </span>
+                </div>
                 <div className="card-body">
                     <CasesList
                         confirmed={dataStore.data?.confirmed.count}

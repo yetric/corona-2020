@@ -44,6 +44,7 @@ export const LocationListItem = ({ item }: LocationListItemProps) => {
             </th>
             <td className={"confirmed text-right"}>{confirmed.toLocaleString("sv-se")}</td>
             <td className={"deaths text-right"}>{deaths.toLocaleString("sv-se")}</td>
+            <td className={"recovered text-right"}>{recovered.toLocaleString("sv-se")}</td>
             <td className={"text-right"}>{relativeToPercentage(deathRate)}</td>
         </tr>
     );
@@ -137,6 +138,12 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                                 }}>
                                 Deaths
                             </th>
+                            <th
+                                onClick={() => {
+                                    sort("recovered");
+                                }}>
+                                Recovered
+                            </th>
                             <th className={"text-center"} colSpan={3}>
                                 Rates - Death
                             </th>
@@ -152,6 +159,7 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                             <th>Total</th>
                             <td>{store.confirmed.toLocaleString("sv-se")}</td>
                             <td>{store.deaths.toLocaleString("sv-se")}</td>
+                            <td>{store.recovered.toLocaleString("sv-se")}</td>
                             <td>{relativeToPercentage(store.deaths / store.confirmed)}</td>
                         </tr>
                     </tfoot>

@@ -46,7 +46,7 @@ export const Table = ({ data, truncate = false }: TableProps) => {
                 <td>{label}</td>
                 <td className={"text-right dimmed"}>
                     <span className={"confirmed"}>{totalConfirmed}</span> /{" "}
-                    <span className={"deaths"}>{totalDeaths}</span>
+                    <span className={"deaths"}>{totalDeaths}</span>/{" "}
                     <span className={"recovered"}>{totalRecovered}</span>
                 </td>
                 <td className={"text-right confirmed"}>
