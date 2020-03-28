@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GeoLocation } from "../models/GeoLocation";
 import { Link } from "react-router-dom";
 import "./LocationList.css";
@@ -10,10 +10,14 @@ import { ContinentStore } from "../stores/ContinentStore";
 import { RegionStore } from "../stores/RegionStore";
 import { GovernmentStore } from "../stores/GovernmentStore";
 import { ExpectancyStore } from "../stores/ExpectancyStore";
+import { ReportInterface } from "../stores/ReportStore";
+import { Report } from "./Report";
+import { Toggle } from "./Toggle";
 
 interface LocationListProps {
     store: ContinentStore | RegionStore | GovernmentStore | ExpectancyStore;
     title: string;
+    report?: ReportInterface | null;
 }
 
 interface LocationListItemProps {
@@ -21,6 +25,10 @@ interface LocationListItemProps {
 }
 
 export const LocationListItem = ({ item }: LocationListItemProps) => {
+    if (!item.confirmed) {
+        return null;
+    }
+
     let confirmed = parseInt(item.confirmed.count);
     let deaths = parseInt(item.deaths.count);
     let recovered = (item.recovered && item.recovered.count && parseInt(item.recovered.count)) || 0;
@@ -41,12 +49,14 @@ export const LocationListItem = ({ item }: LocationListItemProps) => {
     );
 };
 
-export const LocationList = observer(({ store, title }: LocationListProps) => {
+export const LocationList = observer(({ store, title, report }: LocationListProps) => {
     let deathRate = store.confirmed > 0 && store.deaths > 0 ? store.deaths / store.confirmed : null;
     let recoveryRate = store.confirmed > 0 && store.recovered > 0 ? store.recovered / store.confirmed : null;
 
     let active = store.confirmed > 0 ? store.confirmed - (store.deaths + store.recovered) : null;
     let activePercentage = active ? active / store.confirmed : null;
+
+    const [listType, setListType] = useState("linear");
     const sort = (sortType: string) => {
         store.sort(sortType);
     };
@@ -56,7 +66,27 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
             <div className="card-header">{title}</div>
             <div className="card-body">
                 <div className="row">
-                    <div className="col">[GRAPH COMING - WiP]</div>
+                    <div className="col">
+                        {report && (
+                            <>
+                                <Report type={listType} report={report} />
+                                <Toggle
+                                    items={[
+                                        {
+                                            key: "linear",
+                                            label: "Linear"
+                                        },
+                                        {
+                                            key: "logarithmic",
+                                            label: "Logarithmic"
+                                        }
+                                    ]}
+                                    selected={listType}
+                                    onSelect={setListType}
+                                />
+                            </>
+                        )}
+                    </div>
                     <div className="col">
                         <dl>
                             <dt>Confirmed</dt>
@@ -65,6 +95,18 @@ export const LocationList = observer(({ store, title }: LocationListProps) => {
                             <dt>Deaths</dt>
                             <dd className={"deaths"}>
                                 {store.deaths.toLocaleString("sv-se")} <small>{relativeToPercentage(deathRate)}</small>
+                            </dd>
+
+                            <dt>Recovered</dt>
+                            <dd className={"recovered"}>
+                                {store.recovered.toLocaleString("sv-se")}{" "}
+                                <small>{relativeToPercentage(recoveryRate)}</small>
+                            </dd>
+
+                            <dt>Active</dt>
+                            <dd className={"active"}>
+                                {active && active.toLocaleString("sv-se")}{" "}
+                                <small>{relativeToPercentage(activePercentage)}</small>
                             </dd>
                         </dl>
                     </div>

@@ -3,6 +3,9 @@ import { observer } from "mobx-react";
 import { useParams } from "react-router-dom";
 import { ContinentStore } from "../stores/ContinentStore";
 import { LocationList } from "../components/LocationList";
+import { ReportStore } from "../stores/ReportStore";
+
+const reportStore = new ReportStore();
 
 const Continent = observer(() => {
     let { continent } = useParams();
@@ -13,9 +16,13 @@ const Continent = observer(() => {
         document.title = continent + " - Covid-19 - CoronaData.se";
     });
 
+    useEffect(() => {
+        reportStore.loadReport(continent);
+    }, []);
+
     return (
         <>
-            <LocationList store={continentStore} title={"Continent / " + continent} />
+            <LocationList report={reportStore.report} store={continentStore} title={"Continent / " + continent} />
         </>
     );
 });
