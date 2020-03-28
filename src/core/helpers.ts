@@ -3,6 +3,9 @@ import { colors } from "./colors";
 
 export const sortLocation = (location: GeoLocation[], sortKey: string) => {
     return location.slice().sort((a: GeoLocation, b: GeoLocation) => {
+        const aConfirmed = a.confirmed ? parseInt(a.confirmed.count) : 0;
+        const bConfirmed = b.confirmed ? parseInt(b.confirmed.count) : 0;
+
         const activeA = a.confirmed
             ? parseInt(a.confirmed.count) - (parseInt(a.deaths.count) + parseInt(a.recovered.count))
             : 0;
@@ -11,12 +14,16 @@ export const sortLocation = (location: GeoLocation[], sortKey: string) => {
             : 0;
 
         let sort = 0;
+
+        const aDeath = a.deaths ? parseInt(a.deaths.count) : 0;
+        const bDeath = b.deaths ? parseInt(b.deaths.count) : 0;
+
         switch (sortKey) {
             case "confirmed":
-                sort = parseInt(a.confirmed.count) > parseInt(b.confirmed.count) ? -1 : 1;
+                sort = aConfirmed > bConfirmed ? -1 : 1;
                 break;
             case "deaths":
-                sort = parseInt(a.deaths.count) > parseInt(b.deaths.count) ? -1 : 1;
+                sort = aDeath > bDeath ? -1 : 1;
                 break;
             case "recovered":
                 sort = parseInt(a.recovered.count) > parseInt(b.recovered.count) ? -1 : 1;
@@ -36,10 +43,11 @@ export interface DatasetProps {
     label: string;
     data: number[];
     color: string;
+    options?: any;
 }
 
-export const createDataset = ({ label, data, color }: DatasetProps) => {
-    return {
+export const createDataset = ({ label, data, color, options }: DatasetProps) => {
+    let defaultSettings = {
         fill: false,
         lineTension: 0,
         label,
@@ -59,7 +67,9 @@ export const createDataset = ({ label, data, color }: DatasetProps) => {
         pointHoverBorderWidth: 1,
         pointRadius: 0,
         pointHitRadius: 10,
-        borderWidth: 2,
+        borderWidth: 1,
         datasetKeyProvider: label
     };
+
+    return options ? { ...defaultSettings, ...options } : defaultSettings;
 };

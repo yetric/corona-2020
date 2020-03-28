@@ -37,7 +37,10 @@ export const Report = memo(({ report, type }: ReportProps) => {
             createDataset({
                 label: "Active",
                 color: orange,
-                data: active
+                data: active,
+                options: {
+                    borderWidth: 1
+                }
             })
         ]
     };
