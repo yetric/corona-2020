@@ -3,8 +3,12 @@ import { colors } from "./colors";
 
 export const sortLocation = (location: GeoLocation[], sortKey: string) => {
     return location.slice().sort((a: GeoLocation, b: GeoLocation) => {
-        const activeA = parseInt(a.confirmed.count) - (parseInt(a.deaths.count) + parseInt(a.recovered.count));
-        const activeB = parseInt(b.confirmed.count) - (parseInt(b.deaths.count) + parseInt(b.recovered.count));
+        const activeA = a.confirmed
+            ? parseInt(a.confirmed.count) - (parseInt(a.deaths.count) + parseInt(a.recovered.count))
+            : 0;
+        const activeB = b.confirmed
+            ? parseInt(b.confirmed.count) - (parseInt(b.deaths.count) + parseInt(b.recovered.count))
+            : 0;
 
         let sort = 0;
         switch (sortKey) {

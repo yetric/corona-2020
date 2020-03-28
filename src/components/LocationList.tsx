@@ -67,27 +67,6 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
             <div className="card-body">
                 <div className="row">
                     <div className="col">
-                        {report && (
-                            <>
-                                <Report type={listType} report={report} />
-                                <Toggle
-                                    items={[
-                                        {
-                                            key: "linear",
-                                            label: "Linear"
-                                        },
-                                        {
-                                            key: "logarithmic",
-                                            label: "Logarithmic"
-                                        }
-                                    ]}
-                                    selected={listType}
-                                    onSelect={setListType}
-                                />
-                            </>
-                        )}
-                    </div>
-                    <div className="col">
                         <dl>
                             <dt>Confirmed</dt>
                             <dd className={"confirmed"}>{store.confirmed.toLocaleString("sv-se")}</dd>
@@ -109,6 +88,27 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                                 <small>{relativeToPercentage(activePercentage)}</small>
                             </dd>
                         </dl>
+                    </div>
+                    <div className="col">
+                        {report && (
+                            <>
+                                <Report type={listType} report={report} />
+                                <Toggle
+                                    items={[
+                                        {
+                                            key: "linear",
+                                            label: "Linear"
+                                        },
+                                        {
+                                            key: "logarithmic",
+                                            label: "Logarithmic"
+                                        }
+                                    ]}
+                                    selected={listType}
+                                    onSelect={setListType}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

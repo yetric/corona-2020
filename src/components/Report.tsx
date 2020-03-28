@@ -2,7 +2,7 @@ import React, { memo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
-import { blue, green, red, yellow } from "../core/colors";
+import { blue, gray, green, orange, red, yellow } from "../core/colors";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -13,6 +13,9 @@ interface ReportProps {
 
 export const Report = memo(({ report, type }: ReportProps) => {
     const isLogarithmic = type === "logarithmic";
+    const active = report.confirmed.map((confirmed: number, index: number) => {
+        return confirmed - (report.recovered[index] + report.deaths[index]);
+    });
     const data = {
         labels: report.labels,
         datasets: [
@@ -30,6 +33,11 @@ export const Report = memo(({ report, type }: ReportProps) => {
                 label: "Recovered",
                 color: green,
                 data: report.recovered
+            }),
+            createDataset({
+                label: "Active",
+                color: orange,
+                data: active
             })
         ]
     };
