@@ -3,6 +3,9 @@ import { observer } from "mobx-react";
 import { useParams } from "react-router-dom";
 import { RegionStore } from "../stores/RegionStore";
 import { LocationList } from "../components/LocationList";
+import { ReportStore } from "../stores/ReportStore";
+
+const reportStore = new ReportStore();
 
 const Region = observer(() => {
     let { region } = useParams();
@@ -16,11 +19,15 @@ const Region = observer(() => {
         document.title = region + " - Covid-19 - CoronaData.se";
     });
 
+    useEffect(() => {
+        reportStore.loadReport(region);
+    }, []);
+
     regionStore = new RegionStore(region);
 
     return (
         <>
-            <LocationList store={regionStore} title={"Region / " + region} />
+            <LocationList report={reportStore.report} store={regionStore} title={"Region / " + region} />
         </>
     );
 });
