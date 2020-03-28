@@ -44,8 +44,8 @@ export class RegionStore {
         this.locations.forEach((value: GeoLocation) => {
             let rec = (value.recovered && value.recovered.count && parseInt(value.recovered.count)) || 0;
             recovered += rec;
-            deaths += parseInt(value.deaths.count);
-            confirmed += parseInt(value.confirmed.count);
+            deaths += value.deaths ? parseInt(value.deaths.count) : 0;
+            confirmed += value.confirmed ? parseInt(value.confirmed.count) : 0;
         });
 
         this.confirmed = confirmed;
