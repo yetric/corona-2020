@@ -19,7 +19,7 @@ export class ReportStore {
 
     @action
     async loadReport(name: any) {
-        const response = await this.client.getJSON("/api/corona/reports/" + name);
+        const response = await this.client.getJSON("/api/corona/reports/" + encodeURIComponent(name));
         this.report = response.data;
     }
 }

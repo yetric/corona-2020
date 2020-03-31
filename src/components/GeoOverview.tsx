@@ -8,7 +8,6 @@ import { WorldStore } from "../stores/WorldStore";
 import { Edit } from "react-feather";
 import { ReportStore } from "../stores/ReportStore";
 import { Report } from "./Report";
-import { AccumulatedGraph } from "./AccumulatedGraph";
 
 const worldReport = new ReportStore();
 const europeReport = new ReportStore();
@@ -21,7 +20,7 @@ const europeStore = new ContinentStore("Europe");
 export const GeoOverview = observer(() => {
     useEffect(() => {
         worldReport.loadReport("world");
-        europeReport.loadReport("Europe");
+        europeReport.loadReport("continent:Europe");
         swedenReport.loadReport("Sweden");
     }, []);
     return (

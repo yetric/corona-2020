@@ -20,7 +20,7 @@ const Region = observer(() => {
     });
 
     useEffect(() => {
-        reportStore.loadReport(region);
+        reportStore.loadReport("region:" + region);
     }, []);
 
     regionStore = new RegionStore(region);

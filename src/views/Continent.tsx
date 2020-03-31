@@ -17,7 +17,7 @@ const Continent = observer(() => {
     });
 
     useEffect(() => {
-        reportStore.loadReport(continent);
+        reportStore.loadReport(`continent:${continent}`);
     }, []);
 
     return (
