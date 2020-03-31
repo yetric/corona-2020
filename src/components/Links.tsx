@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Links = () => (
-    <ul className={"list-group compact"}>
+    <ul className={"list-group"}>
         <li className={"list-header"}>Links</li>
         <li>
             <a

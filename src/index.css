@@ -577,9 +577,9 @@ table {
 
 table td,
 table th {
-    padding: 5px;
+    padding: 6px 12px;
     border-bottom: 1px solid var(--nord1);
-    font-size: 13px;
+    font-size: 15px;
     text-align: left;
     white-space: nowrap;
     border-right: 1px solid var(--nord1);
