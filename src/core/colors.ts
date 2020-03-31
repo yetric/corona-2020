@@ -7,3 +7,4 @@ export const green = colors[2];
 export const yellow = "rgb(235, 225, 139)";
 export const orange = "rgb(233, 153, 88)";
 export const gray = "#6b7383";
+export const pink = "rgb(180, 142, 173)";

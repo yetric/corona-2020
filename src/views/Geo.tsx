@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { observer } from "mobx-react";
 import { useParams, withRouter } from "react-router-dom";
@@ -13,6 +13,7 @@ import { CountryCard } from "../components/CountryCard";
 import { TabularData } from "../components/TabularData";
 import { Growth } from "../components/Growth";
 import { ActivityRate } from "../components/ActivityRate";
+import { Toggle } from "../components/Toggle";
 
 interface ProvinceProps {
     selected?: any;
@@ -88,6 +89,20 @@ const Geo = withRouter(
 
         return (
             <div className={"geo-wrapper"}>
+                <Toggle
+                    items={[
+                        {
+                            key: "all",
+                            label: "All"
+                        },
+                        {
+                            key: "week",
+                            label: "Last Week"
+                        }
+                    ]}
+                    selected={dataStore.period}
+                    onSelect={dataStore.setPeriod.bind(dataStore)}
+                />
                 <div className="card">
                     <LoadOverlay loading={dataStore.loading} text={"Loading graphs"} />
                     <div className="card-header">

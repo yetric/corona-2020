@@ -49,7 +49,7 @@ export interface DatasetProps {
 export const createDataset = ({ label, data, color, options }: DatasetProps) => {
     let defaultSettings = {
         fill: false,
-        lineTension: 0,
+        lineTension: 0.15,
         label,
         data,
         backgroundColor: color,
@@ -67,7 +67,7 @@ export const createDataset = ({ label, data, color, options }: DatasetProps) => 
         pointHoverBorderWidth: 1,
         pointRadius: 0,
         pointHitRadius: 10,
-        borderWidth: 1,
+        borderWidth: 2,
         datasetKeyProvider: label
     };
 

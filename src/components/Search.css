@@ -16,8 +16,19 @@
 
 .search-result-item {
     padding: 0 12px;
-    line-height: 48px;
+    line-height: 36px;
     border-bottom: 1px solid var(--nord4);
     cursor: default;
     color: var(--nord10);
+}
+
+.search-result-item-header {
+    padding: 0 12px;
+    line-height: 32px;
+    font-size: 14px;
+    background-color: var(--white);
+    color: var(--nord10);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--nord4);
+    font-weight: 500;
 }

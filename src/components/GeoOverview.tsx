@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CasesList } from "./CasesList";
 import { ContinentStore } from "../stores/ContinentStore";
 import { observer } from "mobx-react";
@@ -6,17 +6,30 @@ import { Link } from "react-router-dom";
 import { DataStore } from "../stores/DataStore";
 import { WorldStore } from "../stores/WorldStore";
 import { Edit } from "react-feather";
+import { ReportStore } from "../stores/ReportStore";
+import { Report } from "./Report";
+import { AccumulatedGraph } from "./AccumulatedGraph";
+
+const worldReport = new ReportStore();
+const europeReport = new ReportStore();
+const swedenReport = new ReportStore();
 
 const dataStore = new DataStore();
 dataStore.loadCountry(18);
 const worldStore = new WorldStore();
 const europeStore = new ContinentStore("Europe");
 export const GeoOverview = observer(() => {
+    useEffect(() => {
+        worldReport.loadReport("world");
+        europeReport.loadReport("Europe");
+        swedenReport.loadReport("Sweden");
+    }, []);
     return (
         <div className={"cards"}>
             <div className="card">
                 <div className="card-header">World</div>
                 <div className="card-body">
+                    {worldReport.report && <Report report={worldReport.report} type={"logarithmic"} />}
                     <CasesList
                         confirmed={worldStore.confirmed}
                         confirmedCompare={worldStore.confirmedCompare}
@@ -43,6 +56,7 @@ export const GeoOverview = observer(() => {
                     </span>
                 </div>
                 <div className="card-body">
+                    {europeReport.report && <Report report={europeReport.report} type={"logarithmic"} />}
                     <CasesList
                         deaths={europeStore.deathTotal}
                         confirmed={europeStore.confirmedTotal}
@@ -66,6 +80,7 @@ export const GeoOverview = observer(() => {
                     </span>
                 </div>
                 <div className="card-body">
+                    {swedenReport.report && <Report report={swedenReport.report} type={"logarithmic"} />}
                     <CasesList
                         confirmed={dataStore.data?.confirmed.count}
                         updated={dataStore.data?.confirmed.date}

@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Bar } from "react-chartjs-2";
 import { TypeCollection } from "../stores/DataStore";
 import { colors } from "../core/colors";
+import { observer } from "mobx-react";
 
 type BarChartType = "normal" | "stacked" | string;
 
@@ -11,7 +12,7 @@ interface BarsProps {
     type: BarChartType;
 }
 
-export const Bars = memo(({ data, labels, type }: BarsProps) => {
+export const Bars = observer(({ data, labels, type }: BarsProps) => {
     let datasets: any[] = [];
     data.forEach((collection: TypeCollection, index: number) => {
         let last = 0;
@@ -67,7 +68,7 @@ export const Bars = memo(({ data, labels, type }: BarsProps) => {
 
     return (
         <div className={"bar-chart-elm"}>
-            <Bar data={barData} options={options} />
+            <Bar data={barData} redraw={true} options={options} />
         </div>
     );
 });

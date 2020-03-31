@@ -1,12 +1,22 @@
 import { DataClient } from "../clients/DataClient";
 import { action, observable } from "mobx";
 
+interface SearchResult {
+    countries: any[];
+    regions: any[];
+    continents: any[];
+}
+
 export class SearchStore {
     private client: DataClient;
     private searchCallback: any;
     private query: string;
 
-    @observable result = [];
+    @observable result: SearchResult = {
+        continents: [],
+        countries: [],
+        regions: []
+    };
 
     constructor() {
         this.query = "";
@@ -21,15 +31,18 @@ export class SearchStore {
 
     @action
     clear() {
-        this.result = [];
+        this.result = {
+            continents: [],
+            countries: [],
+            regions: []
+        };
         this.query = "";
     }
 
     @action
     async apiSearch() {
         if (this.query.length > 0) {
-            let response = await this.client.getJSON(`/api/corona/country?query=${this.query}`);
-            this.result = response.countries;
+            this.result = await this.client.getJSON(`/api/corona/country?query=${this.query}`);
         }
     }
 }

@@ -34,6 +34,8 @@
     --yellow: rgb(235, 225, 139);
     --green: rgb(156, 194, 122);
     --purple: rgb(175, 122, 165);
+
+    --white: #f2f5fa;
 }
 
 * {

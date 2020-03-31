@@ -35,7 +35,7 @@ export const Search = withRouter(
             debouncedCallback(event.target.value);
         };
 
-        const searchResults = searchStore.result.map((geo: any) => (
+        const searchCountryResults = searchStore.result.countries.map((geo: any) => (
             <div
                 key={geo.id}
                 className={"search-result-item"}
@@ -49,10 +49,51 @@ export const Search = withRouter(
             </div>
         ));
 
+        const regionSearchResults = searchStore.result.regions.map((geo: any) => {
+            return (
+                <div
+                    className={"search-result-item"}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        searchStore.clear();
+                        setQuery("");
+                        history.push(`/region/${encodeURIComponent(geo)}`);
+                    }}>
+                    {geo}
+                </div>
+            );
+        });
+
+        const continentSearchResults = searchStore.result.continents.map((geo: any) => {
+            return (
+                <div
+                    className={"search-result-item"}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        searchStore.clear();
+                        setQuery("");
+                        history.push(`/continent/${encodeURIComponent(geo)}`);
+                    }}>
+                    {geo}
+                </div>
+            );
+        });
+
         return (
             <div className={"search-component"}>
                 <input type={"text"} value={query} onChange={onChange} placeholder={"Search for country ..."} />
-                {searchStore.result.length > 0 && <div className={"search-results"}>{searchResults}</div>}
+                {(searchStore.result.countries.length > 0 ||
+                    searchStore.result.regions.length > 0 ||
+                    searchStore.result.continents.length > 0) && (
+                    <div className={"search-results"}>
+                        <div className={"search-result-item-header"}>Countries</div>
+                        {searchCountryResults}
+                        <div className={"search-result-item-header"}>Regions</div>
+                        {regionSearchResults}
+                        <div className={"search-result-item-header"}>Continents</div>
+                        {continentSearchResults}
+                    </div>
+                )}
             </div>
         );
     })

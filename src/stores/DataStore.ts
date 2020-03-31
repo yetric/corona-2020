@@ -3,6 +3,11 @@ import { ma } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
 import { relativeToPercentage } from "../core/functions";
 
+const Timespan = {
+    WEEKLY: "weekly",
+    ALL: "all"
+};
+
 interface Case {
     count: string;
     date: number;
@@ -66,8 +71,10 @@ export class DataStore {
     @observable labels = [];
     @observable renderType = "linear";
     @observable barType = "normal";
+    @observable period = "all";
     @observable data: GeoOverview | null = null;
     @observable metadata: CountryMetadata = {};
+
     @observable confirmed: TypeCollection = {
         data: [],
         labels: []
@@ -80,6 +87,12 @@ export class DataStore {
         data: [],
         labels: []
     };
+
+    cachedConfirmed: TypeCollection = {
+        data: [],
+        labels: []
+    };
+
     @observable provinces: any[] = [];
     private client: DataClient;
 
@@ -299,5 +312,25 @@ export class DataStore {
             return this.activeTotal / this.data?.confirmed.count;
         }
         return 0;
+    }
+
+    @action
+    setPeriod(period: string) {
+        this.period = period;
+
+        switch (period) {
+            case Timespan.ALL:
+                break;
+            case Timespan.WEEKLY:
+                let newConfirmed: TypeCollection = {
+                    labels: this.confirmed.labels.slice(-7),
+                    data: this.confirmed.data.slice(-7),
+                    name: this.confirmed.name
+                };
+                this.confirmed = newConfirmed;
+                break;
+        }
+
+        console.log(period);
     }
 }
