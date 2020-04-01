@@ -9,27 +9,54 @@ interface BarReportProps {
     report: ReportInterface | null;
 }
 
+let lastConfirmed = 0;
 export const BarReport = ({ report }: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
     }
+
+    let last = 0;
+    let lastDeath = 0;
+    let lastRecovered = 0;
+    let lastActive = 0;
+    let change = report.confirmed.map((nr, index) => {
+        let confirmed = nr - last;
+        let deaths = report.deaths[index] - lastDeath;
+        let recovered = report.recovered[index] - lastRecovered;
+        let changes = {
+            confirmed,
+            deaths,
+            recovered,
+            active: confirmed - (recovered + deaths)
+        };
+        last = nr;
+        lastDeath = report.deaths[index];
+        lastRecovered = report.recovered[index];
+        return changes;
+    });
+
+    change.shift();
+
+    let lbls = [...report.labels];
+    lbls.shift();
+
     const data = {
-        labels: report.labels,
+        labels: lbls,
         datasets: [
             createDataset({
                 label: "Confirmed",
                 color: blue,
-                data: report.confirmed
+                data: change.map((item) => item.confirmed)
             }),
             createDataset({
                 label: "Deaths",
                 color: red,
-                data: report.deaths
+                data: change.map((item) => item.deaths)
             }),
             createDataset({
                 label: "Recovered",
                 color: green,
-                data: report.recovered
+                data: change.map((item) => item.recovered)
             })
         ]
     };
