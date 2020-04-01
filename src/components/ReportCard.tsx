@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Report } from "./Report";
 import { CasesList } from "./CasesList";
+import { BarReport } from "./BarReport";
+import { Toggle } from "./Toggle";
 
 interface ReportCardProps {
     report: string;
@@ -13,6 +15,8 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     useEffect(() => {
         store.loadReport(report);
     }, []);
+
+    const [chart, setChart] = useState("accumulated");
 
     let deaths = store.report ? store.report.deaths[store.report.deaths.length - 1] : 0;
     let confirmed = store.report ? store.report.confirmed[store.report.confirmed.length - 1] : 0;
@@ -49,16 +53,26 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         })
         .join(" / ");
 
-    /*
-    recoveredCompare?: number | null;
-    activeCompare?: number | null;
-     */
-
     return (
         <div className="card">
             <div className="card-header">{reportFixed}</div>
             <div className="card-body">
-                <Report report={store.report} type={"logarithmic"} />
+                <Toggle
+                    items={[
+                        {
+                            key: "accumulated",
+                            label: "Accumulated"
+                        },
+                        {
+                            key: "daily",
+                            label: "Daily"
+                        }
+                    ]}
+                    selected={chart}
+                    onSelect={setChart}
+                />
+                {chart === "accumulated" && <Report report={store.report} type={"logarithmic"} />}
+                {chart === "daily" && <BarReport report={store.report} />}
                 <CasesList
                     deaths={deaths}
                     confirmed={confirmed}

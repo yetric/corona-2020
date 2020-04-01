@@ -41,6 +41,9 @@ export const Report = memo(({ report, type }: ReportProps) => {
         ]
     };
     const options = {
+        legend: {
+            display: false
+        },
         scales: {
             yAxes: [
                 {
