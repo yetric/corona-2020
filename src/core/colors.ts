@@ -1,10 +1,10 @@
-export const colors = ["#50a8e2", "rgb(221, 87, 101)", "rgb(156, 194, 122)", "rgb(180, 142, 173)"];
+export const colors = ["#81D4FA", "#F44336", "#9CCC65", "#FDD835"];
 
 export const blue = colors[0];
 export const red = colors[1];
 export const green = colors[2];
 
-export const yellow = "rgb(235, 225, 139)";
-export const orange = "rgb(233, 153, 88)";
-export const gray = "#6b7383";
-export const pink = "rgb(180, 142, 173)";
+export const yellow = "#FDD835";
+export const orange = "#FF9800";
+export const gray = "#BDBDBD";
+export const pink = "#F48FB1";

@@ -8,12 +8,15 @@ import "./Report.css";
 export type ChartType = "linear" | "logarithmic";
 
 interface ReportProps {
-    report: ReportInterface;
+    report: ReportInterface | null;
     type: string;
 }
 
 export const Report = memo(({ report, type }: ReportProps) => {
     const isLogarithmic = type === "logarithmic";
+    if (!report) {
+        return <div>Laddar...</div>;
+    }
     const active = report.confirmed.map((confirmed: number, index: number) => {
         return confirmed - (report.recovered[index] + report.deaths[index]);
     });
