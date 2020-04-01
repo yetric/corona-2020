@@ -71,7 +71,7 @@ h6 {
 }
 
 .header {
-    background-color: var(--nord1);
+    background-color: var(--accent);
     text-align: center;
     padding: 12px 0;
     border-bottom: 1px solid var(--nord3);
@@ -82,12 +82,12 @@ h6 {
 }
 
 .header a {
-    color: var(--accent1);
+    color: var(--accent3);
 }
 
 .header h3 {
     margin: 0;
-    color: var(--meta-light);
+    color: var(--nord4);
     font-size: 14px;
 }
 

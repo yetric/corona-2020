@@ -31,7 +31,7 @@ const App = () => {
                     <h2>
                         <Link to={"/"}>Data on Corona</Link>
                     </h2>
-                    <h3>coronadata.se</h3>
+                    <h3>CoronaData.se by Yetric AB</h3>
                 </div>
 
                 <div className={"chart"}>
