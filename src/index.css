@@ -654,3 +654,8 @@ tfoot th {
     text-align: right;
     font-size: 18px;
 }
+
+.focus {
+    color: var(--yellow);
+    border-bottom: 1px dotted var(--meta);
+}

@@ -53,6 +53,19 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         })
         .join(" / ");
 
+    function getDoublingSpeed() {
+        if (!store.report) {
+            return "";
+        }
+        let half = confirmed / 2;
+        for (let i = store.report.confirmed.length - 1; i >= 0; i--) {
+            if (store.report.confirmed[i] <= half) {
+                return store.report.confirmed.length - i;
+            }
+        }
+        return "n/a";
+    }
+
     return (
         <div className="card">
             <div className="card-header">{reportFixed}</div>
@@ -87,6 +100,12 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     recoveredCompare={recoveredCompare}
                     activeCompare={activeCompare}
                 />
+
+                <p className={"muted text-center"}>
+                    <small>
+                        Current Confirmed Doubling Speed: <span className={"focus"}>{getDoublingSpeed()} days</span>
+                    </small>
+                </p>
             </div>
         </div>
     );

@@ -16,7 +16,12 @@ export const GeoOverview = observer(() => {
             <div className="cards">
                 <ReportCard report={"Sweden"} store={new ReportStore()} />
                 <ReportCard report={"region:Nordic Countries"} store={new ReportStore()} />
-                <ReportCard report={"China"} store={new ReportStore()} />
+                <ReportCard report={"Italy"} store={new ReportStore()} />
+            </div>
+            <div className="cards">
+                <ReportCard report={"France"} store={new ReportStore()} />
+                <ReportCard report={"Spain"} store={new ReportStore()} />
+                <ReportCard report={"Germany"} store={new ReportStore()} />
             </div>
         </>
     );
