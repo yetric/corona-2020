@@ -107,7 +107,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
 
                 <p className={"muted text-center"}>
                     <small>
-                        <strong>Double Rates</strong>
+                        <strong>Doubling Rates</strong>
                         <br />
                         Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
                         <br />
