@@ -53,14 +53,18 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         })
         .join(" / ");
 
-    function getDoublingSpeed() {
+    function getDoublingSpeed(prop: string = "confirmed") {
         if (!store.report) {
             return "";
         }
-        let half = confirmed / 2;
-        for (let i = store.report.confirmed.length - 1; i >= 0; i--) {
-            if (store.report.confirmed[i] <= half) {
-                return store.report.confirmed.length - i;
+        let coll = store.report.confirmed;
+        if (prop === "deaths") {
+            coll = store.report.deaths;
+        }
+        let half = coll[coll.length - 1] / 2;
+        for (let i = coll.length - 1; i >= 0; i--) {
+            if (coll[i] <= half) {
+                return coll.length - i;
             }
         }
         return "n/a";
@@ -103,7 +107,12 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
 
                 <p className={"muted text-center"}>
                     <small>
-                        Current Confirmed Doubling Speed: <span className={"focus"}>{getDoublingSpeed()} days</span>
+                        <strong>Double Rates</strong>
+                        <br />
+                        Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
+                        <br />
+                        Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
+                        <br />
                     </small>
                 </p>
             </div>
