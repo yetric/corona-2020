@@ -144,7 +144,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     <div className="col">
                         <p className={"muted text-center"}>
                             <small>
-                                <strong>Last Three Days Share</strong>
+                                <strong>Last Three Days of Total</strong>
                                 <br />
                                 Confirmed: <span className={"focus"}>{lastThreeDaysShare()}</span>
                                 <br />
