@@ -5,6 +5,7 @@ import { Report } from "./Report";
 import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
+import { relativeToPercentage } from "../core/functions";
 
 interface ReportCardProps {
     report: string;
@@ -70,6 +71,28 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         return "n/a";
     }
 
+    const lastThreeDaysShare = (prop: string = "confirmed") => {
+        if (!store.report) {
+            return 0;
+        }
+
+        let source = store.report.confirmed;
+        let compare = confirmed;
+        switch (prop) {
+            case "deaths":
+                source = store.report.deaths;
+                compare = deaths;
+                break;
+        }
+
+        let clone = [...source].slice(-4);
+        let change = 0;
+        for (let i = 0; i < clone.length - 1; i++) {
+            change += clone[i + 1] - clone[i];
+        }
+        return relativeToPercentage(change / compare);
+    };
+
     return (
         <div className="card">
             <div className="card-header">{reportFixed}</div>
@@ -105,16 +128,31 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     activeCompare={activeCompare}
                 />
 
-                <p className={"muted text-center"}>
-                    <small>
-                        <strong>Doubling Rates</strong>
-                        <br />
-                        Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
-                        <br />
-                        Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
-                        <br />
-                    </small>
-                </p>
+                <div className="row">
+                    <div className="col">
+                        <p className={"muted text-center"}>
+                            <small>
+                                <strong>Doubling Rates</strong>
+                                <br />
+                                Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
+                                <br />
+                                Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
+                                <br />
+                            </small>
+                        </p>
+                    </div>
+                    <div className="col">
+                        <p className={"muted text-center"}>
+                            <small>
+                                <strong>Last Three Days Share</strong>
+                                <br />
+                                Confirmed: <span className={"focus"}>{lastThreeDaysShare()}</span>
+                                <br />
+                                Deaths: <span className={"focus"}>{lastThreeDaysShare("deaths")}</span>
+                            </small>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     );
