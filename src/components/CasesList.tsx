@@ -43,23 +43,23 @@ export const CasesList = (props: CasesListProps) => {
         <dl>
             <dt>Confirmed</dt>
             <dd>
-                {(props.confirmed && <CountUp separator={" "} end={props.confirmed} />) || <Placeholder />}{" "}
+                {(props.confirmed && <CountUp separator={" "} redraw={false} end={props.confirmed} />) || (
+                    <Placeholder />
+                )}{" "}
                 <small>{props.updated || <Placeholder />}</small>
                 <span className={"compare"}>{confirmedChange}</span>
             </dd>
 
             <dt>Deaths</dt>
             <dd>
-                {(props.deaths && <CountUp end={props.deaths} duration={rndCount()} separator={" "} />) || (
-                    <Placeholder />
-                )}{" "}
+                {(props.deaths && <CountUp redraw={false} end={props.deaths} separator={" "} />) || <Placeholder />}{" "}
                 <small>
                     {(props.deathRate && (
                         <CountUp
-                            duration={rndCount()}
                             end={relativeToPercentage(props.deathRate, false)}
                             decimals={2}
                             suffix={"%"}
+                            redraw={false}
                         />
                     )) || <Placeholder />}
                 </small>
@@ -67,16 +67,16 @@ export const CasesList = (props: CasesListProps) => {
             </dd>
             <dt>Recovered</dt>
             <dd>
-                {(props.recovered && <CountUp end={props.recovered} duration={rndCount()} separator={" "} />) || (
+                {(props.recovered && <CountUp redraw={false} end={props.recovered} separator={" "} />) || (
                     <Placeholder />
                 )}{" "}
                 <small>
                     {(props.recoveryRate && (
                         <CountUp
-                            duration={rndCount()}
                             end={relativeToPercentage(props.recoveryRate, false)}
                             decimals={2}
                             suffix={"%"}
+                            redraw={false}
                         />
                     )) || <Placeholder />}
                 </small>
@@ -84,16 +84,14 @@ export const CasesList = (props: CasesListProps) => {
             </dd>
             <dt>Active</dt>
             <dd>
-                {(props.active && <CountUp duration={rndCount()} end={props.active} separator={" "} />) || (
-                    <Placeholder />
-                )}{" "}
+                {(props.active && <CountUp redraw={false} end={props.active} separator={" "} />) || <Placeholder />}{" "}
                 <small>
                     {(props.activityRate && (
                         <CountUp
-                            duration={rndCount()}
                             end={relativeToPercentage(props.activityRate, false)}
                             decimals={2}
                             suffix={"%"}
+                            redraw={false}
                         />
                     )) || <Placeholder />}
                 </small>
