@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { Bar } from "react-chartjs-2";
 import { TypeCollection } from "../stores/DataStore";
 import { colors } from "../core/colors";

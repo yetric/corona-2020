@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { Chart } from "./Chart";
 import { Toggle } from "./Toggle";
-import { red, yellow } from "../core/colors";
+import { red } from "../core/colors";
 
 interface GrowthProps {
     dataStore: DataStore;

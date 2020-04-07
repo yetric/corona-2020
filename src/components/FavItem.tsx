@@ -13,6 +13,11 @@ interface FavItemProp {
 }
 
 export const FavItem = observer(({ edit, item, store }: FavItemProp) => {
+    if (!store.confirmed) {
+        return null;
+    }
+    let active = parseInt(store.confirmed) - (parseInt(store.recovered) + parseInt(store.deaths));
+    let activeNr = isNaN(active) ? null : active;
     return (
         <tr key={item.id}>
             <td className={"important-column"}>
@@ -23,9 +28,7 @@ export const FavItem = observer(({ edit, item, store }: FavItemProp) => {
             <td className={"text-right confirmed"}>{store.confirmed}</td>
             <td className={"text-right deaths"}>{store.deaths}</td>
             <td className={"text-right recovered"}>{store.recovered}</td>
-            <td className={"text-right active"}>
-                {parseInt(store.confirmed) - (parseInt(store.recovered) + parseInt(store.deaths))}
-            </td>
+            <td className={"text-right active"}>{activeNr}</td>
             {edit && (
                 <td
                     onClick={(event) => {

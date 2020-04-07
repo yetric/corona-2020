@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { observer } from "mobx-react";
-import { Link } from "react-router-dom";
-import { Edit } from "react-feather";
 import { ReportStore } from "../stores/ReportStore";
 import { ReportCard } from "./ReportCard";
 

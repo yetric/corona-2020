@@ -1,8 +1,8 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
 import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
-import { blue, green, pink, red } from "../core/colors";
+import { blue, green, red } from "../core/colors";
 import "./Report.css";
 
 export type ChartType = "linear" | "logarithmic";
@@ -17,9 +17,6 @@ export const Report = memo(({ report, type }: ReportProps) => {
     if (!report) {
         return <div>Laddar...</div>;
     }
-    const active = report.confirmed.map((confirmed: number, index: number) => {
-        return confirmed - (report.recovered[index] + report.deaths[index]);
-    });
     const data = {
         labels: report.labels,
         datasets: [

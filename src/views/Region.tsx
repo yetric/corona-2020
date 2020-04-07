@@ -20,8 +20,8 @@ const Region = observer(() => {
     });
 
     useEffect(() => {
-        reportStore.loadReport("region:" + region);
-    }, []);
+        region && reportStore.loadReport("region:" + region);
+    }, [region]);
 
     regionStore = new RegionStore(region);
 

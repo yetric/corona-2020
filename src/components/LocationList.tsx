@@ -45,7 +45,9 @@ export const LocationListItem = ({ item }: LocationListItemProps) => {
             <td className={"confirmed text-right"}>{confirmed.toLocaleString("sv-se")}</td>
             <td className={"deaths text-right"}>{deaths.toLocaleString("sv-se")}</td>
             <td className={"recovered text-right"}>{recovered.toLocaleString("sv-se")}</td>
-            <td className={"text-right"}>{relativeToPercentage(deathRate)}</td>
+            <td className={"text-right deaths"}>{relativeToPercentage(deathRate)}</td>
+            <td className={"text-right recovered"}>{relativeToPercentage(recoveryRate)}</td>
+            <td className={"text-right active"}>{relativeToPercentage(activityRate)}</td>
         </tr>
     );
 };
@@ -144,9 +146,9 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                                 }}>
                                 Recovered
                             </th>
-                            <th className={"text-center"} colSpan={3}>
-                                Rates - Death
-                            </th>
+                            <th className={"text-right"}>Death Rate</th>
+                            <th className={"text-right"}>Recovery Rate</th>
+                            <th className={"text-right"}>Activity Rate</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,6 +163,8 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                             <td>{store.deaths.toLocaleString("sv-se")}</td>
                             <td>{store.recovered.toLocaleString("sv-se")}</td>
                             <td>{relativeToPercentage(store.deaths / store.confirmed)}</td>
+                            <td>{relativeToPercentage(store.recovered / store.confirmed)}</td>
+                            <td>{active && relativeToPercentage(active / store.confirmed)}</td>
                         </tr>
                     </tfoot>
                 </table>

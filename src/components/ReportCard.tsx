@@ -15,7 +15,7 @@ interface ReportCardProps {
 export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     useEffect(() => {
         store.loadReport(report);
-    }, []);
+    }, [report, store]);
 
     const [chart, setChart] = useState("accumulated");
 

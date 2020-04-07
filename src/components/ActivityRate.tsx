@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DataStore } from "../stores/DataStore";
 import { Chart } from "./Chart";
 import { Toggle } from "./Toggle";
-import { gray, green, orange, red, yellow } from "../core/colors";
+import { orange } from "../core/colors";
 
 interface ActivityRateProps {
     dataStore: DataStore;

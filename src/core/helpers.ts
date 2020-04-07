@@ -1,5 +1,4 @@
 import { GeoLocation } from "../models/GeoLocation";
-import { colors } from "./colors";
 
 export const sortLocation = (location: GeoLocation[], sortKey: string) => {
     return location.slice().sort((a: GeoLocation, b: GeoLocation) => {

@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
 import { TypeCollection } from "../stores/DataStore";
 import { colors } from "../core/colors";
@@ -14,7 +14,6 @@ interface ChartProps {
 }
 
 export const Chart = memo((props: ChartProps) => {
-    const [showEmpty, setShowEmpty] = useState(true);
     if (props.labels.length === 0 || props.data.length === 0) {
         return null;
     }
@@ -32,9 +31,6 @@ export const Chart = memo((props: ChartProps) => {
             }
         }
     }
-
-    const minIndex = Math.min(...firstNonZero);
-    console.log(minIndex);
 
     props.data.forEach((collection: TypeCollection, index: number) => {
         const rows = collection.data.map((count: any) => {

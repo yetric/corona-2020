@@ -9,7 +9,6 @@ interface BarReportProps {
     report: ReportInterface | null;
 }
 
-let lastConfirmed = 0;
 export const BarReport = ({ report }: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
@@ -18,7 +17,6 @@ export const BarReport = ({ report }: BarReportProps) => {
     let last = 0;
     let lastDeath = 0;
     let lastRecovered = 0;
-    let lastActive = 0;
     let change = report.confirmed.map((nr, index) => {
         let confirmed = nr - last;
         let deaths = report.deaths[index] - lastDeath;
