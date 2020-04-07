@@ -21,12 +21,6 @@ interface CasesListProps {
     activeCompare?: number | null;
 }
 
-const getRandomFloat = (min: number, max: number) => {
-    return Math.random() * (max - min) + min;
-};
-
-const rndCount = () => getRandomFloat(0.7, 1.3);
-
 const emptyOrRelative = (num: number | null | undefined) => {
     if (num && !isNaN(num)) {
         return relativeToPercentage(num, true, true);

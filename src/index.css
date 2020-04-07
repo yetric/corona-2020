@@ -32,6 +32,7 @@
     --red: rgb(221, 87, 101);
     --orange: rgb(233, 153, 88);
     --yellow: rgb(235, 225, 139);
+    --yellow-dimmed: rgba(233, 153, 88, 0.6);
     --green: rgb(156, 194, 122);
     --purple: rgb(175, 122, 165);
 
@@ -71,10 +72,9 @@ h6 {
 }
 
 .header {
-    background-color: var(--accent);
+    background-color: rgba(45, 122, 173, 0.4);
     text-align: center;
     padding: 12px 0;
-    border-bottom: 1px solid var(--nord3);
 }
 .header h2 {
     margin: 0;
