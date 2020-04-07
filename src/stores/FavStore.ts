@@ -1,4 +1,5 @@
 import { action, observable } from "mobx";
+import { CachedList } from "../core/storage";
 
 export interface Fav {
     id: number;
@@ -8,16 +9,31 @@ export interface Fav {
 
 export class FavStore {
     @observable favorites: Fav[] = [];
+    private cachedList: CachedList;
 
     constructor() {
+        this.favorites = FavStore.read();
+        this.cachedList = new CachedList({
+            name: "cd_favs_test",
+            length: 10
+        });
+    }
+
+    private static read() {
         const favJSON = localStorage.getItem("cd_favs");
-        this.favorites = favJSON ? JSON.parse(favJSON) : [];
+        return favJSON ? JSON.parse(favJSON) : [];
+    }
+
+    private sync(favs: Fav[]) {
+        localStorage.setItem("cd_favs", JSON.stringify(favs));
+        this.favorites = favs;
     }
 
     has(fav: Fav) {
+        // return this.cachedList.has(fav);
         for (let i = 0; i < this.favorites.length; i++) {
-            let f = this.favorites[i];
-            if (f.id === fav.id) {
+            let item = this.favorites[i];
+            if (item.id === fav.id) {
                 return true;
             }
         }
@@ -26,33 +42,22 @@ export class FavStore {
 
     @action
     save(fav: Fav) {
-        const favJSON = localStorage.getItem("cd_favs");
-        let favs = favJSON ? JSON.parse(favJSON) : [];
         if (!this.has(fav)) {
+            let favs = FavStore.read();
             favs.unshift(fav);
-            localStorage.setItem("cd_favs", JSON.stringify(favs));
-            this.favorites = favs;
+            this.sync(favs);
         }
     }
 
     @action
     remove(id: number) {
-        let indexToRemove = -1;
-        const favJSON = localStorage.getItem("cd_favs");
-        let favs = [];
-        if (favJSON) {
-            favs = JSON.parse(favJSON);
-            for (let i = 0; i < favs.length; i++) {
-                let f = favs[i];
-                if (f.id === id) {
-                    indexToRemove = i;
-                    break;
-                }
-            }
-            if (indexToRemove > -1) {
-                favs.splice(indexToRemove, 1);
-                localStorage.setItem("cd_favs", JSON.stringify(favs));
-                this.favorites = favs;
+        let favs = FavStore.read();
+        for (let i = 0; i < favs.length; i++) {
+            let item = favs[i];
+            if (item.id === id) {
+                favs.splice(i, 1);
+                this.sync(favs);
+                break;
             }
         }
     }
