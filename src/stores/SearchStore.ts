@@ -41,7 +41,7 @@ export class SearchStore {
 
     @action
     async apiSearch() {
-        if (this.query.length > 0) {
+        if (this.query.length > 1) {
             this.result = await this.client.getJSON(`/api/corona/country?query=${this.query}`);
         }
     }
