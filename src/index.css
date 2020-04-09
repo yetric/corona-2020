@@ -130,7 +130,9 @@ a {
 }
 
 .chart-line,
-.bar-chart-elm {
+.bar-chart-elm,
+.bar-report-wrapper,
+.report-view {
     min-height: 320px;
     padding: 0;
 }
