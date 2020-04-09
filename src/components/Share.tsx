@@ -54,7 +54,7 @@ export const Share = () => {
     const showShare = "share" in newNavigator;
 
     return (
-        <div className={"share-widget"}>
+        <div className={"shr"}>
             <ul>
                 <li ref={button}>
                     <Copy size={14} /> Copy

@@ -1,24 +1,24 @@
-.share-widget {
+.shr {
 }
 
-.share-widget ul {
+.shr ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.share-widget ul li {
+.shr ul li {
     display: inline-block;
     padding: 0 12px;
-    color: var(--meta-light);
+    color: var(--action);
     cursor: pointer;
 }
 
-.share-widget ul li svg {
+.shr ul li svg {
     position: relative;
     top: 2px;
     margin-right: 4px;
 }
 
-.share-widget ul li:last-child {
+.shr ul li:last-child {
     padding-right: 0;
 }

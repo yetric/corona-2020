@@ -37,6 +37,8 @@
     --purple: rgb(175, 122, 165);
 
     --white: #f2f5fa;
+
+    --action: #52d8b9;
 }
 
 * {
@@ -55,9 +57,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background: var(--nord0);
     color: var(--nord4);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 1rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.5;
 }
@@ -104,23 +105,28 @@ a {
     list-style: none;
     padding: 0;
     text-align: right;
+    margin: 20px 0;
 }
 
 .toggle li {
     display: inline-block;
-    padding: 4px 12px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .toggle li a {
-    color: var(--nord3);
+    color: var(--meta);
+    display: inline-block;
+    padding: 0 12px;
+    line-height: 26px;
 }
 
 .toggle li.active {
 }
 
 .toggle li.active a {
-    color: var(--nord12);
+    border-radius: 2px;
+    border: 1px solid var(--action);
+    color: var(--action);
 }
 
 .chart-line,
@@ -400,8 +406,8 @@ ol li:before {
 
 .btn {
     display: inline-block;
-    border: 1px solid var(--nord12);
-    color: var(--nord12);
+    border: 1px solid var(--action);
+    color: var(--action);
     line-height: 42px;
     padding: 0 18px;
 }

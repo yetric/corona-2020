@@ -9,7 +9,6 @@ interface SearchResult {
 
 export class SearchStore {
     private client: DataClient;
-    private searchCallback: any;
     private query: string;
 
     @observable result: SearchResult = {
