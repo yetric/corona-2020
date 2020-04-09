@@ -683,11 +683,17 @@ tfoot th {
 .actions li {
     flex-grow: 1;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .actions li a {
-    color: var(--meta-light);
+    color: var(--meta);
+    outline: 0;
+}
+
+.actions li a svg {
+    position: relative;
+    top: 2px;
 }
 
 .actions li a.selected {

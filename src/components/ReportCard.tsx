@@ -6,6 +6,7 @@ import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
+import { Check, CheckCircle, CheckSquare, Square } from "react-feather";
 
 interface ReportCardProps {
     report: string;
@@ -171,7 +172,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                                 event.preventDefault();
                                 setShowConfirmed(!showConfirmed);
                             }}>
-                            Confirmed
+                            {showConfirmed ? <CheckSquare size={14} /> : <Square size={14} />} Confirmed
                         </a>
                     </li>
                     <li>
@@ -182,7 +183,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                                 event.preventDefault();
                                 setShowDeaths(!showDeaths);
                             }}>
-                            Deaths
+                            {showDeaths ? <CheckSquare size={14} /> : <Square size={14} />} Deaths
                         </a>
                     </li>
                     <li>
@@ -193,7 +194,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                                 event.preventDefault();
                                 setShowRecovered(!showRecovered);
                             }}>
-                            Recovered
+                            {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
                         </a>
                     </li>
                 </ul>
