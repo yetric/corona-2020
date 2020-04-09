@@ -524,9 +524,9 @@ ol li:before {
 .toast {
     margin: 10px auto;
     width: 250px;
-    background: rgba(163, 190, 140, 0.85);
-    border: 1px solid rgb(163, 190, 140);
-    color: var(--nord6);
+    background: var(--action);
+    border: 1px solid var(--action);
+    color: var(--white);
     font-size: 14px;
     padding: 8px;
     transition: opacity 1s;
