@@ -11,12 +11,12 @@ export type ChartType = "linear" | "logarithmic";
 interface ReportProps {
     report: ReportInterface | null;
     type: string;
+    showConfirmed: boolean;
+    showDeaths: boolean;
+    showRecovered: boolean;
 }
 
-export const Report = memo(({ report, type }: ReportProps) => {
-    const [showConfirmed, setShowConfirmed] = useState(true);
-    const [showDeaths, setShowDeaths] = useState(true);
-    const [showRecovered, setShowRecovered] = useState(true);
+export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecovered }: ReportProps) => {
     const isLogarithmic = type === "logarithmic";
     if (!report) {
         return (

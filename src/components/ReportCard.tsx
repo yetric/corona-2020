@@ -14,6 +14,10 @@ interface ReportCardProps {
 
 export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     const ref = createRef<HTMLDivElement>();
+    const [showConfirmed, setShowConfirmed] = useState(true);
+    const [showDeaths, setShowDeaths] = useState(true);
+    const [showRecovered, setShowRecovered] = useState(true);
+
     const [loaded, setLoaded] = useState(false);
     const [observing, setObserving] = useState(false);
 
@@ -140,8 +144,60 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     selected={chart}
                     onSelect={setChart}
                 />
-                {chart === "accumulated" && <Report report={store.report} type={"logarithmic"} />}
-                {chart === "daily" && <BarReport report={store.report} />}
+                {chart === "accumulated" && (
+                    <Report
+                        showConfirmed={showConfirmed}
+                        showDeaths={showDeaths}
+                        showRecovered={showRecovered}
+                        report={store.report}
+                        type={"logarithmic"}
+                    />
+                )}
+                {chart === "daily" && (
+                    <BarReport
+                        showConfirmed={showConfirmed}
+                        showDeaths={showDeaths}
+                        showRecovered={showRecovered}
+                        report={store.report}
+                    />
+                )}
+
+                <ul className={"actions"}>
+                    <li>
+                        <a
+                            href={"#confirmed"}
+                            className={showConfirmed ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setShowConfirmed(!showConfirmed);
+                            }}>
+                            Confirmed
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#deaths"}
+                            className={showDeaths ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setShowDeaths(!showDeaths);
+                            }}>
+                            Deaths
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#recovered"}
+                            className={showRecovered ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setShowRecovered(!showRecovered);
+                            }}>
+                            Recovered
+                        </a>
+                    </li>
+                </ul>
+
                 <CasesList
                     deaths={deaths}
                     confirmed={confirmed}

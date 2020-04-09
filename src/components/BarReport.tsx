@@ -7,9 +7,12 @@ import "./BarReport.css";
 
 interface BarReportProps {
     report: ReportInterface | null;
+    showConfirmed: boolean;
+    showDeaths: boolean;
+    showRecovered: boolean;
 }
 
-export const BarReport = ({ report }: BarReportProps) => {
+export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered }: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
     }
@@ -37,27 +40,39 @@ export const BarReport = ({ report }: BarReportProps) => {
 
     let lbls = [...report.labels];
     lbls.shift();
-
+    const empty: any[] = [];
     const data = {
         labels: lbls,
-        datasets: [
+        datasets: empty
+    };
+
+    showConfirmed &&
+        data.datasets.push(
             createDataset({
                 label: "Confirmed",
                 color: blue,
                 data: change.map((item) => item.confirmed)
-            }),
+            })
+        );
+
+    showDeaths &&
+        data.datasets.push(
             createDataset({
                 label: "Deaths",
                 color: red,
                 data: change.map((item) => item.deaths)
-            }),
+            })
+        );
+
+    showRecovered &&
+        data.datasets.push(
             createDataset({
                 label: "Recovered",
                 color: green,
                 data: change.map((item) => item.recovered)
             })
-        ]
-    };
+        );
+
     const options = {
         legend: {
             display: false

@@ -672,3 +672,24 @@ tfoot th {
     color: var(--yellow);
     border-bottom: 1px dotted var(--meta);
 }
+
+.actions {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+    display: flex;
+}
+
+.actions li {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 12px;
+}
+
+.actions li a {
+    color: var(--meta-light);
+}
+
+.actions li a.selected {
+    color: var(--action);
+}

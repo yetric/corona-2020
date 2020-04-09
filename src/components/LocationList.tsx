@@ -95,7 +95,13 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                     <div className="col">
                         {report && (
                             <>
-                                <Report type={listType} report={report} />
+                                <Report
+                                    showRecovered={true}
+                                    showDeaths={true}
+                                    showConfirmed={true}
+                                    type={listType}
+                                    report={report}
+                                />
                                 <Toggle
                                     items={[
                                         {
