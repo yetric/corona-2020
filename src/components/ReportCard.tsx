@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Report } from "./Report";
@@ -13,9 +13,38 @@ interface ReportCardProps {
 }
 
 export const ReportCard = observer(({ report, store }: ReportCardProps) => {
+    const ref = createRef<HTMLDivElement>();
+    const [loaded, setLoaded] = useState(false);
+    const [observing, setObserving] = useState(false);
+
+    const loadReport = async () => {
+        if (!loaded) {
+            observer.disconnect();
+            await store.loadReport(report);
+            setLoaded(true);
+        }
+    };
+
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            console.log(entry.intersectionRatio);
+            if (entry.intersectionRatio > 0.3 && !loaded) {
+                loadReport();
+            }
+        },
+        {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.3
+        }
+    );
+
     useEffect(() => {
-        store.loadReport(report);
-    }, [report, store]);
+        if (ref.current && !observing) {
+            observer.observe(ref.current);
+            setObserving(true);
+        }
+    }, [ref, observing, observer]);
 
     const [chart, setChart] = useState("accumulated");
 
@@ -94,7 +123,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     };
 
     return (
-        <div className="card">
+        <div ref={ref} className="card">
             <div className="card-header">{reportFixed}</div>
             <div className="card-body">
                 <Toggle

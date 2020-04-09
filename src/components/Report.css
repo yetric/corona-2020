@@ -1,3 +1,6 @@
 .report-view {
     margin-bottom: 20px;
 }
+.report-loading {
+    position: relative;
+}

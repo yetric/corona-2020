@@ -17,7 +17,7 @@
     --nord14-dark: #798c68;
     --nord15: rgb(180, 142, 173);
 
-    --odd: #313644;
+    --odd: #212e3d;
 
     --meta: #6b7383;
     --meta-light: #a2acc0;
@@ -39,6 +39,10 @@
     --white: #f2f5fa;
 
     --action: #52d8b9;
+
+    --main-bg: #253344;
+    --elevated-bg: #2c3d51;
+    --elevated-border: #354a62;
 }
 
 * {
@@ -55,7 +59,7 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: var(--nord0);
+    background: var(--main-bg);
     color: var(--nord4);
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 18px;
@@ -93,7 +97,7 @@ h6 {
 }
 
 a {
-    color: var(--nord9);
+    color: var(--accent1);
     text-decoration: none;
 }
 
@@ -130,10 +134,14 @@ a {
 }
 
 .chart-line,
-.bar-chart-elm,
+.bar-chart-elm {
+    min-height: 320px;
+    padding: 0;
+}
+
 .bar-report-wrapper,
 .report-view {
-    min-height: 320px;
+    min-height: 280px;
     padding: 0;
 }
 
@@ -227,14 +235,14 @@ select {
 }
 
 .card {
-    border: 1px solid var(--nord2);
+    border: 1px solid var(--elevated-border);
     margin: 0 0 20px 0;
 }
 
 .card-header {
     position: relative;
-    background-color: var(--nord1);
-    border-bottom: 1px solid var(--nord2);
+    background-color: var(--elevated-bg);
+    border-bottom: 1px solid var(--elevated-border);
     line-height: 48px;
     padding: 0 20px;
 }
@@ -571,8 +579,8 @@ table {
     border-collapse: collapse;
     width: 100%;
     margin: 0 0 12px 0;
-    border-top: 1px solid var(--nord1);
-    border-bottom: 1px solid var(--nord1);
+    border-top: 1px solid var(--elevated-border);
+    border-bottom: 1px solid var(--elevated-border);
 }
 
 .card-header small {
@@ -583,18 +591,18 @@ table {
 table td,
 table th {
     padding: 6px 12px;
-    border-bottom: 1px solid var(--nord1);
+    border-bottom: 1px solid var(--elevated-border);
     font-size: 15px;
     text-align: left;
     white-space: nowrap;
-    border-right: 1px solid var(--nord1);
+    border-right: 1px solid var(--elevated-border);
     vertical-align: top;
 }
 
 table th {
     font-weight: normal;
     text-transform: uppercase;
-    color: var(--nord13);
+    color: var(--meta-light);
 }
 
 tbody tr th {
@@ -655,7 +663,7 @@ caption span {
 
 tfoot td,
 tfoot th {
-    border-top: 1px solid var(--nord1);
+    border-top: 1px solid var(--elevated-border);
     text-align: right;
     font-size: 18px;
 }

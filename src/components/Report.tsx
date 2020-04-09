@@ -1,9 +1,10 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
 import { blue, green, red } from "../core/colors";
 import "./Report.css";
+import { Loading } from "./Loading";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -13,34 +14,50 @@ interface ReportProps {
 }
 
 export const Report = memo(({ report, type }: ReportProps) => {
+    const [showConfirmed, setShowConfirmed] = useState(true);
+    const [showDeaths, setShowDeaths] = useState(true);
+    const [showRecovered, setShowRecovered] = useState(true);
     const isLogarithmic = type === "logarithmic";
     if (!report) {
-        return <div>Laddar...</div>;
+        return (
+            <div className={"report-view"}>
+                <Loading />
+            </div>
+        );
     }
+    const empty: any[] = [];
     const data = {
         labels: report.labels,
-        datasets: [
-            createDataset({
-                label: "Confirmed",
-                color: blue,
-                data: report.confirmed
-            }),
-            createDataset({
-                label: "Deaths",
-                color: red,
-                data: report.deaths
-            }),
-            createDataset({
-                label: "Recovered",
-                color: green,
-                data: report.recovered
-            })
-        ]
+        datasets: empty
     };
+
+    let confirmed = createDataset({
+        label: "Confirmed",
+        color: blue,
+        data: report.confirmed
+    });
+
+    let deaths = createDataset({
+        label: "Deaths",
+        color: red,
+        data: report.deaths
+    });
+    let recovered = createDataset({
+        label: "Recovered",
+        color: green,
+        data: report.recovered
+    });
+
+    showConfirmed && data.datasets.push(confirmed);
+    showDeaths && data.datasets.push(deaths);
+    showRecovered && data.datasets.push(recovered);
+
     const options = {
         legend: {
             display: false
         },
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             yAxes: [
                 {
