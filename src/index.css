@@ -43,6 +43,8 @@
     --main-bg: #253344;
     --elevated-bg: #2c3d51;
     --elevated-border: #354a62;
+
+    --change: #9fc3cb;
 }
 
 * {
@@ -174,6 +176,19 @@ a {
     .cards .card:first-child {
         margin-left: 0;
     }
+}
+
+.row-xs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-xs {
+    position: relative;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0 6px;
 }
 
 @media screen and (min-width: 1024px) {
@@ -698,4 +713,15 @@ tfoot th {
 
 .actions li a.selected {
     color: var(--action);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--elevated-border);
+    margin: 20px 0;
+}
+
+.meta-info {
+    margin-bottom: 20px;
 }

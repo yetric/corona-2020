@@ -1,8 +1,7 @@
 import React from "react";
-import { Placeholder } from "./Placeholder";
 import { relativeToPercentage } from "../core/functions";
 import "./CasesList.css";
-import CountUp from "react-countup";
+import { CaseListItem } from "./CaseListItem";
 
 interface CasesListProps {
     confirmed?: number | null;
@@ -19,6 +18,13 @@ interface CasesListProps {
     deathsCompare?: number | null;
     recoveredCompare?: number | null;
     activeCompare?: number | null;
+
+    changes?: {
+        confirmed: number;
+        deaths: number;
+        recovered: number;
+        active: number;
+    } | null;
 }
 
 const emptyOrRelative = (num: number | null | undefined) => {
@@ -34,63 +40,35 @@ export const CasesList = (props: CasesListProps) => {
     let activeChange = emptyOrRelative(props.activeCompare);
 
     return (
-        <dl>
-            <dt>Confirmed</dt>
-            <dd>
-                {(props.confirmed && <CountUp separator={" "} redraw={false} end={props.confirmed} />) || (
-                    <Placeholder />
-                )}{" "}
-                <small>{props.updated || <Placeholder />}</small>
-                <span className={"compare"}>{confirmedChange}</span>
-            </dd>
-
-            <dt>Deaths</dt>
-            <dd>
-                {(props.deaths && <CountUp redraw={false} end={props.deaths} separator={" "} />) || <Placeholder />}{" "}
-                <small>
-                    {(props.deathRate && (
-                        <CountUp
-                            end={relativeToPercentage(props.deathRate, false)}
-                            decimals={2}
-                            suffix={"%"}
-                            redraw={false}
-                        />
-                    )) || <Placeholder />}
-                </small>
-                <span className={"compare"}>{deathChange}</span>
-            </dd>
-            <dt>Recovered</dt>
-            <dd>
-                {(props.recovered && <CountUp redraw={false} end={props.recovered} separator={" "} />) || (
-                    <Placeholder />
-                )}{" "}
-                <small>
-                    {(props.recoveryRate && (
-                        <CountUp
-                            end={relativeToPercentage(props.recoveryRate, false)}
-                            decimals={2}
-                            suffix={"%"}
-                            redraw={false}
-                        />
-                    )) || <Placeholder />}
-                </small>
-                <span className={"compare"}>{recoveredChange}</span>
-            </dd>
-            <dt>Active</dt>
-            <dd>
-                {(props.active && <CountUp redraw={false} end={props.active} separator={" "} />) || <Placeholder />}{" "}
-                <small>
-                    {(props.activityRate && (
-                        <CountUp
-                            end={relativeToPercentage(props.activityRate, false)}
-                            decimals={2}
-                            suffix={"%"}
-                            redraw={false}
-                        />
-                    )) || <Placeholder />}
-                </small>
-                <span className={"compare"}>{activeChange}</span>
-            </dd>
+        <dl className={"case-list"}>
+            <CaseListItem
+                change={props.changes?.confirmed}
+                changeRate={confirmedChange}
+                count={props.confirmed}
+                label={"Confirmed"}
+                rate={props.updated}
+            />
+            <CaseListItem
+                label={"Deaths"}
+                count={props.deaths}
+                rate={props.deathRate}
+                change={props.changes?.deaths}
+                changeRate={deathChange}
+            />
+            <CaseListItem
+                label={"Recovered"}
+                count={props.recovered}
+                rate={props.recoveryRate}
+                change={props.changes?.recovered}
+                changeRate={recoveredChange}
+            />
+            <CaseListItem
+                label={"Active"}
+                count={props.active}
+                rate={props.activityRate}
+                change={props.changes?.active}
+                changeRate={activeChange}
+            />
         </dl>
     );
 };

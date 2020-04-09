@@ -6,7 +6,7 @@ import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
-import { Check, CheckCircle, CheckSquare, Square } from "react-feather";
+import { CheckSquare, Square } from "react-feather";
 
 interface ReportCardProps {
     report: string;
@@ -70,10 +70,17 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
             : 0;
     let activeBefore = confirmedBefore - (deathsBefore + recoveredBefore);
 
-    let deathsCompare = (deaths - deathsBefore) / deathsBefore;
-    let confirmedCompare = (confirmed - confirmedBefore) / confirmedBefore;
-    let recoveredCompare = (recovered - recoveredBefore) / recoveredBefore;
-    let activeCompare = (active - activeBefore) / activeBefore;
+    let changes = {
+        confirmed: confirmed - confirmedBefore,
+        deaths: deaths - deathsBefore,
+        recovered: recovered - recoveredBefore,
+        active: active - activeBefore
+    };
+
+    let deathsCompare = changes.deaths / deathsBefore;
+    let confirmedCompare = changes.confirmed / confirmedBefore;
+    let recoveredCompare = changes.recovered / recoveredBefore;
+    let activeCompare = changes.active / activeBefore;
 
     let deathRate = deaths / confirmed;
     let recoveryRate = recovered / confirmed;
@@ -198,7 +205,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                         </a>
                     </li>
                 </ul>
-
+                <hr />
                 <CasesList
                     deaths={deaths}
                     confirmed={confirmed}
@@ -212,11 +219,14 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     confirmedCompare={confirmedCompare}
                     recoveredCompare={recoveredCompare}
                     activeCompare={activeCompare}
+                    changes={changes}
                 />
 
-                <div className="row">
-                    <div className="col">
-                        <p className={"muted text-center"}>
+                <hr />
+
+                <div className="row-xs meta-info">
+                    <div className="col-xs">
+                        <div className={"muted text-center"}>
                             <small>
                                 <strong>Doubling Rates</strong>
                                 <br />
@@ -225,18 +235,18 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                                 Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
                                 <br />
                             </small>
-                        </p>
+                        </div>
                     </div>
-                    <div className="col">
-                        <p className={"muted text-center"}>
+                    <div className="col-xs">
+                        <div className={"muted text-center"}>
                             <small>
-                                <strong>Last Three Days of Total</strong>
+                                <strong>Last 3 Days of Total</strong>
                                 <br />
                                 Confirmed: <span className={"focus"}>{lastThreeDaysShare()}</span>
                                 <br />
                                 Deaths: <span className={"focus"}>{lastThreeDaysShare("deaths")}</span>
                             </small>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
