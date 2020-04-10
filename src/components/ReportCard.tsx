@@ -174,7 +174,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     <li>
                         <a
                             href={"#confirmed"}
-                            className={showConfirmed ? "selected" : ""}
+                            className={"confirmed" + (showConfirmed ? " selected" : "")}
                             onClick={(event) => {
                                 event.preventDefault();
                                 setShowConfirmed(!showConfirmed);
@@ -185,7 +185,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     <li>
                         <a
                             href={"#deaths"}
-                            className={showDeaths ? "selected" : ""}
+                            className={"deaths" + (showDeaths ? " selected" : "")}
                             onClick={(event) => {
                                 event.preventDefault();
                                 setShowDeaths(!showDeaths);
@@ -196,7 +196,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     <li>
                         <a
                             href={"#recovered"}
-                            className={showRecovered ? "selected" : ""}
+                            className={"recovered" + (showRecovered ? " selected" : "")}
                             onClick={(event) => {
                                 event.preventDefault();
                                 setShowRecovered(!showRecovered);
