@@ -137,6 +137,7 @@ a {
     display: inline-block;
     padding: 0 12px;
     line-height: 26px;
+    transition: color 0.85s;
 }
 
 .toggle li.active {
@@ -144,8 +145,9 @@ a {
 
 .toggle li.active a {
     border-radius: 2px;
-    border: 1px solid var(--action);
+    border-bottom: 1px solid var(--action);
     color: var(--action);
+    outline: 0;
 }
 
 .chart-line,
@@ -717,6 +719,7 @@ tfoot th {
 .actions li a {
     color: var(--meta);
     outline: 0;
+    transition: color 0.85s;
 }
 
 .actions li a svg {
@@ -742,6 +745,11 @@ tfoot th {
 
 .actions li a.selected.active {
     color: var(--yellow);
+}
+
+.disabled-action {
+    opacity: 0.15;
+    pointer-events: none;
 }
 
 hr {

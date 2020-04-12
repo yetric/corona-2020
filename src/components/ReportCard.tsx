@@ -6,7 +6,7 @@ import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
-import { CheckSquare, Square } from "react-feather";
+import { Bell, CheckSquare, Square } from "react-feather";
 
 interface ReportCardProps {
     report: string;
@@ -136,9 +136,21 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         return relativeToPercentage(change / compare);
     };
 
+    const disableAccumulatedActions = chart === "daily";
+
     return (
         <div ref={ref} className="card">
-            <div className="card-header">{reportFixed}</div>
+            <div className="card-header">
+                {reportFixed}
+                <span
+                    className={"action"}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        alert("Show notifications UI");
+                    }}>
+                    <Bell size={14} />
+                </span>
+            </div>
             <div className="card-body">
                 <Toggle
                     items={[
@@ -153,7 +165,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     ]}
                     selected={chartType}
                     onSelect={setChartType}
-                    className={"pull-left"}
+                    className={"pull-left" + (disableAccumulatedActions ? " disabled-action" : "")}
                 />
                 <Toggle
                     items={[
@@ -176,7 +188,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                         showRecovered={showRecovered}
                         report={store.report}
                         showActive={showActive}
-                        type={"logarithmic"}
+                        type={chartType}
                     />
                 )}
                 {chart === "daily" && (
@@ -225,7 +237,11 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     <li>
                         <a
                             href={"#active"}
-                            className={"active" + (showActive ? " selected" : "")}
+                            className={
+                                "active" +
+                                (showActive ? " selected" : "") +
+                                (disableAccumulatedActions ? " disabled-action" : "")
+                            }
                             onClick={(event) => {
                                 event.preventDefault();
                                 setShowActive(!showActive);
