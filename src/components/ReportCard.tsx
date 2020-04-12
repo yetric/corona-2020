@@ -18,6 +18,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
     const [showRecovered, setShowRecovered] = useState(true);
+    const [showActive, setShowActive] = useState(false);
 
     const [loaded, setLoaded] = useState(false);
     const [observing, setObserving] = useState(false);
@@ -52,6 +53,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     }, [ref, observing, observer]);
 
     const [chart, setChart] = useState("accumulated");
+    const [chartType, setChartType] = useState("logarithmic");
 
     let deaths = store.report ? store.report.deaths[store.report.deaths.length - 1] : 0;
     let confirmed = store.report ? store.report.confirmed[store.report.confirmed.length - 1] : 0;
@@ -141,6 +143,21 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                 <Toggle
                     items={[
                         {
+                            key: "linear",
+                            label: "Linear"
+                        },
+                        {
+                            key: "logarithmic",
+                            label: "Logarithmic"
+                        }
+                    ]}
+                    selected={chartType}
+                    onSelect={setChartType}
+                    className={"pull-left"}
+                />
+                <Toggle
+                    items={[
+                        {
                             key: "accumulated",
                             label: "Accumulated"
                         },
@@ -158,6 +175,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                         showDeaths={showDeaths}
                         showRecovered={showRecovered}
                         report={store.report}
+                        showActive={showActive}
                         type={"logarithmic"}
                     />
                 )}
@@ -202,6 +220,17 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                                 setShowRecovered(!showRecovered);
                             }}>
                             {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#active"}
+                            className={"active" + (showActive ? " selected" : "")}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setShowActive(!showActive);
+                            }}>
+                            {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
                         </a>
                     </li>
                 </ul>

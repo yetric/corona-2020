@@ -5,6 +5,7 @@ import { Links } from "../components/Links";
 import { Advice } from "../components/Advice";
 import { About } from "../components/About";
 import { GeoOverview } from "../components/GeoOverview";
+import { Modal } from "../components/core/Modal";
 
 export const Home = observer(() => {
     useEffect(() => {
@@ -30,6 +31,16 @@ export const Home = observer(() => {
                     <About />
                 </div>
             </div>
+            {/*
+            <Modal header={"Welcome to CoronaData.se"} footer={"CoronaData.se by Yetric AB - 2020"} allowClose={true} steps={[
+                "Step 1", "Step 2", "Step 3"
+            ]}>
+                <p>Ok, before we start (we will only show this the first time) there are some stuff we need to take care of:</p>
+
+                <ol>
+                    <li>Stay Safe, Stay Home</li>
+                </ol>
+            </Modal>*/}
         </>
     );
 });

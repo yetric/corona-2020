@@ -116,6 +116,10 @@ a {
     padding: 12px;
 }
 
+.toggle.pull-left {
+    float: left;
+}
+
 .toggle {
     list-style: none;
     padding: 0;
@@ -734,6 +738,10 @@ tfoot th {
 
 .actions li a.selected.deaths {
     color: #ef7171;
+}
+
+.actions li a.selected.active {
+    color: var(--yellow);
 }
 
 hr {
