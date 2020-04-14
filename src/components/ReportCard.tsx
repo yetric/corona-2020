@@ -7,6 +7,7 @@ import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
 import { Bell, CheckSquare, Square } from "react-feather";
+import domtoimage from "dom-to-image";
 
 interface ReportCardProps {
     report: string;
@@ -14,7 +15,7 @@ interface ReportCardProps {
 }
 
 export const ReportCard = observer(({ report, store }: ReportCardProps) => {
-    const ref = createRef<HTMLDivElement>();
+    const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
     const [showRecovered, setShowRecovered] = useState(true);
@@ -294,6 +295,24 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                         </div>
                     </div>
                 </div>
+                <a
+                    href={"#download"}
+                    onClick={(event) => {
+                        event.preventDefault();
+
+                        domtoimage
+                            .toPng(ref.current)
+                            .then(function(dataUrl) {
+                                const img = new Image();
+                                img.src = dataUrl;
+                                document.body.appendChild(img);
+                            })
+                            .catch(function(error) {
+                                console.error("oops, something went wrong!", error);
+                            });
+                    }}>
+                    Download Image
+                </a>
             </div>
         </div>
     );
