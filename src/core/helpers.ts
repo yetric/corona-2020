@@ -17,6 +17,18 @@ export const sortLocation = (location: GeoLocation[], sortKey: string) => {
         const aDeath = a.deaths ? parseInt(a.deaths.count) : 0;
         const bDeath = b.deaths ? parseInt(b.deaths.count) : 0;
 
+        const aRecovered = a.recovered ? parseInt(a.recovered.count) : 0;
+        const bRecovered = b.recovered ? parseInt(b.recovered.count) : 0;
+
+        const deathRateA = aDeath / aConfirmed;
+        const deathRateB = bDeath / bConfirmed;
+
+        const aRecoveryRate = aRecovered / aConfirmed;
+        const bRecoveryRate = bRecovered / bConfirmed;
+
+        const aActivityRate = (aConfirmed - (aDeath + aRecovered)) / aConfirmed;
+        const bActivityRate = (bConfirmed - (bDeath + bRecovered)) / bConfirmed;
+
         switch (sortKey) {
             case "confirmed":
                 sort = aConfirmed > bConfirmed ? -1 : 1;
@@ -32,6 +44,15 @@ export const sortLocation = (location: GeoLocation[], sortKey: string) => {
                 break;
             case "active":
                 sort = activeA > activeB ? -1 : 1;
+                break;
+            case "death-rate":
+                sort = deathRateA > deathRateB ? -1 : 1;
+                break;
+            case "recovery-rate":
+                sort = aRecoveryRate > bRecoveryRate ? -1 : 1;
+                break;
+            case "activity-rate":
+                sort = aActivityRate > bActivityRate ? -1 : 1;
                 break;
         }
         return sort;

@@ -152,9 +152,27 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                                 }}>
                                 Recovered
                             </th>
-                            <th className={"text-right"}>Death Rate</th>
-                            <th className={"text-right"}>Recovery Rate</th>
-                            <th className={"text-right"}>Activity Rate</th>
+                            <th
+                                className={"text-right"}
+                                onClick={() => {
+                                    sort("death-rate");
+                                }}>
+                                Death Rate
+                            </th>
+                            <th
+                                className={"text-right"}
+                                onClick={() => {
+                                    sort("recovery-rate");
+                                }}>
+                                Recovery Rate
+                            </th>
+                            <th
+                                className={"text-right"}
+                                onClick={() => {
+                                    sort("activity-rate");
+                                }}>
+                                Activity Rate
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
