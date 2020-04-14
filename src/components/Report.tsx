@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
 import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
