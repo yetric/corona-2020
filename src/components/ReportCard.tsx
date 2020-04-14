@@ -34,7 +34,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         ([entry]) => {
             console.log(entry.intersectionRatio);
             if (entry.intersectionRatio > 0.3 && !loaded) {
-                loadReport();
+                loadReport().then(() => {});
             }
         },
         {
@@ -136,7 +136,12 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
 
     return (
         <div ref={ref} className="card">
-            <div className="card-header">{reportFixed}</div>
+            <div className="card-header">
+                {reportFixed}
+                <small className={"meta"}>
+                    {store.report?.labels[0]} - {store.report?.labels[store.report?.labels.length - 1]}
+                </small>
+            </div>
             <div className="card-body">
                 <Toggle
                     items={[
