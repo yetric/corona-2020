@@ -1,5 +1,5 @@
 :root {
-    --nord0: #2e3440;
+    --nord0: rgb(46, 52, 64);
     --nord1: #3b4252;
     --nord2: #434c5e;
     --nord3: #4c566a;
@@ -352,9 +352,13 @@ input[type="text"] {
     width: 100%;
     margin: 0 0 12px 0;
     line-height: 24px;
-    padding: 12px;
+    padding: 12px 4px;
     font-size: 16px;
     border-radius: 2px;
+    background-color: transparent;
+    color: var(--nord4);
+    border: none;
+    border-bottom: 1px solid var(--nord4);
 }
 
 .list-group {

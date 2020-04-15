@@ -72,15 +72,23 @@ export const Monokai: ColorTheme = createTheme({
     fg: "#F8F8F2"
 });
 
+export const Material: ColorTheme = createTheme({
+    blue: "#2196F3",
+    red: "#F44336",
+    green: "#4CAF50",
+    orange: "#FF9800",
+    yellow: "#FFEB3B",
+    purple: "#673AB7",
+
+    bg: "#272822",
+    fg: "#F8F8F2"
+});
+
 export const CoronaTheme: ColorTheme = createTheme();
 
-export const colors = [NordTheme.blue, NordTheme.red, NordTheme.green, NordTheme.yellow];
+export const colors = [Material.blue, Material.red, Material.green, Material.yellow];
 
-export const blue = colors[0];
-export const red = colors[1];
-export const green = colors[2];
+export const { blue, red, green, yellow, purple, orange } = Material;
 
-export const yellow = "#FDD835";
-export const orange = "#ef9b71";
 export const gray = "#BDBDBD";
 export const pink = "#ef71d8";

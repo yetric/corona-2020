@@ -1,10 +1,11 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Search } from "./components/Search";
 import Analytics from "react-router-ga";
 
 import "./core/toaster";
 import { Home } from "./views/Home";
+import { Search as SearchIcon } from "react-feather";
+import { Search } from "./components/Search";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -24,6 +25,16 @@ const WaitingComponent = (Component: any) => {
 };
 
 const App = () => {
+    const [showSearch, setShowSearch] = useState(false);
+    useEffect(() => {
+        document.addEventListener("keydown", (event) => {
+            const { key } = event;
+            if (key === "Escape") {
+                setShowSearch(false);
+            }
+        });
+    });
+
     return (
         <Router>
             <Analytics id={"UA-103000963-8"}>
@@ -31,12 +42,22 @@ const App = () => {
                     <h2>
                         <Link to={"/"}>Data on Corona</Link>
                     </h2>
-                    <h3>CoronaData.se by Yetric AB</h3>
+                    <small
+                        onClick={(event) => {
+                            event.preventDefault();
+                            setShowSearch(true);
+                        }}>
+                        <SearchIcon />
+                    </small>
                 </div>
-
+                {showSearch && (
+                    <Search
+                        onClose={() => {
+                            setShowSearch(false);
+                        }}
+                    />
+                )}
                 <div className={"chart"}>
-                    <Search />
-
                     <Switch>
                         <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
                         <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
