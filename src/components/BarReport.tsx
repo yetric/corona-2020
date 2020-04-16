@@ -10,9 +10,10 @@ interface BarReportProps {
     showConfirmed: boolean;
     showDeaths: boolean;
     showRecovered: boolean;
+    stacked?: boolean;
 }
 
-export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered }: BarReportProps) => {
+export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered, stacked = true }: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
     }
@@ -83,13 +84,16 @@ export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered }: 
             yAxes: [
                 {
                     display: false,
-                    stacked: true
+                    stacked,
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }
             ],
             xAxes: [
                 {
                     display: false,
-                    stacked: true,
+                    stacked,
                     gridLines: {
                         display: false
                     }

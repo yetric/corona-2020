@@ -1,0 +1,42 @@
+.steps {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.steps .step-indicator {
+    display: inline-block;
+    background-color: var(--meta);
+    margin-right: 12px;
+    border-radius: 100%;
+    text-indent: -100000em;
+    width: 8px;
+    height: 8px;
+}
+
+.steps .step-indicator.active {
+    background-color: var(--action);
+}
+
+.steps .next,
+.steps .previous {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    color: var(--meta-dark);
+    border: 1px solid var(--meta-dark);
+    width: 36px;
+    line-height: 36px;
+    border-radius: 100%;
+    transform: translateY(-50%);
+}
+
+.steps .next.active,
+.steps .previous.active {
+    border-color: var(--action);
+    color: var(--action);
+}
+
+.steps .next {
+    right: 20px;
+    left: unset;
+}

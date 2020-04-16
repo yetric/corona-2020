@@ -9,8 +9,9 @@ interface ToggleProps {
     items: ToggleProp[];
     selected: string;
     onSelect: (key: string) => void;
+    className?: string;
 }
-export const Toggle = ({ items, selected, onSelect }: ToggleProps) => {
+export const Toggle = ({ items, selected, onSelect, className = "" }: ToggleProps) => {
     const toggles = items.map((toggle: ToggleProp) => {
         return (
             <li key={toggle.key} className={toggle.key === selected ? "active" : ""}>
@@ -25,5 +26,5 @@ export const Toggle = ({ items, selected, onSelect }: ToggleProps) => {
             </li>
         );
     });
-    return <ul className={"toggle"}>{toggles}</ul>;
+    return <ul className={"toggle" + (className ? " " + className : "")}>{toggles}</ul>;
 };

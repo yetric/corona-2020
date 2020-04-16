@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
 import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
-import { blue, green, red } from "../core/colors";
+import { blue, green, red, yellow } from "../core/colors";
 import "./Report.css";
 import { Loading } from "./Loading";
 
@@ -14,9 +14,10 @@ interface ReportProps {
     showConfirmed: boolean;
     showDeaths: boolean;
     showRecovered: boolean;
+    showActive: boolean;
 }
 
-export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecovered }: ReportProps) => {
+export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecovered, showActive }: ReportProps) => {
     const isLogarithmic = type === "logarithmic";
     if (!report) {
         return (
@@ -30,6 +31,10 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
         labels: report.labels,
         datasets: empty
     };
+
+    const activeData = report.confirmed.map((count: number, index: number) => {
+        return count - (report.deaths[index] + report.recovered[index]);
+    });
 
     let confirmed = createDataset({
         label: "Confirmed",
@@ -48,9 +53,16 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
         data: report.recovered
     });
 
+    let active = createDataset({
+        label: "Active",
+        color: yellow,
+        data: activeData
+    });
+
     showConfirmed && data.datasets.push(confirmed);
     showDeaths && data.datasets.push(deaths);
     showRecovered && data.datasets.push(recovered);
+    showActive && data.datasets.push(active);
 
     const options = {
         legend: {

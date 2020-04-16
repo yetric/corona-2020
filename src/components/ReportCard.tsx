@@ -1,26 +1,32 @@
 import React, { createRef, useEffect, useState } from "react";
-import { ReportStore } from "../stores/ReportStore";
+import { ReportInterface, ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Report } from "./Report";
 import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
-import { CheckSquare, Square } from "react-feather";
+import { Bell, CheckSquare, Square } from "react-feather";
+import domtoimage from "dom-to-image";
+
+type DataRange = "all" | "monthly" | "weekly";
 
 interface ReportCardProps {
     report: string;
     store: ReportStore;
+    range?: DataRange;
 }
 
-export const ReportCard = observer(({ report, store }: ReportCardProps) => {
-    const ref = createRef<HTMLDivElement>();
+export const ReportCard = observer(({ report, store, range = "all" }: ReportCardProps) => {
+    const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
     const [showRecovered, setShowRecovered] = useState(true);
+    const [showActive, setShowActive] = useState(false);
 
     const [loaded, setLoaded] = useState(false);
     const [observing, setObserving] = useState(false);
+    const [currentRange, setCurrentRange] = useState(range);
 
     const loadReport = async () => {
         if (!loaded) {
@@ -52,22 +58,30 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     }, [ref, observing, observer]);
 
     const [chart, setChart] = useState("accumulated");
+    const [chartType, setChartType] = useState("logarithmic");
+    let dataStore: ReportInterface | null = null;
+    switch (currentRange) {
+        case "all":
+            dataStore = store.report;
+            break;
+        case "monthly":
+            dataStore = store.monthly;
+            break;
+        case "weekly":
+            dataStore = store.weekly;
+            break;
+    }
 
-    let deaths = store.report ? store.report.deaths[store.report.deaths.length - 1] : 0;
-    let confirmed = store.report ? store.report.confirmed[store.report.confirmed.length - 1] : 0;
-    let recovered = store.report ? store.report.recovered[store.report.recovered.length - 1] : 0;
+    let deaths = dataStore ? dataStore.deaths[dataStore.deaths.length - 1] : 0;
+    let confirmed = dataStore ? dataStore.confirmed[dataStore.confirmed.length - 1] : 0;
+    let recovered = dataStore ? dataStore.recovered[dataStore.recovered.length - 1] : 0;
     let active = confirmed - (deaths + recovered);
 
-    let deathsBefore =
-        store.report && store.report.deaths.length > 2 ? store.report.deaths[store.report.deaths.length - 2] : 0;
+    let deathsBefore = dataStore && dataStore.deaths.length > 2 ? dataStore.deaths[dataStore.deaths.length - 2] : 0;
     let confirmedBefore =
-        store.report && store.report.confirmed.length > 2
-            ? store.report.confirmed[store.report.confirmed.length - 2]
-            : 0;
+        dataStore && dataStore.confirmed.length > 2 ? dataStore.confirmed[dataStore.confirmed.length - 2] : 0;
     let recoveredBefore =
-        store.report && store.report.recovered.length > 2
-            ? store.report.recovered[store.report.recovered.length - 2]
-            : 0;
+        dataStore && dataStore.recovered.length > 2 ? dataStore.recovered[dataStore.recovered.length - 2] : 0;
     let activeBefore = confirmedBefore - (deathsBefore + recoveredBefore);
 
     let changes = {
@@ -86,7 +100,7 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     let recoveryRate = recovered / confirmed;
     let activityRate = active / confirmed;
 
-    let updated = store.report ? store.report.labels[store.report.labels.length - 1] : "";
+    let updated = dataStore ? dataStore.labels[dataStore.labels.length - 1] : "";
 
     const arrReport = report.split(":");
     let reportFixed = arrReport
@@ -96,12 +110,12 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         .join(" / ");
 
     function getDoublingSpeed(prop: string = "confirmed") {
-        if (!store.report) {
+        if (!dataStore) {
             return "";
         }
-        let coll = store.report.confirmed;
+        let coll = dataStore.confirmed;
         if (prop === "deaths") {
-            coll = store.report.deaths;
+            coll = dataStore.deaths;
         }
         let half = coll[coll.length - 1] / 2;
         for (let i = coll.length - 1; i >= 0; i--) {
@@ -113,15 +127,15 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
     }
 
     const lastThreeDaysShare = (prop: string = "confirmed") => {
-        if (!store.report) {
+        if (!dataStore) {
             return 0;
         }
 
-        let source = store.report.confirmed;
+        let source = dataStore.confirmed;
         let compare = confirmed;
         switch (prop) {
             case "deaths":
-                source = store.report.deaths;
+                source = dataStore.deaths;
                 compare = deaths;
                 break;
         }
@@ -134,15 +148,52 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
         return relativeToPercentage(change / compare);
     };
 
+    const disableAccumulatedActions = chart === "daily";
+    let dates = dataStore ? dataStore.labels[0] + " - " + dataStore.labels[dataStore.labels.length - 1] : "";
+
     return (
         <div ref={ref} className="card">
             <div className="card-header">
                 {reportFixed}
-                <small className={"meta"}>
-                    {store.report?.labels[0]} - {store.report?.labels[store.report?.labels.length - 1]}
-                </small>
+                <small className={"meta"}>{dates}</small>
             </div>
             <div className="card-body">
+                <ul className={"actions"}>
+                    <li>
+                        <a
+                            href={"#all"}
+                            className={currentRange === "all" ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentRange("all");
+                            }}>
+                            All
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#monthly"}
+                            className={currentRange === "monthly" ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentRange("monthly");
+                            }}>
+                            Last Month
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#weekly"}
+                            className={currentRange === "weekly" ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentRange("weekly");
+                            }}>
+                            Last Week
+                        </a>
+                    </li>
+                </ul>
+
                 <Toggle
                     items={[
                         {
@@ -157,13 +208,15 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                     selected={chart}
                     onSelect={setChart}
                 />
+
                 {chart === "accumulated" && (
                     <Report
                         showConfirmed={showConfirmed}
                         showDeaths={showDeaths}
                         showRecovered={showRecovered}
-                        report={store.report}
-                        type={"logarithmic"}
+                        report={dataStore}
+                        showActive={showActive}
+                        type={chartType}
                     />
                 )}
                 {chart === "daily" && (
@@ -171,7 +224,8 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                         showConfirmed={showConfirmed}
                         showDeaths={showDeaths}
                         showRecovered={showRecovered}
-                        report={store.report}
+                        report={dataStore}
+                        stacked={false}
                     />
                 )}
 
@@ -209,7 +263,23 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                             {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
                         </a>
                     </li>
+                    <li>
+                        <a
+                            href={"#active"}
+                            className={
+                                "active" +
+                                (showActive ? " selected" : "") +
+                                (disableAccumulatedActions ? " disabled-action" : "")
+                            }
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setShowActive(!showActive);
+                            }}>
+                            {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
+                        </a>
+                    </li>
                 </ul>
+
                 <hr />
                 <CasesList
                     deaths={deaths}
@@ -254,6 +324,24 @@ export const ReportCard = observer(({ report, store }: ReportCardProps) => {
                         </div>
                     </div>
                 </div>
+                <a
+                    href={"#download"}
+                    onClick={(event) => {
+                        event.preventDefault();
+
+                        domtoimage
+                            .toPng(ref.current)
+                            .then(function(dataUrl) {
+                                const img = new Image();
+                                img.src = dataUrl;
+                                document.body.appendChild(img);
+                            })
+                            .catch(function(error) {
+                                console.error("oops, something went wrong!", error);
+                            });
+                    }}>
+                    Download Image
+                </a>
             </div>
         </div>
     );

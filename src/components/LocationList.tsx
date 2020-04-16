@@ -101,6 +101,7 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                                     showConfirmed={true}
                                     type={listType}
                                     report={report}
+                                    showActive={false}
                                 />
                                 <Toggle
                                     items={[

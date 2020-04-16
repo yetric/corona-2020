@@ -89,20 +89,6 @@ const Geo = withRouter(
 
         return (
             <div className={"geo-wrapper"}>
-                <Toggle
-                    items={[
-                        {
-                            key: "all",
-                            label: "All"
-                        },
-                        {
-                            key: "week",
-                            label: "Last Week"
-                        }
-                    ]}
-                    selected={dataStore.period}
-                    onSelect={dataStore.setPeriod.bind(dataStore)}
-                />
                 <div className="card">
                     <LoadOverlay loading={dataStore.loading} text={"Loading graphs"} />
                     <div className="card-header">
