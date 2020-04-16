@@ -1,10 +1,11 @@
 import React, { Suspense, lazy, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Analytics from "react-router-ga";
+import { Home as HomeIcon, Info, Search as SearchIcon, Star } from "react-feather";
 
 import "./core/toaster";
 
-import { Toolbar } from "./components/Toolbar";
+import { Toolbar, ToolbarItem } from "./components/Toolbar";
 import { BarChart2 } from "react-feather";
 import { LoadingView } from "./views/Loading";
 import { Search } from "./components/Search";
@@ -38,6 +39,33 @@ const App = () => {
             }
         });
     });
+
+    const toolbarItems: ToolbarItem[] = [
+        {
+            icon: <HomeIcon size={18} />,
+            label: "Home",
+            link: "/"
+        },
+        {
+            icon: <SearchIcon size={18} />,
+            label: "Search",
+            onClick: () => {
+                setShowSearch(true);
+            }
+        },
+        {
+            icon: <Star size={18} />,
+            label: "Saved",
+            onClick: () => {
+                alert("Show saved items");
+            }
+        },
+        {
+            icon: <Info size={18} />,
+            label: "About",
+            link: "/about"
+        }
+    ];
 
     return (
         <Router>
@@ -76,7 +104,7 @@ const App = () => {
                         <a href={"https://github.com/yetric/corona-2020"}>here</a>
                     </p>
                 </div>
-                <Toolbar />
+                <Toolbar items={toolbarItems} />
             </Analytics>
         </Router>
     );

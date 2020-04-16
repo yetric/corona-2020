@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import "./Search.css";
 import { trackEvent } from "../core/tracking";
 import { useHistory } from "react-router-dom";
+import { XCircle, Search as SearchIcon } from "react-feather";
 
 interface SearchProps {
     onClose?: () => void;
@@ -85,13 +86,14 @@ export const Search = observer(({ onClose = () => {} }: SearchProps) => {
     return (
         <div className="search-wrapper">
             <div className={"search-component"}>
+                <SearchIcon className={"prefix-icon"} size={16} />
                 <a
-                    href="#close-sarch"
+                    href="#close-search"
                     onClick={(event) => {
                         event.preventDefault();
                         onClose();
                     }}>
-                    Close
+                    <XCircle size={16} /> Close
                 </a>
                 <input type={"text"} value={query} onChange={onChange} placeholder={"Search for country ..."} />
                 {(searchStore.result.countries.length > 0 ||
