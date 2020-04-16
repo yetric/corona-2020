@@ -10,10 +10,29 @@
     align-items: center;
     justify-content: center;
 }
+
+.prefix-icon {
+    position: absolute;
+    left: 4px;
+    top: 17px;
+}
+
 .search-component {
     position: relative;
     width: 90vw;
     max-width: 600px;
+}
+
+.search-component input {
+    padding-left: 32px;
+}
+
+.search-component a {
+    position: absolute;
+    right: 4px;
+    top: 12px;
+    color: var(--nord3);
+    outline: 0;
 }
 
 .search-results {
@@ -26,7 +45,7 @@
 }
 
 .search-result-item {
-    padding: 0;
+    padding: 0 0 0 30px;
     line-height: 36px;
     cursor: default;
     color: var(--action);

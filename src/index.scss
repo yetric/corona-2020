@@ -89,11 +89,19 @@ h6 {
 }
 
 .header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: var(--accent);
+    z-index: 10000;
     text-align: center;
     padding: 12px 0;
+    border-bottom: 1px solid var(--accent);
     h2 {
         margin: 0;
         font-size: 18px;
+        font-weight: 300;
     }
     h3 {
         margin: 0;
@@ -101,8 +109,16 @@ h6 {
         font-size: 14px;
     }
     a {
-        color: var(--accent3);
+        color: var(--nord4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            color: var(--action-light);
+        }
     }
+
 }
 
 a {
@@ -111,7 +127,7 @@ a {
 }
 
 .chart {
-    padding: 12px;
+    padding: 68px 12px 68px 12px;
 }
 
 .toggle.pull-left {
@@ -123,6 +139,9 @@ a {
     padding: 0;
     text-align: right;
     margin: 20px 0;
+    .card-body > &:first-child {
+        margin-top: 0;
+    }
     li {
         display: inline-block;
         font-size: 12px;
@@ -259,7 +278,8 @@ select {
 
 .card {
     border: 1px solid var(--elevated-border);
-    margin: 0 0 20px 0;
+    margin: 0 0 6px 0;
+    background: #283749;
     background: var(--main-bg);
 }
 
@@ -320,6 +340,18 @@ dt {
     padding: 0 20px 0 0;
     text-align: right;
     color: var(--meta-light);
+}
+
+dl.small-dl {
+    dt {
+        flex-basis: 35%;
+        line-height: 24px;
+        font-size: 14px;
+    }
+    dd {
+        flex-basis: 65%;
+        font-size: 16px;
+    }
 }
 
 dd {
@@ -570,7 +602,7 @@ ol li:before {
 
 #toaster-wrapper {
     position: fixed;
-    top: 0;
+    top: 60px;
     left: 0;
     right: 0;
     text-align: center;
@@ -579,14 +611,15 @@ ol li:before {
 .toast {
     margin: 10px auto;
     width: 250px;
-    background: var(--action);
-    border: 1px solid var(--action);
+    background: var(--accent);
     color: var(--white);
     font-size: 14px;
     padding: 8px;
+    opacity: .9;
     transition: opacity 1s;
     text-align: center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow:0 0 1.5em var(--shadow-color);
 }
 
 .toast.hide {
@@ -776,4 +809,36 @@ hr {
 
 .meta-info {
     margin-bottom: 20px;
+}
+
+.toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background: var(--elevated-bg);
+    color: var(--nord4);
+    border-top: 1px solid var(--elevated-border);
+
+    height: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    div {
+        text-align: center;
+        color: var(--action);
+    }
+
+    a {
+        color: var(--action);
+    }
+
+    div span {
+        display: block;
+        line-height: 12px;
+        font-size: 12px;
+        color: var(--action-light);
+    }
 }

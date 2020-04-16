@@ -9,7 +9,7 @@ import { relativeToPercentage } from "../core/functions";
 import { Bell, CheckSquare, Download, Square } from "react-feather";
 import domtoimage from "dom-to-image";
 
-type DataRange = "all" | "monthly" | "weekly";
+type DataRange = "all" | "monthly" | "weekly" | "biweekly";
 
 interface ReportCardProps {
     report: string;
@@ -38,7 +38,6 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
 
     const observer = new IntersectionObserver(
         ([entry]) => {
-            console.log(entry.intersectionRatio);
             if (entry.intersectionRatio > 0.3 && !loaded) {
                 loadReport().then(() => {});
             }
@@ -69,6 +68,9 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
             break;
         case "weekly":
             dataStore = store.weekly;
+            break;
+        case "biweekly":
+            dataStore = store.biweekly;
             break;
     }
 
@@ -151,6 +153,13 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
     const disableAccumulatedActions = chart === "daily";
     let dates = dataStore ? dataStore.labels[0] + " - " + dataStore.labels[dataStore.labels.length - 1] : "";
 
+    let incidensDeaths = null;
+    let incidensCases = null;
+    if (store.report && store.report.country && store.report.country.population) {
+        incidensDeaths = Math.round(deaths / (store.report.country.population / 100000)).toLocaleString("sv-se");
+        incidensCases = Math.round(confirmed / (store.report.country.population / 100000)).toLocaleString("sv-se");
+    }
+
     return (
         <div ref={ref} className="card">
             <div className="card-header">
@@ -179,6 +188,17 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                                 setCurrentRange("monthly");
                             }}>
                             Last Month
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#biweekly"}
+                            className={currentRange === "biweekly" ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentRange("biweekly");
+                            }}>
+                            Last 14 days
                         </a>
                     </li>
                     <li>
@@ -298,7 +318,30 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                 />
 
                 <hr />
-
+                <div className="row-xs meta-info">
+                    <div className="col-xs">
+                        {incidensDeaths && (
+                            <div className={"muted text-center"}>
+                                <small>
+                                    <strong>Incidens</strong>
+                                    <br />
+                                    <span className={"focus"}>{incidensDeaths} deaths</span> <small>/ 100K</small>
+                                </small>
+                            </div>
+                        )}
+                    </div>
+                    <div className="col-xs">
+                        {incidensCases && (
+                            <div className={"muted text-center"}>
+                                <small>
+                                    <strong>Incidens</strong>
+                                    <br />
+                                    <span className={"focus"}>{incidensCases} cases</span> <small>/ 100K</small>
+                                </small>
+                            </div>
+                        )}
+                    </div>
+                </div>
                 <div className="row-xs meta-info">
                     <div className="col-xs">
                         <div className={"muted text-center"}>
@@ -312,6 +355,7 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                             </small>
                         </div>
                     </div>
+
                     <div className="col-xs">
                         <div className={"muted text-center"}>
                             <small>
