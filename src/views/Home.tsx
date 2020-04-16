@@ -21,7 +21,7 @@ const Home = observer(({ store }: HomeProps) => {
                 label: "Deaths (Incidens)",
                 backgroundColor: red,
                 borderColor: red,
-                borderWidth: 1,
+                borderWidth: 0,
                 hoverBackgroundColor: red,
                 hoverBorderColor: red,
                 data: store.deathData
@@ -36,7 +36,7 @@ const Home = observer(({ store }: HomeProps) => {
                 label: "Confirmed Cases (Incidens)",
                 backgroundColor: blue,
                 borderColor: blue,
-                borderWidth: 1,
+                borderWidth: 0,
                 hoverBackgroundColor: blue,
                 hoverBorderColor: blue,
                 data: store.confirmedhData
@@ -60,7 +60,7 @@ const Home = observer(({ store }: HomeProps) => {
                     ticks: {
                         fontColor: "#a2acc0",
                         fontFamily: "IBM Plex Sans",
-                        fontSize: 14,
+                        fontSize: 12,
                         lineHeight: 1.2
                     }
                 }
