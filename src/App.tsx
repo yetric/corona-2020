@@ -53,7 +53,7 @@ const App = () => {
         if (isIos() && !isInStandaloneMode()) {
             setShowPwa(true);
         }
-    });
+    }, []);
 
     const toolbarItems: ToolbarItem[] = [
         {
