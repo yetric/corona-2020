@@ -11,6 +11,21 @@ export class SearchStore {
     private client: DataClient;
     private query: string;
 
+    private lookup: any = {
+        usa: "US",
+        kina: "China",
+        ryssland: "Russia",
+        sverige: "Sweden",
+        tyskland: "Germany",
+        england: "United Kingdom",
+        uk: "United Kingdom",
+        frankrike: "France",
+        norge: "Norway",
+        danmark: "Denmark",
+        island: "Iceland",
+        suomi: "Finland"
+    };
+
     @observable result: SearchResult = {
         continents: [],
         countries: [],
@@ -41,7 +56,8 @@ export class SearchStore {
     @action
     async apiSearch() {
         if (this.query.length > 1) {
-            this.result = await this.client.getJSON(`/api/corona/country?query=${this.query}`);
+            let query = this.lookup[this.query.toLowerCase()] || this.query;
+            this.result = await this.client.getJSON(`/api/corona/country?query=${query}`);
         }
     }
 }
