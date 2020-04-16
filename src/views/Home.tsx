@@ -47,8 +47,35 @@ const Home = observer(({ store }: HomeProps) => {
     const options = {
         responsive: true,
         maintainAspectRatio: false,
+        scaleFontColor: "#ffffcc",
         legend: {
             display: false
+        },
+        scales: {
+            yAxes: [
+                {
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        fontColor: "#a2acc0",
+                        fontFamily: "IBM Plex Sans",
+                        fontSize: 14,
+                        lineHeight: 1.2
+                    }
+                }
+            ],
+            xAxes: [
+                {
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        fontColor: "#a2acc0",
+                        fontFamily: "IBM Plex Sans"
+                    }
+                }
+            ]
         }
     };
 
