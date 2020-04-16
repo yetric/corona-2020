@@ -25,13 +25,18 @@
 
 .search-component input {
     padding-left: 32px;
+    outline: 0;
+}
+
+.search-component input:focus {
+    border-bottom-color: var(--action);
 }
 
 .search-component a {
     position: absolute;
     right: 4px;
     top: 12px;
-    color: var(--nord3);
+    color: var(--meta);
     outline: 0;
 }
 
