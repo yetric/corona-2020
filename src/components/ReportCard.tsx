@@ -112,12 +112,12 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
         .join(" / ");
 
     function getDoublingSpeed(prop: string = "confirmed") {
-        if (!dataStore) {
+        if (!store.report) {
             return "";
         }
-        let coll = dataStore.confirmed;
+        let coll = store.report.confirmed;
         if (prop === "deaths") {
-            coll = dataStore.deaths;
+            coll = store.report.deaths;
         }
         let half = coll[coll.length - 1] / 2;
         for (let i = coll.length - 1; i >= 0; i--) {
