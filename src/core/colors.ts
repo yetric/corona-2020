@@ -108,9 +108,9 @@ export const Dracula: ColorTheme = createTheme({
     fg: "#f8f8f2"
 });
 
-export const colors = [Gruvbox.blue, Gruvbox.red, Gruvbox.green, Gruvbox.yellow];
+export const colors = [Monokai.blue, Monokai.red, Monokai.green, Monokai.yellow];
 
-export const { blue, red, green, yellow, purple, orange } = Gruvbox;
+export const { blue, red, green, yellow, purple, orange } = Monokai;
 
 export const gray = "#BDBDBD";
 export const pink = "#ef71d8";
