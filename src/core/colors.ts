@@ -85,10 +85,32 @@ export const Material: ColorTheme = createTheme({
 });
 
 export const CoronaTheme: ColorTheme = createTheme();
+export const Gruvbox: ColorTheme = createTheme({
+    blue: "#458588",
+    red: "#cc241d",
+    green: "#b8bb26",
+    orange: "#fe8019",
+    yellow: "#fabd2f",
+    purple: "#d3869b",
 
-export const colors = [Material.blue, Material.red, Material.green, Material.yellow];
+    bg: "#282828",
+    fg: "#ebdbb2"
+});
 
-export const { blue, red, green, yellow, purple, orange } = Material;
+export const Dracula: ColorTheme = createTheme({
+    blue: "#6272a4",
+    red: "#ff5555",
+    green: "#50fa7b",
+    yellow: "#f1fa8c",
+    purple: "#bd93f9",
+
+    bg: "#282a36",
+    fg: "#f8f8f2"
+});
+
+export const colors = [Gruvbox.blue, Gruvbox.red, Gruvbox.green, Gruvbox.yellow];
+
+export const { blue, red, green, yellow, purple, orange } = Gruvbox;
 
 export const gray = "#BDBDBD";
 export const pink = "#ef71d8";
