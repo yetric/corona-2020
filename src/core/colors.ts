@@ -86,7 +86,7 @@ export const Material: ColorTheme = createTheme({
 
 export const CoronaTheme: ColorTheme = createTheme();
 export const Gruvbox: ColorTheme = createTheme({
-    blue: "#458588",
+    blue: "#3e91aa",
     red: "#cc241d",
     green: "#b8bb26",
     orange: "#fe8019",

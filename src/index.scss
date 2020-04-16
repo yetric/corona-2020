@@ -726,7 +726,7 @@ tfoot th {
 }
 
 .actions li {
-    flex-grow: 1;
+    flex: 1 0 80px;
     text-align: center;
     font-size: 14px;
 }
@@ -747,19 +747,19 @@ tfoot th {
 }
 
 .actions li a.selected.confirmed {
-    color: #71b7ef;
+    color: #3e91aa;
 }
 
 .actions li a.selected.recovered {
-    color: #95e2d0;
+    color: #b8bb26;
 }
 
 .actions li a.selected.deaths {
-    color: #ef7171;
+    color: #cc241d;
 }
 
 .actions li a.selected.active {
-    color: var(--yellow);
+    color: #fabd2f;
 }
 
 .disabled-action {
