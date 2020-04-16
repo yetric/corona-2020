@@ -260,6 +260,7 @@ select {
 .card {
     border: 1px solid var(--elevated-border);
     margin: 0 0 20px 0;
+    background: var(--main-bg);
 }
 
 .card-header {
@@ -299,6 +300,9 @@ select {
     padding: 0 20px;
     font-size: 14px;
     text-align: right;
+    a {
+        outline: 0;
+    }
 }
 
 dl {
@@ -453,6 +457,11 @@ ol li:before {
     padding: 0 18px;
 }
 
+.btn.btn-sm {
+    line-height: 28px;
+    font-size: 13px;
+}
+
 .btn.btn-block {
     display: block;
     text-align: center;
@@ -461,6 +470,11 @@ ol li:before {
 .btn svg {
     position: relative;
     top: 2px;
+}
+
+.download {
+    font-size: 14px;
+    color: var(--action);
 }
 
 .list-data {
