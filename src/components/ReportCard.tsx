@@ -149,14 +149,13 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
     };
 
     const disableAccumulatedActions = chart === "daily";
+    let dates = dataStore ? dataStore.labels[0] + " - " + dataStore.labels[dataStore.labels.length - 1] : "";
 
     return (
         <div ref={ref} className="card">
             <div className="card-header">
                 {reportFixed}
-                <small className={"meta"}>
-                    {store.report?.labels[0]} - {store.report?.labels[store.report?.labels.length - 1]}
-                </small>
+                <small className={"meta"}>{dates}</small>
             </div>
             <div className="card-body">
                 <ul className={"actions"}>
@@ -194,21 +193,7 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                         </a>
                     </li>
                 </ul>
-                <Toggle
-                    items={[
-                        {
-                            key: "linear",
-                            label: "Linear"
-                        },
-                        {
-                            key: "logarithmic",
-                            label: "Logarithmic"
-                        }
-                    ]}
-                    selected={chartType}
-                    onSelect={setChartType}
-                    className={"pull-left" + (disableAccumulatedActions ? " disabled-action" : "")}
-                />
+
                 <Toggle
                     items={[
                         {
