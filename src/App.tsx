@@ -42,13 +42,6 @@ const App = () => {
                     <h2>
                         <Link to={"/"}>Data on Corona</Link>
                     </h2>
-                    <small
-                        onClick={(event) => {
-                            event.preventDefault();
-                            setShowSearch(true);
-                        }}>
-                        <SearchIcon />
-                    </small>
                 </div>
                 {showSearch && (
                     <Search
