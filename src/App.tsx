@@ -31,6 +31,7 @@ const WaitingComponent = (Component: any) => {
 
 const App = () => {
     const [showSearch, setShowSearch] = useState(false);
+    const [showPwa, setShowPwa] = useState(false);
     useEffect(() => {
         document.addEventListener("keydown", (event) => {
             const { key } = event;
@@ -38,6 +39,20 @@ const App = () => {
                 setShowSearch(false);
             }
         });
+
+        // Detects if device is on iOS
+        const isIos = () => {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            return /iphone|ipad|ipod/.test(userAgent);
+        };
+
+        // Detects if device is in standalone mode
+        const isInStandaloneMode = () => "standalone" in window.navigator && window.navigator["standalone"];
+
+        // Checks if should display install popup notification:
+        if (isIos() && !isInStandaloneMode()) {
+            setShowPwa(true);
+        }
     });
 
     const toolbarItems: ToolbarItem[] = [
