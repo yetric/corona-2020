@@ -9,6 +9,8 @@ import { Toolbar, ToolbarItem } from "./components/Toolbar";
 import { BarChart2 } from "react-feather";
 import { LoadingView } from "./views/Loading";
 import { Search } from "./components/Search";
+import Home from "./views/Home";
+import { IncidensStore } from "./stores/IncidensStore";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -17,7 +19,6 @@ const Government = lazy(() => import("./views/Government"));
 const Expectancy = lazy(() => import("./views/Expectancy"));
 const Country = lazy(() => import("./views/Country"));
 const About = lazy(() => import("./views/About"));
-const Home = lazy(() => import("./views/Home"));
 
 const NoMatchPage = () => <div>File not found</div>;
 
@@ -109,7 +110,7 @@ const App = () => {
                         <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
                         <Route exact path={"/c/:country"} component={WaitingComponent(Country)} />
                         <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
-                        <Route exact path={"/"} component={WaitingComponent(Home)} />
+                        <Route exact path={"/"} component={() => <Home store={new IncidensStore()} />} />
                         <Route component={NoMatchPage} />
                     </Switch>
 
