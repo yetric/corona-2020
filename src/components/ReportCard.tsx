@@ -9,7 +9,7 @@ import { relativeToPercentage } from "../core/functions";
 import { Bell, CheckSquare, Download, Square } from "react-feather";
 import domtoimage from "dom-to-image";
 
-type DataRange = "all" | "monthly" | "weekly";
+type DataRange = "all" | "monthly" | "weekly" | "biweekly";
 
 interface ReportCardProps {
     report: string;
@@ -68,6 +68,9 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
             break;
         case "weekly":
             dataStore = store.weekly;
+            break;
+        case "biweekly":
+            dataStore = store.biweekly;
             break;
     }
 
@@ -185,6 +188,17 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                                 setCurrentRange("monthly");
                             }}>
                             Last Month
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={"#biweekly"}
+                            className={currentRange === "biweekly" ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentRange("biweekly");
+                            }}>
+                            Last 14 days
                         </a>
                     </li>
                     <li>

@@ -43,13 +43,13 @@ export class ReportStore {
         this.report = response.data;
     }
 
-    @computed get weekly(): ReportInterface {
+    sliceThatReport(slice: number) {
         if (!this.report) return emptyReport;
         return {
-            recovered: this.report?.recovered.slice(-7) || [],
-            deaths: this.report?.deaths.slice(-7) || [],
-            confirmed: this.report?.confirmed.slice(-7) || [],
-            labels: this.report?.labels.slice(-7) || [],
+            recovered: this.report?.recovered.slice(slice) || [],
+            deaths: this.report?.deaths.slice(slice) || [],
+            confirmed: this.report?.confirmed.slice(slice) || [],
+            labels: this.report?.labels.slice(slice) || [],
             name: this.report?.name || "",
             country: this.report.country || {
                 coord: null,
@@ -59,19 +59,15 @@ export class ReportStore {
         };
     }
 
+    @computed get weekly(): ReportInterface {
+        return this.sliceThatReport(-8);
+    }
+
+    @computed get biweekly(): ReportInterface {
+        return this.sliceThatReport(-15);
+    }
+
     @computed get monthly(): ReportInterface {
-        if (!this.report) return emptyReport;
-        return {
-            recovered: this.report?.recovered.slice(-30) || [],
-            deaths: this.report?.deaths.slice(-30) || [],
-            confirmed: this.report?.confirmed.slice(-30) || [],
-            labels: this.report?.labels.slice(-30) || [],
-            name: this.report?.name || "",
-            country: this.report.country || {
-                coord: null,
-                geometry: null,
-                population: null
-            }
-        };
+        return this.sliceThatReport(-31);
     }
 }
