@@ -91,20 +91,18 @@ h6 {
 .header {
     text-align: center;
     padding: 12px 0;
-}
-.header h2 {
-    margin: 0;
-    font-size: 18px;
-}
-
-.header a {
-    color: var(--accent3);
-}
-
-.header h3 {
-    margin: 0;
-    color: var(--nord4);
-    font-size: 14px;
+    h2 {
+        margin: 0;
+        font-size: 18px;
+    }
+    h3 {
+        margin: 0;
+        color: var(--nord4);
+        font-size: 14px;
+    }
+    a {
+        color: var(--accent3);
+    }
 }
 
 a {
@@ -125,29 +123,24 @@ a {
     padding: 0;
     text-align: right;
     margin: 20px 0;
-}
-
-.toggle li {
-    display: inline-block;
-    font-size: 12px;
-}
-
-.toggle li a {
-    color: var(--meta);
-    display: inline-block;
-    padding: 0 12px;
-    line-height: 26px;
-    transition: color 0.85s;
-}
-
-.toggle li.active {
-}
-
-.toggle li.active a {
-    border-radius: 2px;
-    border-bottom: 1px solid var(--action);
-    color: var(--action);
-    outline: 0;
+    li {
+        display: inline-block;
+        font-size: 12px;
+        a {
+            color: var(--meta);
+            display: inline-block;
+            padding: 0 12px;
+            line-height: 26px;
+            transition: color .85s;
+        }
+        &.active {
+            a {
+                border-radius: 2px;
+                border: 1px solid var(--action);
+                color: var(--action);
+            }
+        }
+    }
 }
 
 .chart-line,
@@ -280,6 +273,10 @@ select {
 .card-header small {
     font-weight: 400;
     font-size: 14px;
+    &.meta {
+        float: right;
+        font-size: 12px;
+    }
 }
 
 .card-header select {

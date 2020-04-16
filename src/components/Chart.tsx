@@ -13,53 +13,53 @@ interface ChartProps {
     colors?: string[];
 }
 
+interface LineProps {
+    label: string;
+    data: any[];
+    color: string;
+}
+
+const getDatasetProps = (lineSettings: LineProps) => {
+    return {
+        fill: false,
+        lineTension: 0,
+        label: lineSettings.label,
+        data: lineSettings.data,
+        backgroundColor: lineSettings.color,
+        borderColor: lineSettings.color,
+        borderCapStyle: "butt",
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: "miter",
+        pointBorderColor: lineSettings.color,
+        pointBackgroundColor: lineSettings.color,
+        pointBorderWidth: 1,
+        pointHoverRadius: 10,
+        pointHoverBackgroundColor: lineSettings.color,
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 1,
+        pointRadius: 0,
+        pointHitRadius: 10,
+        borderWidth: 2,
+        datasetKeyProvider: lineSettings.label
+    };
+};
+
 export const Chart = memo((props: ChartProps) => {
     if (props.labels.length === 0 || props.data.length === 0) {
         return null;
     }
     let datasets: any[] = [];
 
-    const firstNonZero = [];
-
-    for (let i = 0; i < props.data.length; i++) {
-        let collection: TypeCollection = props.data[i];
-        for (let j = 0; j < collection.data.length; j++) {
-            let count: number = collection.data[j];
-            if (count > 0) {
-                firstNonZero[i] = j;
-                break;
-            }
-        }
-    }
-
     props.data.forEach((collection: TypeCollection, index: number) => {
-        const rows = collection.data.map((count: any) => {
-            return count;
-        });
-
-        datasets.push({
-            fill: false,
-            lineTension: 0,
-            label: collection.name,
-            data: rows,
-            backgroundColor: (props.colors && props.colors[index]) || colors[index],
-            borderColor: (props.colors && props.colors[index]) || colors[index],
-            borderCapStyle: "butt",
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: "miter",
-            pointBorderColor: (props.colors && props.colors[index]) || colors[index],
-            pointBackgroundColor: (props.colors && props.colors[index]) || colors[index],
-            pointBorderWidth: 1,
-            pointHoverRadius: 10,
-            pointHoverBackgroundColor: (props.colors && props.colors[index]) || colors[index],
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 1,
-            pointRadius: 0,
-            pointHitRadius: 10,
-            borderWidth: 2,
-            datasetKeyProvider: collection.name
-        });
+        const colorFromProp = props.colors && props.colors[index];
+        datasets.push(
+            getDatasetProps({
+                color: colorFromProp || colors[index],
+                data: collection.data,
+                label: collection.name || ""
+            })
+        );
     });
 
     const chartDataset = {

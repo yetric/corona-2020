@@ -40,7 +40,7 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
         ([entry]) => {
             console.log(entry.intersectionRatio);
             if (entry.intersectionRatio > 0.3 && !loaded) {
-                loadReport();
+                loadReport().then(() => {});
             }
         },
         {
@@ -154,14 +154,9 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
         <div ref={ref} className="card">
             <div className="card-header">
                 {reportFixed}
-                <span
-                    className={"action"}
-                    onClick={(event) => {
-                        event.preventDefault();
-                        alert("Show notifications UI");
-                    }}>
-                    <Bell size={14} />
-                </span>
+                <small className={"meta"}>
+                    {store.report?.labels[0]} - {store.report?.labels[store.report?.labels.length - 1]}
+                </small>
             </div>
             <div className="card-body">
                 <ul className={"actions"}>
