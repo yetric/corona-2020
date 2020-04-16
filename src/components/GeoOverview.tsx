@@ -21,8 +21,15 @@ export const GeoOverview = observer(() => {
                 <ReportCard report={"Spain"} store={new ReportStore()} />
                 <ReportCard report={"Italy"} store={new ReportStore()} />
             </div>
+
             <div className="cards">
-                <ReportCard report={"region:Nordic Countries"} store={new ReportStore()} />
+                <ReportCard report={"China"} store={new ReportStore()} />
+                <ReportCard report={"Iran"} store={new ReportStore()} />
+                <ReportCard report={"Brazil"} store={new ReportStore()} />
+            </div>
+
+            <div className="cards">
+                <ReportCard report={"Finland"} store={new ReportStore()} />
                 <ReportCard report={"Norway"} store={new ReportStore()} />
                 <ReportCard report={"Denmark"} store={new ReportStore()} />
             </div>
@@ -30,6 +37,12 @@ export const GeoOverview = observer(() => {
                 <ReportCard report={"Russia"} store={new ReportStore()} />
                 <ReportCard report={"China"} store={new ReportStore()} />
                 <ReportCard report={"Brazil"} store={new ReportStore()} />
+            </div>
+
+            <div className="cards">
+                <ReportCard report={"Russia"} store={new ReportStore()} />
+                <ReportCard report={"Netherlands"} store={new ReportStore()} />
+                <ReportCard report={"Australia"} store={new ReportStore()} />
             </div>
         </>
     );

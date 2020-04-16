@@ -19,6 +19,8 @@ interface CasesListProps {
     recoveredCompare?: number | null;
     activeCompare?: number | null;
 
+    incidens?: string | null;
+
     changes?: {
         confirmed: number;
         deaths: number;
@@ -40,35 +42,37 @@ export const CasesList = (props: CasesListProps) => {
     let activeChange = emptyOrRelative(props.activeCompare);
 
     return (
-        <dl className={"case-list"}>
-            <CaseListItem
-                change={props.changes?.confirmed}
-                changeRate={confirmedChange}
-                count={props.confirmed}
-                label={"Confirmed"}
-                rate={props.updated}
-            />
-            <CaseListItem
-                label={"Deaths"}
-                count={props.deaths}
-                rate={props.deathRate}
-                change={props.changes?.deaths}
-                changeRate={deathChange}
-            />
-            <CaseListItem
-                label={"Recovered"}
-                count={props.recovered}
-                rate={props.recoveryRate}
-                change={props.changes?.recovered}
-                changeRate={recoveredChange}
-            />
-            <CaseListItem
-                label={"Active"}
-                count={props.active}
-                rate={props.activityRate}
-                change={props.changes?.active}
-                changeRate={activeChange}
-            />
-        </dl>
+        <>
+            <dl className={"case-list"}>
+                <CaseListItem
+                    change={props.changes?.confirmed}
+                    changeRate={confirmedChange}
+                    count={props.confirmed}
+                    label={"Confirmed"}
+                    rate={props.updated}
+                />
+                <CaseListItem
+                    label={"Deaths"}
+                    count={props.deaths}
+                    rate={props.deathRate}
+                    change={props.changes?.deaths}
+                    changeRate={deathChange}
+                />
+                <CaseListItem
+                    label={"Recovered"}
+                    count={props.recovered}
+                    rate={props.recoveryRate}
+                    change={props.changes?.recovered}
+                    changeRate={recoveredChange}
+                />
+                <CaseListItem
+                    label={"Active"}
+                    count={props.active}
+                    rate={props.activityRate}
+                    change={props.changes?.active}
+                    changeRate={activeChange}
+                />
+            </dl>
+        </>
     );
 };

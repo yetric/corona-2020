@@ -29,7 +29,7 @@ export const CaseListItem = (props: CaseListProps) => (
             </small>
             <div className="daily-change">
                 <span className={"yesterday"}>{props.change && prefixNum(props.change)}</span>
-                <span className={"compare"}>{props.changeRate}</span>
+                <span className={"compare"}>{props.changeRate || (props.change === 0 ? <>&plusmn;0</> : "n/a")}</span>
                 <span className="info">Since Yesterday</span>
             </div>
         </dd>
