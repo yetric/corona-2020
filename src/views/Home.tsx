@@ -54,21 +54,17 @@ const Home = observer(({ store }: HomeProps) => {
 
     return (
         <>
-            <div className="row">
-                <div className="col horizontal-bars">
-                    <div className="card">
-                        <div className="card-header">Deaths per 100K</div>
-                        <div className="card-body">
-                            <HorizontalBar data={deaths} options={options} />
-                        </div>
+            <div className={"cards horizontal-bars"}>
+                <div className="card">
+                    <div className="card-header">Deaths per 100K</div>
+                    <div className="card-body">
+                        <HorizontalBar data={deaths} options={options} />
                     </div>
                 </div>
-                <div className="col horizontal-bars">
-                    <div className="card">
-                        <div className="card-header">Cases per 100K</div>
-                        <div className="card-body">
-                            <HorizontalBar data={cases} options={options} />
-                        </div>
+                <div className="card">
+                    <div className="card-header">Cases per 100K</div>
+                    <div className="card-body">
+                        <HorizontalBar data={cases} options={options} />
                     </div>
                 </div>
             </div>
