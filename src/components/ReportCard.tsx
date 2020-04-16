@@ -324,7 +324,7 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                         </div>
                     </div>
                 </div>
-                <a
+                {/*<a
                     href={"#download"}
                     onClick={(event) => {
                         event.preventDefault();
@@ -341,7 +341,7 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                             });
                     }}>
                     Download Image
-                </a>
+                </a>*/}
             </div>
         </div>
     );
