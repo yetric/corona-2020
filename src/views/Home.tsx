@@ -89,7 +89,7 @@ const Home = observer(({ store }: HomeProps) => {
                     </div>
                 </div>
                 <div className="card">
-                    <div className="card-header">Cases per 100K</div>
+                    <div className="card-header">Cases (Confirmed) per 100K</div>
                     <div className="card-body">
                         <HorizontalBar data={cases} options={options} />
                     </div>
