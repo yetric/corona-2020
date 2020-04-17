@@ -281,6 +281,11 @@ select {
     margin: 0 0 6px 0;
     background: #283749;
     background: var(--main-bg);
+    display: flex;
+    flex-direction: column;
+    .card-body {
+        flex-grow: 1;
+    }
 }
 
 .card-header {
@@ -846,4 +851,30 @@ hr {
 
 .horizontal-bars .card-body {
     height: 360px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btn {
+        line-height: 28px;
+        font-size: 15px;
+        & ~ .btn {
+            border-left: none;
+        }
+    }
+}
+
+.saved-items-toolbox {
+    width: 95vw;
+    position: fixed;
+    bottom: 78px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 480px;
+    font-size: 15px;
+    .card {
+        box-shadow: 0 0 2.5em var(--shadow-color);
+    }
 }

@@ -6,8 +6,9 @@ import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
-import { Bell, CheckSquare, Download, Square } from "react-feather";
+import { CheckSquare, Download, Square } from "react-feather";
 import domtoimage from "dom-to-image";
+import { Link } from "react-router-dom";
 
 type DataRange = "all" | "monthly" | "weekly" | "biweekly";
 
@@ -15,9 +16,10 @@ interface ReportCardProps {
     report: string;
     store: ReportStore;
     range?: DataRange;
+    standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "all" }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "all", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
@@ -368,6 +370,14 @@ export const ReportCard = observer(({ report, store, range = "all" }: ReportCard
                         </div>
                     </div>
                 </div>
+
+                {!standalone && (
+                    <div className="btn-group">
+                        <Link to={`/report/${encodeURIComponent(report)}`} className="btn">
+                            Full Report
+                        </Link>
+                    </div>
+                )}
             </div>
             <div className="card-footer">
                 <a

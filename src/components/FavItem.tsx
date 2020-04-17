@@ -21,7 +21,7 @@ export const FavItem = observer(({ edit, item, store }: FavItemProp) => {
     return (
         <tr key={item.id}>
             <td className={"important-column"}>
-                <Link to={`/${item.id}`}>
+                <Link to={`/report/${item.name}`}>
                     {item.name} {item.province && <>({item.province})</>}
                 </Link>
             </td>

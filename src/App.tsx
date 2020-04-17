@@ -11,6 +11,7 @@ import { LoadingView } from "./views/Loading";
 import { Search } from "./components/Search";
 import Home from "./views/Home";
 import { IncidensStore } from "./stores/IncidensStore";
+import { ListFavs } from "./components/ListFavs";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -32,12 +33,14 @@ const WaitingComponent = (Component: any) => {
 
 const App = () => {
     const [showSearch, setShowSearch] = useState(false);
+    const [showSaved, setShowSaved] = useState(false);
     const [showPwa, setShowPwa] = useState(false);
     useEffect(() => {
         document.addEventListener("keydown", (event) => {
             const { key } = event;
             if (key === "Escape") {
                 setShowSearch(false);
+                setShowSaved(false);
             }
         });
 
@@ -73,7 +76,7 @@ const App = () => {
             icon: <Star size={16} />,
             label: "Saved",
             onClick: () => {
-                alert("Show saved items");
+                setShowSaved(!showSaved);
             }
         },
         {
@@ -108,7 +111,7 @@ const App = () => {
                         <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
                         <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
                         <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
-                        <Route exact path={"/c/:country"} component={WaitingComponent(Country)} />
+                        <Route exact path={"/report/:country"} component={WaitingComponent(Country)} />
                         <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
                         <Route exact path={"/"} component={() => <Home store={new IncidensStore()} />} />
                         <Route component={NoMatchPage} />
@@ -120,6 +123,20 @@ const App = () => {
                         <a href={"https://github.com/yetric/corona-2020"}>here</a>
                     </p>
                 </div>
+
+                {showSaved && (
+                    <div className={"saved-items-toolbox"}>
+                        <div className={"card"}>
+                            <div className={"card-header"}>Saved Reports</div>
+                            <div className={"card-body"}>
+                                <strong>WiP</strong> ipsum dolor sit amet, consectetur adipisicing elit. Atque
+                                consequuntur debitis eius enim esse est explicabo inventore iure magni molestiae nisi
+                                quaerat ratione sapiente sed suscipit, unde, vel velit voluptatibus?
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <Toolbar items={toolbarItems} />
             </Analytics>
         </Router>
