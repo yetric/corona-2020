@@ -93,7 +93,7 @@ const App = () => {
                     <h2>
                         <Link to={"/"}>
                             <BarChart2 size={18} />
-                            coronadata.se
+                            coronadata<span>.se</span>
                         </Link>
                     </h2>
                 </div>

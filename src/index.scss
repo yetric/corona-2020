@@ -102,6 +102,9 @@ h6 {
         margin: 0;
         font-size: 18px;
         font-weight: 300;
+        span {
+            opacity: .45;
+        }
     }
     h3 {
         margin: 0;
@@ -860,6 +863,8 @@ hr {
     .btn {
         line-height: 28px;
         font-size: 15px;
+        border-color: var(--action-light);
+        color: var(--action-light);
         & ~ .btn {
             border-left: none;
         }
