@@ -1,6 +1,7 @@
 {
-  "short_name": "CoronaData.se",
-  "name": "Data on Covid-19 - Graphs and Tables",
+  "name": "CoronaData.se",
+  "short_name": "CoronaData",
+  "description": "Data, graphs and tables on Corona (Covid-19) outbreak 2020. Confirmed, Recovered and Death cases categorized per geographic area all over the world.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/?pwa=1",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#2d7aad",
+  "background_color": "#52d8b9"
 }
