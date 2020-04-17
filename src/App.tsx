@@ -58,26 +58,26 @@ const App = () => {
 
     const toolbarItems: ToolbarItem[] = [
         {
-            icon: <HomeIcon size={18} />,
+            icon: <HomeIcon size={16} />,
             label: "Home",
             link: "/"
         },
         {
-            icon: <SearchIcon size={18} />,
+            icon: <SearchIcon size={16} />,
             label: "Search",
             onClick: () => {
                 setShowSearch(true);
             }
         },
         {
-            icon: <Star size={18} />,
+            icon: <Star size={16} />,
             label: "Saved",
             onClick: () => {
                 alert("Show saved items");
             }
         },
         {
-            icon: <Info size={18} />,
+            icon: <Info size={16} />,
             label: "About",
             link: "/about"
         }
