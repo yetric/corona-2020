@@ -10,7 +10,7 @@ import { CheckSquare, Download, Square } from "react-feather";
 import domtoimage from "dom-to-image";
 import { Link } from "react-router-dom";
 
-type DataRange = "all" | "monthly" | "weekly" | "biweekly";
+type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma";
 
 interface ReportCardProps {
     report: string;
@@ -64,6 +64,9 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
     switch (currentRange) {
         case "all":
             dataStore = store.report;
+            break;
+        case "ma":
+            dataStore = store.flatten;
             break;
         case "monthly":
             dataStore = store.monthly;
@@ -173,13 +176,22 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
                     <li>
                         <a
                             href={"#all"}
-                            className={currentRange === "all" ? "selected" : ""}
+                            className={currentRange === "all" || currentRange === "ma" ? "selected" : ""}
                             onClick={(event) => {
                                 event.preventDefault();
                                 setCurrentRange("all");
                             }}>
                             All
                         </a>
+                        <br />
+                        <small
+                            className={currentRange === "ma" ? "selected" : ""}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                setCurrentRange(currentRange === "all" ? "ma" : "all");
+                            }}>
+                            (Smoother)
+                        </small>
                     </li>
                     <li>
                         <a

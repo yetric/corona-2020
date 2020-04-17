@@ -771,12 +771,21 @@ tfoot th {
     flex: 1 0 80px;
     text-align: center;
     font-size: 12px;
+    small {
+        color: var(--nord3);
+        line-height: 12px;
+        font-size: 12px;
+        &.selected {
+            color: var(--action-light);
+        }
+    }
 }
 
 .actions li a {
     color: var(--meta);
     outline: 0;
     transition: color 0.85s;
+
 }
 
 .actions li a svg {
