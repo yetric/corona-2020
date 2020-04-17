@@ -295,8 +295,9 @@ select {
     position: relative;
     background-color: var(--elevated-bg);
     border-bottom: 1px solid var(--elevated-border);
-    line-height: 48px;
-    padding: 0 20px;
+    line-height: 42px;
+    font-size: 16px;
+    padding: 0 12px;
 }
 
 .card-header small {

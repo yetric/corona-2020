@@ -86,7 +86,9 @@ export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered, st
                     display: false,
                     stacked,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        suggestedMin: 0,
+                        min: 0
                     }
                 }
             ],
