@@ -23,7 +23,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
-    const [showRecovered, setShowRecovered] = useState(true);
+    const [showRecovered, setShowRecovered] = useState(false);
     const [showActive, setShowActive] = useState(false);
 
     const [loaded, setLoaded] = useState(false);
@@ -58,7 +58,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
         }
     }, [ref, observing, observer]);
 
-    const [chart, setChart] = useState("accumulated");
+    const [chart, setChart] = useState("daily");
     const [chartType, setChartType] = useState("logarithmic");
     let dataStore: ReportInterface | null = null;
     switch (currentRange) {
@@ -79,16 +79,21 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
             break;
     }
 
-    let deaths = dataStore ? dataStore.deaths[dataStore.deaths.length - 1] : 0;
-    let confirmed = dataStore ? dataStore.confirmed[dataStore.confirmed.length - 1] : 0;
-    let recovered = dataStore ? dataStore.recovered[dataStore.recovered.length - 1] : 0;
+    let deaths = store.report ? store.report.deaths[store.report.deaths.length - 1] : 0;
+    let confirmed = store.report ? store.report.confirmed[store.report.confirmed.length - 1] : 0;
+    let recovered = store.report ? store.report.recovered[store.report.recovered.length - 1] : 0;
     let active = confirmed - (deaths + recovered);
 
-    let deathsBefore = dataStore && dataStore.deaths.length > 2 ? dataStore.deaths[dataStore.deaths.length - 2] : 0;
+    let deathsBefore =
+        store.report && store.report.deaths.length > 2 ? store.report.deaths[store.report.deaths.length - 2] : 0;
     let confirmedBefore =
-        dataStore && dataStore.confirmed.length > 2 ? dataStore.confirmed[dataStore.confirmed.length - 2] : 0;
+        store.report && store.report.confirmed.length > 2
+            ? store.report.confirmed[store.report.confirmed.length - 2]
+            : 0;
     let recoveredBefore =
-        dataStore && dataStore.recovered.length > 2 ? dataStore.recovered[dataStore.recovered.length - 2] : 0;
+        store.report && store.report.recovered.length > 2
+            ? store.report.recovered[store.report.recovered.length - 2]
+            : 0;
     let activeBefore = confirmedBefore - (deathsBefore + recoveredBefore);
 
     let changes = {

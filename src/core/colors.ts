@@ -112,5 +112,5 @@ export const colors = [Monokai.blue, Monokai.red, Monokai.green, Monokai.yellow]
 
 export const { blue, red, green, yellow, purple, orange } = Monokai;
 
-export const gray = "#BDBDBD";
+export const gray = "#444444";
 export const pink = "#ef71d8";
