@@ -1,4 +1,13 @@
 export const isNumber = (subject) => typeof subject === "number";
+export const expMovingAverage = (source, range = 3) => {
+    const k = 2 / (range + 1);
+    const response = [source[0]];
+    for (let i = 1; i < source.length; i++) {
+        response.push(source[i] * k + response[i - 1] * (1 - k));
+    }
+    return response;
+};
+
 export const ma = (data, size) => {
     const length = data.length;
 
