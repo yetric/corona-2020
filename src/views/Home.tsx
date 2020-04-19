@@ -27,11 +27,15 @@ const Home = observer(({ store }: HomeProps) => {
                 <HorizontalDataBar data={cases} descr={"Min. 1M population"} name={"Confirmed Cases / 100K"} />
             </div>
             <div className={"cards horizontal-bars"}>
-                <HorizontalDataBar data={doubling} descr={"Deaths - Min. 50 deaths total"} name={"Doubling Speed"} />
+                <HorizontalDataBar
+                    data={doubling}
+                    descr={"Deaths - Min. 50 deaths total"}
+                    name={"Doubling Speed (days)"}
+                />
                 <HorizontalDataBar
                     data={growth}
                     descr={"Deaths - Min. 50 deaths total"}
-                    name={"Last 3 Days of Total"}
+                    name={"Last 3 Days of Total (%)"}
                 />
             </div>
 
