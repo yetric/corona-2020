@@ -1,5 +1,5 @@
 import { action, computed, observable } from "mobx";
-import { ma } from "../core/stats";
+import { expMovingAverage } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
 import { relativeToPercentage } from "../core/functions";
 
@@ -204,7 +204,7 @@ export class DataStore {
     }
 
     @computed get movingAvg() {
-        return ma(this.confirmed.data, 3);
+        return expMovingAverage(this.confirmed.data, 3);
     }
 
     @action
@@ -271,7 +271,7 @@ export class DataStore {
         });
 
         return {
-            data: expAvg ? ma(growthRate, 10) : growthRate,
+            data: expAvg ? expMovingAverage(growthRate, 14) : growthRate,
             labels: this.labels,
             name
         };
