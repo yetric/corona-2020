@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { GeoOverview } from "../components/GeoOverview";
 import { HorizontalBar } from "react-chartjs-2";
 import { IncidensStore } from "../stores/IncidensStore";
-import { red, blue, orange, yellow, purple } from "../core/colors";
+import { red, blue, orange, yellow, purple, green } from "../core/colors";
 
 interface HomeProps {
     store: IncidensStore;
@@ -148,6 +148,35 @@ const Home = observer(({ store }: HomeProps) => {
                     </div>
                 </div>
             </div>
+
+            <div className="message">
+                <h3>Medecins sans Frontiers</h3>
+                <p>
+                    We have only seen the beginning of the spread of Covid-19 in the world. Big parts of the world will
+                    be hit hard with this pandemic and will need all the support it can get within the health systems.
+                    Donate an amount to{" "}
+                    <a
+                        target={"_blank"}
+                        rel="noopener noreferrer"
+                        href={
+                            "https://egen-insamling.lakareutangranser.se/en/fundraisers/hjalp-lakare-utan-granser-att-hjalpa1"
+                        }>
+                        Medecins sans Frontiers
+                    </a>{" "}
+                    to help fight this virus.
+                </p>
+
+                <a
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                    href={
+                        "https://egen-insamling.lakareutangranser.se/en/fundraisers/hjalp-lakare-utan-granser-att-hjalpa1"
+                    }
+                    className={"btn btn-block"}>
+                    Read more
+                </a>
+            </div>
+
             <GeoOverview />
         </>
     );

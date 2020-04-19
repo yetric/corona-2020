@@ -14,9 +14,9 @@ interface ToolbarProps {
 
 export const Toolbar = (props: ToolbarProps) => (
     <div className="toolbar">
-        {props.items.map((item: ToolbarItem) => {
+        {props.items.map((item: ToolbarItem, index: number) => {
             return item.link ? (
-                <div>
+                <div key={`toolbar-item-${index}`}>
                     <Link to={item.link}>
                         {item.icon}
                         <span>{item.label}</span>
@@ -24,6 +24,7 @@ export const Toolbar = (props: ToolbarProps) => (
                 </div>
             ) : (
                 <div
+                    key={`toolbar-item-${index}`}
                     onClick={(event) => {
                         event.preventDefault();
                         item.onClick && item.onClick();

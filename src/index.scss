@@ -894,3 +894,15 @@ hr {
         box-shadow: 0 0 2.5em var(--shadow-color);
     }
 }
+
+.message {
+    margin: 6px 0 12px 0;
+    padding: 20px;
+    font-size: 16px;
+    border: 1px solid var(--elevated-border);
+    background-color: var(--elevated-bg);
+    color: var(--meta-light);
+    h3 {
+        color: var(--nord4);
+    }
+}
