@@ -93,3 +93,20 @@ export const createDataset = ({ label, data, color, options }: DatasetProps) => 
 
     return options ? { ...defaultSettings, ...options } : defaultSettings;
 };
+
+export const createData = (labels: string[], data: number[], color: string = "#3e91aa") => {
+    return {
+        labels,
+        datasets: [
+            {
+                label: "",
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: 0,
+                hoverBackgroundColor: color,
+                hoverBorderColor: color,
+                data
+            }
+        ]
+    };
+};

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { GeoOverview } from "../components/GeoOverview";
-import { HorizontalBar } from "react-chartjs-2";
 import { IncidensStore } from "../stores/IncidensStore";
-import { red, blue, orange, yellow, purple, green } from "../core/colors";
+import { red, blue, yellow, purple } from "../core/colors";
+import { HorizontalDataBar } from "../components/HorizontalDataBar";
+import { createData } from "../core/helpers";
 
 interface HomeProps {
     store: IncidensStore;
@@ -14,154 +15,39 @@ const Home = observer(({ store }: HomeProps) => {
         document.title = "Corona (Covid-19) Data 2020 - Graph and Table - CoronaData.se";
     });
 
-    const deaths = {
-        labels: store.deathLabels,
-        datasets: [
-            {
-                label: "Deaths (Incidens)",
-                backgroundColor: red,
-                borderColor: red,
-                borderWidth: 0,
-                hoverBackgroundColor: red,
-                hoverBorderColor: red,
-                data: store.deathData
-            }
-        ]
-    };
-
-    const cases = {
-        labels: store.confirmedLabels,
-        datasets: [
-            {
-                label: "Confirmed Cases (Incidens)",
-                backgroundColor: blue,
-                borderColor: blue,
-                borderWidth: 0,
-                hoverBackgroundColor: blue,
-                hoverBorderColor: blue,
-                data: store.confirmedhData
-            }
-        ]
-    };
-
-    const doubling = {
-        labels: store.doublingLabels,
-        datasets: [
-            {
-                label: "Doubling Speed (Days)",
-                backgroundColor: purple,
-                borderColor: purple,
-                borderWidth: 0,
-                hoverBackgroundColor: purple,
-                hoverBorderColor: purple,
-                data: store.doublingData
-            }
-        ]
-    };
-
-    const growth = {
-        labels: store.growthLabels,
-        datasets: [
-            {
-                label: "Death Growth (Last 3 days of total)",
-                backgroundColor: yellow,
-                borderColor: yellow,
-                borderWidth: 0,
-                hoverBackgroundColor: yellow,
-                hoverBorderColor: yellow,
-                data: store.growthData
-            }
-        ]
-    };
-
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scaleFontColor: "#ffffcc",
-        legend: {
-            display: false
-        },
-        scales: {
-            yAxes: [
-                {
-                    gridLines: {
-                        display: false
-                    },
-                    ticks: {
-                        fontColor: "#a2acc0",
-                        fontFamily: "IBM Plex Sans",
-                        fontSize: 12,
-                        lineHeight: 1.2
-                    }
-                }
-            ],
-            xAxes: [
-                {
-                    gridLines: {
-                        display: false
-                    },
-                    ticks: {
-                        fontColor: "#a2acc0",
-                        fontFamily: "IBM Plex Sans",
-                        beginAtZero: true
-                    }
-                }
-            ]
-        }
-    };
+    const deaths = createData(store.deathLabels, store.deathData, red);
+    const cases = createData(store.confirmedLabels, store.confirmedhData, blue);
+    const doubling = createData(store.doublingLabels, store.doublingData, purple);
+    const growth = createData(store.growthLabels, store.growthData, yellow);
 
     return (
         <>
             <div className={"cards horizontal-bars"}>
-                <div className="card">
-                    <div className="card-header">
-                        Deaths per 100K <small>Min. population 1M</small>
-                    </div>
-                    <div className="card-body">
-                        <HorizontalBar data={deaths} options={options} />
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="card-header">
-                        Cases (Confirmed) per 100K <small>Min. population 1M</small>
-                    </div>
-                    <div className="card-body">
-                        <HorizontalBar data={cases} options={options} />
-                    </div>
-                </div>
+                <HorizontalDataBar data={deaths} descr={"Min. 1M population"} name={"Deaths / 100K"} />
+                <HorizontalDataBar data={cases} descr={"Min. 1M population"} name={"Confirmed Cases / 100K"} />
             </div>
-            <div className="cards horizontal-bars">
-                <div className="card">
-                    <div className="card-header">
-                        Deaths Doubling Speed (days) <small>Min. 50 deaths total</small>
-                    </div>
-                    <div className="card-body">
-                        <HorizontalBar data={doubling} options={options} />
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="card-header">
-                        Growth Deaths (Last 3 days of total) <small>Min. 50 deaths total</small>
-                    </div>
-                    <div className="card-body">
-                        <HorizontalBar data={growth} options={options} />
-                    </div>
-                </div>
+            <div className={"cards horizontal-bars"}>
+                <HorizontalDataBar data={doubling} descr={"Deaths - Min. 50 deaths total"} name={"Doubling Speed"} />
+                <HorizontalDataBar
+                    data={growth}
+                    descr={"Deaths - Min. 50 deaths total"}
+                    name={"Last 3 Days of Total"}
+                />
             </div>
 
             <div className="message">
-                <h3>Medecins sans Frontiers</h3>
+                <h3>Medecins sans Frontières</h3>
                 <p>
-                    We have only seen the beginning of the spread of Covid-19 in the world. Big parts of the world will
-                    be hit hard with this pandemic and will need all the support it can get within the health systems.
-                    Donate an amount to{" "}
+                    We have probably only seen the beginning of the spread of Covid-19 in the world. Big parts of the
+                    world will be hit hard with this pandemic and will need all the support it can get within the health
+                    systems. Donate an amount to{" "}
                     <a
                         target={"_blank"}
                         rel="noopener noreferrer"
                         href={
                             "https://egen-insamling.lakareutangranser.se/en/fundraisers/hjalp-lakare-utan-granser-att-hjalpa1"
                         }>
-                        Medecins sans Frontiers
+                        Medecins sans Frontières
                     </a>{" "}
                     to help fight this virus.
                 </p>

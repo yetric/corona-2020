@@ -44,7 +44,7 @@ export const Search = observer(({ onClose = () => {} }: SearchProps) => {
                 event.preventDefault();
                 searchStore.clear();
                 setQuery("");
-                history.push("/" + geo.id);
+                history.push("/report/" + geo.country);
                 onClose();
             }}>
             {geo.country} {geo.province && "(" + geo.province + ")"}
@@ -70,6 +70,7 @@ export const Search = observer(({ onClose = () => {} }: SearchProps) => {
     const continentSearchResults = searchStore.result.continents.map((geo: any) => {
         return (
             <div
+                key={"search-result-item-" + geo.id}
                 className={"search-result-item"}
                 onClick={(event) => {
                     event.preventDefault();

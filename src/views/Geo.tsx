@@ -13,7 +13,6 @@ import { CountryCard } from "../components/CountryCard";
 import { TabularData } from "../components/TabularData";
 import { Growth } from "../components/Growth";
 import { ActivityRate } from "../components/ActivityRate";
-import { Toggle } from "../components/Toggle";
 
 interface ProvinceProps {
     selected?: any;

@@ -11,7 +11,6 @@ import { LoadingView } from "./views/Loading";
 import { Search } from "./components/Search";
 import Home from "./views/Home";
 import { IncidensStore } from "./stores/IncidensStore";
-import { ListFavs } from "./components/ListFavs";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
