@@ -12,12 +12,14 @@ export class IncidensStore {
     @observable deaths: CountryIncidens[] = [];
     @observable confirmed: CountryIncidens[] = [];
     @observable doubling: CountryIncidens[] = [];
+    @observable growth: CountryIncidens[] = [];
 
     constructor() {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.loadConfirmed();
         this.loadDeaths();
         this.loadDoubling();
+        this.loadGrowth();
     }
 
     @action
@@ -36,6 +38,12 @@ export class IncidensStore {
     async loadConfirmed() {
         let { incidens } = await this.client.getJSON("/api/corona/incidens/confirmed");
         this.confirmed = incidens;
+    }
+
+    @action
+    async loadGrowth() {
+        let { growth } = await this.client.getJSON("/api/corona/growth/deaths");
+        this.growth = growth;
     }
 
     @computed get deathLabels() {
@@ -60,5 +68,13 @@ export class IncidensStore {
 
     @computed get doublingData() {
         return this.doubling.map((item) => item.count);
+    }
+
+    @computed get growthLabels() {
+        return this.growth.map((item) => item.name);
+    }
+
+    @computed get growthData() {
+        return this.growth.map((item) => item.count);
     }
 }

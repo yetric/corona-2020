@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { GeoOverview } from "../components/GeoOverview";
 import { HorizontalBar } from "react-chartjs-2";
 import { IncidensStore } from "../stores/IncidensStore";
-import { red, blue, orange } from "../core/colors";
+import { red, blue, orange, yellow, purple } from "../core/colors";
 
 interface HomeProps {
     store: IncidensStore;
@@ -49,12 +49,27 @@ const Home = observer(({ store }: HomeProps) => {
         datasets: [
             {
                 label: "Doubling Speed (Days)",
-                backgroundColor: orange,
-                borderColor: orange,
+                backgroundColor: purple,
+                borderColor: purple,
                 borderWidth: 0,
-                hoverBackgroundColor: orange,
-                hoverBorderColor: orange,
+                hoverBackgroundColor: purple,
+                hoverBorderColor: purple,
                 data: store.doublingData
+            }
+        ]
+    };
+
+    const growth = {
+        labels: store.growthLabels,
+        datasets: [
+            {
+                label: "Death Growth (Last 3 days of total)",
+                backgroundColor: yellow,
+                borderColor: yellow,
+                borderWidth: 0,
+                hoverBackgroundColor: yellow,
+                hoverBorderColor: yellow,
+                data: store.growthData
             }
         ]
     };
@@ -114,10 +129,22 @@ const Home = observer(({ store }: HomeProps) => {
                         <HorizontalBar data={cases} options={options} />
                     </div>
                 </div>
+            </div>
+            <div className="cards horizontal-bars">
                 <div className="card">
-                    <div className="card-header">Deaths Doubling Speed (days)</div>
+                    <div className="card-header">
+                        Deaths Doubling Speed (days) <small>Min. 50 deaths total</small>
+                    </div>
                     <div className="card-body">
                         <HorizontalBar data={doubling} options={options} />
+                    </div>
+                </div>
+                <div className="card">
+                    <div className="card-header">
+                        Growth Deaths (Last 3 days of total) <small>Min. 50 deaths total</small>
+                    </div>
+                    <div className="card-body">
+                        <HorizontalBar data={growth} options={options} />
                     </div>
                 </div>
             </div>
