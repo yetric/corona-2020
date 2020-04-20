@@ -9,7 +9,6 @@ import { relativeToPercentage } from "../core/functions";
 import { CheckSquare, Download, Square } from "react-feather";
 import domtoimage from "dom-to-image";
 import { Link } from "react-router-dom";
-import { CountryCard } from "./CountryCard";
 import { CountryMetadataCard } from "./CountryMetadataCard";
 
 type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma";

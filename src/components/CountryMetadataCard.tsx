@@ -1,18 +1,26 @@
 import React from "react";
 import { CountryMetadata } from "../stores/DataStore";
 import { Link } from "react-router-dom";
+import { CountryMap } from "./CountryMap";
 
 interface CountryMetadataCardProps {
     metadata: CountryMetadata | null;
 }
 
 export const CountryMetadataCard = ({ metadata }: CountryMetadataCardProps) => {
-    return metadata ? (
+    if (!metadata) {
+        return null;
+    }
+
+    let coords = JSON.parse(metadata.coord);
+    let geoJSON = JSON.parse(metadata.geometry);
+
+    return (
         <div className={"card"}>
             <div className="card-header">
                 About {metadata.name} <small className={"meta"}>{metadata.abbr}</small>
             </div>
-            <div className="card-body">MAP</div>
+            <CountryMap coord={coords} geoJSON={geoJSON} />
             <div className="table-responsive">
                 <table>
                     <tbody>
@@ -77,5 +85,5 @@ export const CountryMetadataCard = ({ metadata }: CountryMetadataCardProps) => {
             </div>
             <div className="card-footer">dsfs</div>
         </div>
-    ) : null;
+    );
 };

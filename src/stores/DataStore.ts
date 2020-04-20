@@ -63,6 +63,8 @@ export interface CountryMetadata {
     region?: string;
     religion?: string;
     average_temp?: string;
+    coord?: any;
+    geometry?: any;
 }
 
 export class DataStore {

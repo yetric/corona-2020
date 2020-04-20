@@ -34,6 +34,7 @@ const App = () => {
     const [showSearch, setShowSearch] = useState(false);
     const [showSaved, setShowSaved] = useState(false);
     const [showPwa, setShowPwa] = useState(false);
+    const [isPwa, setIsPwa] = useState(false);
     useEffect(() => {
         document.addEventListener("keydown", (event) => {
             const { key } = event;
@@ -51,6 +52,8 @@ const App = () => {
 
         // Detects if device is in standalone mode
         const isInStandaloneMode = () => "standalone" in window.navigator && window.navigator["standalone"];
+
+        setIsPwa(isInStandaloneMode());
 
         // Checks if should display install popup notification:
         if (isIos() && !isInStandaloneMode()) {
