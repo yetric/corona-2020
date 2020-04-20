@@ -1,6 +1,7 @@
 import { DataClient } from "../clients/DataClient";
 import { action, computed, observable } from "mobx";
 import { expMovingAverage, ma } from "../core/stats";
+import { CountryMetadata } from "./DataStore";
 
 export interface CountryMetaDataInterface {
     population?: number;
@@ -33,15 +34,19 @@ const emptyReport = {
 export class ReportStore {
     private client: DataClient;
     @observable report: ReportInterface | null = null;
+    @observable metadata: CountryMetadata | null = null;
 
     constructor() {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
 
     @action
-    async loadReport(name: any) {
+    async loadReport(name: any, loadMetadata: boolean = false) {
         const response = await this.client.getJSON("/api/corona/reports/" + encodeURIComponent(name));
         this.report = response.data;
+        if (loadMetadata) {
+            await this.loadMetadata(name);
+        }
     }
 
     sliceThatReport(slice: number) {
@@ -90,5 +95,11 @@ export class ReportStore {
 
     @computed get flatten(): ReportInterface {
         return this.flattenThatReport();
+    }
+
+    @action
+    private async loadMetadata(name: any) {
+        let { metadata } = await this.client.getJSON(`/api/corona/report/${encodeURIComponent(name)}/metadata`);
+        this.metadata = metadata;
     }
 }

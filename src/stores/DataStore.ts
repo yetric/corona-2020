@@ -50,7 +50,8 @@ export interface TypeCollection {
     name?: string;
 }
 
-interface CountryMetadata {
+export interface CountryMetadata {
+    name?: string;
     abbr?: string;
     capital?: string;
     continent?: string;

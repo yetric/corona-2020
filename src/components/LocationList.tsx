@@ -40,7 +40,7 @@ export const LocationListItem = ({ item }: LocationListItemProps) => {
     return (
         <tr className={"location-list-item important-column"} key={item.id}>
             <th>
-                <Link to={"/" + item.id}>{item.country}</Link>
+                <Link to={"/report/" + item.country}>{item.country}</Link>
             </th>
             <td className={"confirmed text-right"}>{confirmed.toLocaleString("sv-se")}</td>
             <td className={"deaths text-right"}>{deaths.toLocaleString("sv-se")}</td>

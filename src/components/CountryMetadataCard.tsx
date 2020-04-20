@@ -1,0 +1,81 @@
+import React from "react";
+import { CountryMetadata } from "../stores/DataStore";
+import { Link } from "react-router-dom";
+
+interface CountryMetadataCardProps {
+    metadata: CountryMetadata | null;
+}
+
+export const CountryMetadataCard = ({ metadata }: CountryMetadataCardProps) => {
+    return metadata ? (
+        <div className={"card"}>
+            <div className="card-header">
+                About {metadata.name} <small className={"meta"}>{metadata.abbr}</small>
+            </div>
+            <div className="card-body">MAP</div>
+            <div className="table-responsive">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{metadata.name}</td>
+                        </tr>
+                        <tr>
+                            <th>Abbrevation</th>
+                            <td>{metadata.abbr}</td>
+                        </tr>
+                        <tr>
+                            <th>Population</th>
+                            <td>{metadata.population && parseInt(metadata.population).toLocaleString("sv-se")}</td>
+                        </tr>
+                        <tr>
+                            <th>Capital</th>
+                            <td>{metadata.capital}</td>
+                        </tr>
+                        <tr>
+                            <th>Continent</th>
+                            <td>
+                                <Link to={"/continent/" + metadata.continent}>{metadata.continent}</Link>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Region</th>
+                            <td>
+                                <Link to={"/region/" + metadata.region}>{metadata.region}</Link>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Life Expectancy</th>
+                            <td>
+                                <Link to={"/expectancy/" + metadata.life_expectancy}>{metadata.life_expectancy}</Link>{" "}
+                                years
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Population Density</th>
+                            <td>
+                                <Link to={"/density/" + metadata.population_density}>
+                                    {metadata.population_density}
+                                </Link>{" "}
+                                people/km<sup>2</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Avg Temp</th>
+                            <td>
+                                <Link to={"/temperature/" + metadata.average_temp}>{metadata.average_temp}</Link>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Government</th>
+                            <td>
+                                <Link to={"/government/" + metadata.government}>{metadata.government}</Link>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div className="card-footer">dsfs</div>
+        </div>
+    ) : null;
+};

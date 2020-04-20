@@ -9,6 +9,8 @@ import { relativeToPercentage } from "../core/functions";
 import { CheckSquare, Download, Square } from "react-feather";
 import domtoimage from "dom-to-image";
 import { Link } from "react-router-dom";
+import { CountryCard } from "./CountryCard";
+import { CountryMetadataCard } from "./CountryMetadataCard";
 
 type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma";
 
@@ -33,7 +35,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
     const loadReport = async () => {
         if (!loaded) {
             observer.disconnect();
-            await store.loadReport(report);
+            await store.loadReport(report, standalone);
             setLoaded(true);
         }
     };
@@ -171,252 +173,255 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
     }
 
     return (
-        <div ref={ref} className="card">
-            <div className="card-header">
-                {reportFixed}
-                <small className={"meta"}>{dates}</small>
-            </div>
-            <div className="card-body">
-                <ul className={"actions"}>
-                    <li>
-                        <a
-                            href={"#all"}
-                            className={currentRange === "all" || currentRange === "ma" ? "selected" : ""}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setCurrentRange("all");
-                            }}>
-                            All
-                        </a>
-                        <br />
-                        <small
-                            className={currentRange === "ma" ? "selected" : ""}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setCurrentRange(currentRange === "all" ? "ma" : "all");
-                            }}>
-                            (Smoother)
-                        </small>
-                    </li>
-                    <li>
-                        <a
-                            href={"#monthly"}
-                            className={currentRange === "monthly" ? "selected" : ""}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setCurrentRange("monthly");
-                            }}>
-                            Last Month
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={"#biweekly"}
-                            className={currentRange === "biweekly" ? "selected" : ""}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setCurrentRange("biweekly");
-                            }}>
-                            Last 14 days
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={"#weekly"}
-                            className={currentRange === "weekly" ? "selected" : ""}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setCurrentRange("weekly");
-                            }}>
-                            Last Week
-                        </a>
-                    </li>
-                </ul>
+        <>
+            <div ref={ref} className="card">
+                <div className="card-header">
+                    {reportFixed}
+                    <small className={"meta"}>{dates}</small>
+                </div>
+                <div className="card-body">
+                    <ul className={"actions"}>
+                        <li>
+                            <a
+                                href={"#all"}
+                                className={currentRange === "all" || currentRange === "ma" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange("all");
+                                }}>
+                                All
+                            </a>
+                            <br />
+                            <small
+                                className={currentRange === "ma" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange(currentRange === "all" ? "ma" : "all");
+                                }}>
+                                (Smoother)
+                            </small>
+                        </li>
+                        <li>
+                            <a
+                                href={"#monthly"}
+                                className={currentRange === "monthly" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange("monthly");
+                                }}>
+                                Last Month
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#biweekly"}
+                                className={currentRange === "biweekly" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange("biweekly");
+                                }}>
+                                Last 14 days
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#weekly"}
+                                className={currentRange === "weekly" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange("weekly");
+                                }}>
+                                Last Week
+                            </a>
+                        </li>
+                    </ul>
 
-                <Toggle
-                    items={[
-                        {
-                            key: "accumulated",
-                            label: "Accumulated"
-                        },
-                        {
-                            key: "daily",
-                            label: "Daily"
-                        }
-                    ]}
-                    selected={chart}
-                    onSelect={setChart}
-                />
-
-                {chart === "accumulated" && (
-                    <Report
-                        showConfirmed={showConfirmed}
-                        showDeaths={showDeaths}
-                        showRecovered={showRecovered}
-                        report={dataStore}
-                        showActive={showActive}
-                        type={chartType}
-                    />
-                )}
-                {chart === "daily" && (
-                    <BarReport
-                        showConfirmed={showConfirmed}
-                        showDeaths={showDeaths}
-                        showRecovered={showRecovered}
-                        report={dataStore}
-                        stacked={false}
-                    />
-                )}
-
-                <ul className={"actions"}>
-                    <li>
-                        <a
-                            href={"#confirmed"}
-                            className={"confirmed" + (showConfirmed ? " selected" : "")}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setShowConfirmed(!showConfirmed);
-                            }}>
-                            {showConfirmed ? <CheckSquare size={14} /> : <Square size={14} />} Confirmed
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={"#deaths"}
-                            className={"deaths" + (showDeaths ? " selected" : "")}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setShowDeaths(!showDeaths);
-                            }}>
-                            {showDeaths ? <CheckSquare size={14} /> : <Square size={14} />} Deaths
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={"#recovered"}
-                            className={"recovered" + (showRecovered ? " selected" : "")}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setShowRecovered(!showRecovered);
-                            }}>
-                            {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href={"#active"}
-                            className={
-                                "active" +
-                                (showActive ? " selected" : "") +
-                                (disableAccumulatedActions ? " disabled-action" : "")
+                    <Toggle
+                        items={[
+                            {
+                                key: "accumulated",
+                                label: "Accumulated"
+                            },
+                            {
+                                key: "daily",
+                                label: "Daily"
                             }
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setShowActive(!showActive);
-                            }}>
-                            {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
-                        </a>
-                    </li>
-                </ul>
+                        ]}
+                        selected={chart}
+                        onSelect={setChart}
+                    />
 
-                <hr />
-                <CasesList
-                    deaths={deaths}
-                    confirmed={confirmed}
-                    recovered={recovered}
-                    active={active}
-                    deathRate={deathRate}
-                    recoveryRate={recoveryRate}
-                    activityRate={activityRate}
-                    updated={updated}
-                    deathsCompare={deathsCompare}
-                    confirmedCompare={confirmedCompare}
-                    recoveredCompare={recoveredCompare}
-                    activeCompare={activeCompare}
-                    changes={changes}
-                />
+                    {chart === "accumulated" && (
+                        <Report
+                            showConfirmed={showConfirmed}
+                            showDeaths={showDeaths}
+                            showRecovered={showRecovered}
+                            report={dataStore}
+                            showActive={showActive}
+                            type={chartType}
+                        />
+                    )}
+                    {chart === "daily" && (
+                        <BarReport
+                            showConfirmed={showConfirmed}
+                            showDeaths={showDeaths}
+                            showRecovered={showRecovered}
+                            report={dataStore}
+                            stacked={false}
+                        />
+                    )}
 
-                <hr />
-                <div className="row-xs meta-info">
-                    <div className="col-xs">
-                        {incidensDeaths && (
+                    <ul className={"actions"}>
+                        <li>
+                            <a
+                                href={"#confirmed"}
+                                className={"confirmed" + (showConfirmed ? " selected" : "")}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setShowConfirmed(!showConfirmed);
+                                }}>
+                                {showConfirmed ? <CheckSquare size={14} /> : <Square size={14} />} Confirmed
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#deaths"}
+                                className={"deaths" + (showDeaths ? " selected" : "")}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setShowDeaths(!showDeaths);
+                                }}>
+                                {showDeaths ? <CheckSquare size={14} /> : <Square size={14} />} Deaths
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#recovered"}
+                                className={"recovered" + (showRecovered ? " selected" : "")}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setShowRecovered(!showRecovered);
+                                }}>
+                                {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#active"}
+                                className={
+                                    "active" +
+                                    (showActive ? " selected" : "") +
+                                    (disableAccumulatedActions ? " disabled-action" : "")
+                                }
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setShowActive(!showActive);
+                                }}>
+                                {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr />
+                    <CasesList
+                        deaths={deaths}
+                        confirmed={confirmed}
+                        recovered={recovered}
+                        active={active}
+                        deathRate={deathRate}
+                        recoveryRate={recoveryRate}
+                        activityRate={activityRate}
+                        updated={updated}
+                        deathsCompare={deathsCompare}
+                        confirmedCompare={confirmedCompare}
+                        recoveredCompare={recoveredCompare}
+                        activeCompare={activeCompare}
+                        changes={changes}
+                    />
+
+                    <hr />
+                    <div className="row-xs meta-info">
+                        <div className="col-xs">
+                            {incidensDeaths && (
+                                <div className={"muted text-center"}>
+                                    <small>
+                                        <strong>Incidens</strong>
+                                        <br />
+                                        <span className={"focus"}>{incidensDeaths} deaths</span> <small>/ 100K</small>
+                                    </small>
+                                </div>
+                            )}
+                        </div>
+                        <div className="col-xs">
+                            {incidensCases && (
+                                <div className={"muted text-center"}>
+                                    <small>
+                                        <strong>Incidens</strong>
+                                        <br />
+                                        <span className={"focus"}>{incidensCases} cases</span> <small>/ 100K</small>
+                                    </small>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="row-xs meta-info">
+                        <div className="col-xs">
                             <div className={"muted text-center"}>
                                 <small>
-                                    <strong>Incidens</strong>
+                                    <strong>Doubling Rates</strong>
                                     <br />
-                                    <span className={"focus"}>{incidensDeaths} deaths</span> <small>/ 100K</small>
+                                    Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
+                                    <br />
+                                    Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
+                                    <br />
                                 </small>
                             </div>
-                        )}
-                    </div>
-                    <div className="col-xs">
-                        {incidensCases && (
+                        </div>
+
+                        <div className="col-xs">
                             <div className={"muted text-center"}>
                                 <small>
-                                    <strong>Incidens</strong>
+                                    <strong>Last 3 Days of Total</strong>
                                     <br />
-                                    <span className={"focus"}>{incidensCases} cases</span> <small>/ 100K</small>
+                                    Confirmed: <span className={"focus"}>{lastThreeDaysShare()}</span>
+                                    <br />
+                                    Deaths: <span className={"focus"}>{lastThreeDaysShare("deaths")}</span>
                                 </small>
                             </div>
-                        )}
-                    </div>
-                </div>
-                <div className="row-xs meta-info">
-                    <div className="col-xs">
-                        <div className={"muted text-center"}>
-                            <small>
-                                <strong>Doubling Rates</strong>
-                                <br />
-                                Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
-                                <br />
-                                Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
-                                <br />
-                            </small>
                         </div>
                     </div>
 
-                    <div className="col-xs">
-                        <div className={"muted text-center"}>
-                            <small>
-                                <strong>Last 3 Days of Total</strong>
-                                <br />
-                                Confirmed: <span className={"focus"}>{lastThreeDaysShare()}</span>
-                                <br />
-                                Deaths: <span className={"focus"}>{lastThreeDaysShare("deaths")}</span>
-                            </small>
+                    {!standalone && (
+                        <div className="btn-group">
+                            <Link to={`/report/${encodeURIComponent(report)}`} className="btn">
+                                Full Report
+                            </Link>
                         </div>
-                    </div>
+                    )}
                 </div>
-
-                {!standalone && (
-                    <div className="btn-group">
-                        <Link to={`/report/${encodeURIComponent(report)}`} className="btn">
-                            Full Report
-                        </Link>
-                    </div>
-                )}
+                <div className="card-footer">
+                    <a
+                        href={"#download"}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            domtoimage
+                                .toPng(ref.current)
+                                .then(function(dataUrl) {
+                                    let link = document.createElement("a");
+                                    link.download = encodeURIComponent(reportFixed.toLowerCase()) + ".png";
+                                    link.href = dataUrl;
+                                    link.click();
+                                })
+                                .catch(function(error) {
+                                    console.error("oops, something went wrong!", error);
+                                });
+                        }}>
+                        <Download size={14} /> Export as png
+                    </a>{" "}
+                    - coronadata.se
+                </div>
             </div>
-            <div className="card-footer">
-                <a
-                    href={"#download"}
-                    onClick={(event) => {
-                        event.preventDefault();
-                        domtoimage
-                            .toPng(ref.current)
-                            .then(function(dataUrl) {
-                                let link = document.createElement("a");
-                                link.download = encodeURIComponent(reportFixed.toLowerCase()) + ".png";
-                                link.href = dataUrl;
-                                link.click();
-                            })
-                            .catch(function(error) {
-                                console.error("oops, something went wrong!", error);
-                            });
-                    }}>
-                    <Download size={14} /> Export as png
-                </a>{" "}
-                - coronadata.se
-            </div>
-        </div>
+            {standalone && <CountryMetadataCard metadata={store.metadata} />}
+        </>
     );
 });
