@@ -12,8 +12,8 @@ export const CountryMetadataCard = ({ metadata }: CountryMetadataCardProps) => {
         return null;
     }
 
-    let coords = JSON.parse(metadata.coord);
-    let geoJSON = JSON.parse(metadata.geometry);
+    let coords = (metadata.coord && JSON.parse(metadata.coord)) || null;
+    let geoJSON = (metadata.geometry && JSON.parse(metadata.geometry)) || null;
 
     return (
         <div className={"card"}>
