@@ -131,6 +131,8 @@ a {
 
 .chart {
     padding: 68px 12px 68px 12px;
+    max-width: 1280px;
+    margin: 0px auto;
 }
 
 .toggle.pull-left {
@@ -900,7 +902,7 @@ hr {
     padding: 20px;
     font-size: 16px;
     border: 1px solid var(--elevated-border);
-    background-color: var(--elevated-bg);
+    background-color: mix(#2c3d51, #52d8b9, 96%);
     color: var(--meta-light);
     h3 {
         color: var(--nord4);

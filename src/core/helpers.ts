@@ -110,3 +110,15 @@ export const createData = (labels: string[], data: number[], color: string = "#3
         ]
     };
 };
+
+export const createSimpleDataset = (data: number[], color: string = "#3e91aa") => {
+    return {
+        label: "",
+        backgroundColor: color,
+        borderColor: color,
+        borderWidth: 0,
+        hoverBackgroundColor: color,
+        hoverBorderColor: color,
+        data
+    };
+};
