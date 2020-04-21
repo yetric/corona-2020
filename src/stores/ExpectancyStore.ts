@@ -1,9 +1,9 @@
 import { action, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
-import { sortLocation } from "../core/helpers";
+import { cacheOrGet, sortLocation } from "../core/helpers";
 
-const governmentCache: any = {};
+const expectancyCache: any = {};
 
 export class ExpectancyStore {
     @observable locations: GeoLocation[] = [];
@@ -26,30 +26,11 @@ export class ExpectancyStore {
     async loadRegion() {
         this.loading = true;
         const url = `/api/corona/expectancy/${Math.round(this.lifeExpectancy)}`;
-        if (governmentCache.hasOwnProperty(url)) {
-            this.locations = governmentCache[url];
-        } else {
-            const payload = await this.client.getJSON(url);
-            const geoLocations = payload.geos.map((item: any) => {
-                return item;
-            });
-            this.locations = geoLocations;
-            governmentCache[url] = geoLocations;
-        }
-
-        let confirmed = 0;
-        let deaths = 0;
-        let recovered = 0;
-
-        this.locations.forEach((value: GeoLocation) => {
-            recovered += parseInt(value.recovered.count);
-            deaths += (value.deaths && parseInt(value.deaths.count)) || 0;
-            confirmed += (value.confirmed && parseInt(value.confirmed.count)) || 0;
-        });
-
+        let { locations, confirmed, deaths, recovered } = await cacheOrGet(url, this.client, expectancyCache);
         this.confirmed = confirmed;
         this.deaths = deaths;
         this.recovered = recovered;
+        this.locations = locations;
         this.loading = false;
     }
 

@@ -1,4 +1,5 @@
 import { GeoLocation } from "../models/GeoLocation";
+import { DataClient } from "../clients/DataClient";
 
 export const sortLocation = (location: GeoLocation[], sortKey: string) => {
     return location.slice().sort((a: GeoLocation, b: GeoLocation) => {
@@ -120,5 +121,36 @@ export const createSimpleDataset = (data: number[], color: string = "#3e91aa") =
         hoverBackgroundColor: color,
         hoverBorderColor: color,
         data
+    };
+};
+
+export const cacheOrGet = async (url: string, client: DataClient, cache: any) => {
+    let locations;
+    if (cache.hasOwnProperty(url)) {
+        locations = cache[url];
+    } else {
+        const payload = await client.getJSON(url);
+        const geoLocations = payload.geos.map((item: any) => {
+            return item;
+        });
+        locations = geoLocations;
+        cache[url] = geoLocations;
+    }
+
+    let confirmed = 0;
+    let deaths = 0;
+    let recovered = 0;
+
+    locations.forEach((value: GeoLocation) => {
+        recovered += parseInt(value.recovered.count);
+        deaths += (value.deaths && parseInt(value.deaths.count)) || 0;
+        confirmed += (value.confirmed && parseInt(value.confirmed.count)) || 0;
+    });
+
+    return {
+        confirmed,
+        deaths,
+        recovered,
+        locations
     };
 };
