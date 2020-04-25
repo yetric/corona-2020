@@ -83,8 +83,9 @@ export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered, st
         scales: {
             yAxes: [
                 {
-                    display: false,
+                    display: true,
                     stacked,
+                    gridLines: false,
                     ticks: {
                         beginAtZero: true,
                         suggestedMin: 0,

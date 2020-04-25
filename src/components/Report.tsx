@@ -64,6 +64,8 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
     showRecovered && data.datasets.push(recovered);
     showActive && data.datasets.push(active);
 
+    const showYaxis = [0, 100, 1000, 10000, 100000, 1000000, 2000000];
+
     const options = {
         legend: {
             display: false
@@ -73,14 +75,14 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
         scales: {
             yAxes: [
                 {
-                    display: false,
+                    display: true,
                     type: type,
                     gridLines: false,
                     ticks: {
                         autoSkip: !isLogarithmic,
                         callback: isLogarithmic
                             ? (value: any, index: any, values: any) => {
-                                  return index % 5 === 0 && value % 2 === 0 ? value : "";
+                                  return showYaxis.includes(value) ? value.toLocaleString("sv-se") : "";
                               }
                             : (value: any, index: any, values: any) => {
                                   return value % 1 === 0 ? value : "";
