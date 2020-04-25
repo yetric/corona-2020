@@ -10,7 +10,10 @@ import { BarChart2 } from "react-feather";
 import { LoadingView } from "./views/Loading";
 import { Search } from "./components/Search";
 import Home from "./views/Home";
-import { IncidensStore } from "./stores/IncidensStore";
+import { Breadcrumbs } from "./components/Breadcrumbs";
+import { PwaPush } from "./components/PwaPush";
+import { appStore } from "./stores/AppStore";
+import { observer } from "mobx-react";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -19,6 +22,7 @@ const Government = lazy(() => import("./views/Government"));
 const Expectancy = lazy(() => import("./views/Expectancy"));
 const Country = lazy(() => import("./views/Country"));
 const About = lazy(() => import("./views/About"));
+const World = lazy(() => import("./views/World"));
 
 const NoMatchPage = () => <div>File not found</div>;
 
@@ -30,11 +34,10 @@ const WaitingComponent = (Component: any) => {
     );
 };
 
-const App = () => {
+const App = observer(() => {
     const [showSearch, setShowSearch] = useState(false);
     const [showSaved, setShowSaved] = useState(false);
-    const [showPwa, setShowPwa] = useState(false);
-    const [isPwa, setIsPwa] = useState(false);
+
     useEffect(() => {
         document.addEventListener("keydown", (event) => {
             const { key } = event;
@@ -43,22 +46,6 @@ const App = () => {
                 setShowSaved(false);
             }
         });
-
-        // Detects if device is on iOS
-        const isIos = () => {
-            const userAgent = window.navigator.userAgent.toLowerCase();
-            return /iphone|ipad|ipod/.test(userAgent);
-        };
-
-        // Detects if device is in standalone mode
-        const isInStandaloneMode = () => "standalone" in window.navigator && window.navigator["standalone"];
-
-        setIsPwa(isInStandaloneMode());
-
-        // Checks if should display install popup notification:
-        if (isIos() && !isInStandaloneMode()) {
-            setShowPwa(true);
-        }
     }, []);
 
     const toolbarItems: ToolbarItem[] = [
@@ -106,16 +93,19 @@ const App = () => {
                         }}
                     />
                 )}
+
                 <div className={"chart"}>
+                    <Breadcrumbs />
                     <Switch>
                         <Route exact path={"/about"} component={WaitingComponent(About)} />
+                        <Route exact path={"/world"} component={WaitingComponent(World)} />
                         <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
                         <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
                         <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
                         <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
                         <Route exact path={"/report/:country"} component={WaitingComponent(Country)} />
                         <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
-                        <Route exact path={"/"} component={() => <Home store={new IncidensStore()} />} />
+                        <Route exact path={"/"} component={Home} />
                         <Route component={NoMatchPage} />
                     </Switch>
 
@@ -138,11 +128,11 @@ const App = () => {
                         </div>
                     </div>
                 )}
-
+                {appStore.showPwa && <PwaPush />}
                 <Toolbar items={toolbarItems} />
             </Analytics>
         </Router>
     );
-};
+});
 
 export default App;

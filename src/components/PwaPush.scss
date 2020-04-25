@@ -1,0 +1,32 @@
+$pwa-bg: rgb(255, 255, 255);
+.pwa-push {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 20px;
+  background: $pwa-bg;
+  color: var(--nord3);
+  z-index: 1000000;
+  padding: 12px;
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid $pwa-bg;
+    clear: both;
+    transform: translateX(-50%);
+  }
+
+  a {
+    float: right;
+  }
+}

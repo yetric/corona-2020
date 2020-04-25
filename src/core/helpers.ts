@@ -154,3 +154,11 @@ export const cacheOrGet = async (url: string, client: DataClient, cache: any) =>
         locations
     };
 };
+
+export const isIos = () => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/i.test(userAgent) && /webkit/i.test(userAgent);
+};
+
+// Detects if device is in standalone mode
+export const isInStandaloneMode = () => "standalone" in window.navigator && window.navigator["standalone"];
