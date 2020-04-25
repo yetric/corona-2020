@@ -64,7 +64,7 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
     showRecovered && data.datasets.push(recovered);
     showActive && data.datasets.push(active);
 
-    const showYaxis = [0, 100, 1000, 10000, 100000, 1000000, 2000000];
+    const showYaxis = [0, 100, 1000, 10000, 100000, 1000000, 2500000, 5000000, 10000000];
 
     const options = {
         legend: {
