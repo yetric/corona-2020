@@ -353,6 +353,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                     />
 
                     <hr />
+
                     <div className="row-xs meta-info">
                         <div className="col-xs">
                             {incidensDeaths && (
@@ -403,6 +404,12 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                             </div>
                         </div>
                     </div>
+
+                    <p className={"text-center"}>
+                        <small>
+                            Days since first death: <span className="focus">{store.daysSinceFirstDeath} days</span>
+                        </small>
+                    </p>
 
                     {!standalone && (
                         <div className="btn-group">

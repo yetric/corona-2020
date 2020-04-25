@@ -81,6 +81,11 @@ export class ReportStore {
         };
     }
 
+    @computed get daysSinceFirstDeath(): number {
+        if (!this.report) return 0;
+        return this.report?.deaths.length - this.daysToFirstDeath();
+    }
+
     @computed get weekly(): ReportInterface {
         return this.sliceThatReport(-8);
     }
