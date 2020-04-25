@@ -66,14 +66,14 @@ export class ReportStore {
     }
 
     flattenThatReport() {
-        if (!this.report) return emptyReport;
+        let report = this.firstDeathReport();
         return {
-            recovered: expMovingAverage(this.report.recovered, 14),
-            deaths: expMovingAverage(this.report.deaths, 14),
-            confirmed: expMovingAverage(this.report.confirmed, 14),
-            labels: this.report.labels,
-            name: this.report.name,
-            country: this.report.country || {
+            recovered: expMovingAverage(report.recovered, 14),
+            deaths: expMovingAverage(report.deaths, 14),
+            confirmed: expMovingAverage(report.confirmed, 14),
+            labels: report.labels,
+            name: report.name,
+            country: report.country || {
                 coord: null,
                 geometry: null,
                 population: null
@@ -95,6 +95,42 @@ export class ReportStore {
 
     @computed get flatten(): ReportInterface {
         return this.flattenThatReport();
+    }
+
+    public daysToFirstDeath(): number {
+        if (!this.report) return 0;
+        for (let i = 0; i < this.report.deaths.length; i++) {
+            if (this.report.deaths[i] > 0) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private firstDeathReport(): ReportInterface {
+        if (!this.report) return emptyReport;
+
+        let deathIndex = this.daysToFirstDeath();
+        let recovered = [...this.report.recovered].splice(deathIndex);
+        let deaths = [...this.report.deaths].splice(deathIndex);
+        let confirmed = [...this.report.confirmed].splice(deathIndex);
+        let labels = [...this.report.labels].splice(deathIndex);
+        return {
+            recovered,
+            deaths,
+            confirmed,
+            labels,
+            name: this.report.name,
+            country: this.report.country || {
+                coord: null,
+                geometry: null,
+                population: null
+            }
+        };
+    }
+
+    @computed get firstDeath(): ReportInterface {
+        return this.firstDeathReport();
     }
 
     @action

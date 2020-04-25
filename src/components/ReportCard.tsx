@@ -11,7 +11,7 @@ import domtoimage from "dom-to-image";
 import { Link } from "react-router-dom";
 import { CountryMetadataCard } from "./CountryMetadataCard";
 
-type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma";
+type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
 interface ReportCardProps {
     report: string;
@@ -20,7 +20,7 @@ interface ReportCardProps {
     standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "all", standalone = false }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "ma", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
@@ -77,6 +77,9 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
             break;
         case "biweekly":
             dataStore = store.biweekly;
+            break;
+        case "death":
+            dataStore = store.firstDeath;
             break;
     }
 
@@ -183,19 +186,30 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
                         <li>
                             <a
                                 href={"#all"}
-                                className={currentRange === "all" || currentRange === "ma" ? "selected" : ""}
+                                className={currentRange === "all" ? "selected" : ""}
                                 onClick={(event) => {
                                     event.preventDefault();
                                     setCurrentRange("all");
                                 }}>
                                 All
                             </a>
+                        </li>
+                        <li>
+                            <a
+                                href={"#death"}
+                                className={currentRange === "ma" || currentRange === "death" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange("death");
+                                }}>
+                                1st Death
+                            </a>
                             <br />
                             <small
                                 className={currentRange === "ma" ? "selected" : ""}
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    setCurrentRange(currentRange === "all" ? "ma" : "all");
+                                    setCurrentRange(currentRange === "death" ? "ma" : "death");
                                 }}>
                                 (Smoother)
                             </small>
@@ -208,7 +222,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
                                     event.preventDefault();
                                     setCurrentRange("monthly");
                                 }}>
-                                Last Month
+                                30 days
                             </a>
                         </li>
                         <li>
@@ -219,7 +233,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
                                     event.preventDefault();
                                     setCurrentRange("biweekly");
                                 }}>
-                                Last 14 days
+                                14 days
                             </a>
                         </li>
                         <li>
@@ -230,7 +244,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
                                     event.preventDefault();
                                     setCurrentRange("weekly");
                                 }}>
-                                Last Week
+                                Week
                             </a>
                         </li>
                     </ul>
