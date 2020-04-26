@@ -14,6 +14,7 @@ import { Breadcrumbs } from "./components/Breadcrumbs";
 import { PwaPush } from "./components/PwaPush";
 import { appStore } from "./stores/AppStore";
 import { observer } from "mobx-react";
+import { isInStandaloneMode } from "./core/helpers";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -37,6 +38,8 @@ const WaitingComponent = (Component: any) => {
 const App = observer(() => {
     const [showSearch, setShowSearch] = useState(false);
     const [showSaved, setShowSaved] = useState(false);
+
+    const pwaClassName = isInStandaloneMode() ? "pwa" : "web";
 
     useEffect(() => {
         document.addEventListener("keydown", (event) => {
@@ -77,60 +80,62 @@ const App = observer(() => {
 
     return (
         <Router>
-            <Analytics id={"UA-103000963-8"}>
-                <div className="header">
-                    <h2>
-                        <Link to={"/"}>
-                            <BarChart2 size={18} />
-                            coronadata<span>.se</span>
-                        </Link>
-                    </h2>
-                </div>
-                {showSearch && (
-                    <Search
-                        onClose={() => {
-                            setShowSearch(false);
-                        }}
-                    />
-                )}
+            <div id="app-wrapper" className={pwaClassName}>
+                <Analytics id={"UA-103000963-8"}>
+                    <div className="header">
+                        <h2>
+                            <Link to={"/"}>
+                                <BarChart2 size={18} />
+                                coronadata<span>.se</span>
+                            </Link>
+                        </h2>
+                    </div>
+                    {showSearch && (
+                        <Search
+                            onClose={() => {
+                                setShowSearch(false);
+                            }}
+                        />
+                    )}
 
-                <div className={"chart"}>
-                    <Breadcrumbs />
-                    <Switch>
-                        <Route exact path={"/about"} component={WaitingComponent(About)} />
-                        <Route exact path={"/world"} component={WaitingComponent(World)} />
-                        <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
-                        <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
-                        <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
-                        <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
-                        <Route exact path={"/report/:country"} component={WaitingComponent(Country)} />
-                        <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
-                        <Route exact path={"/"} component={Home} />
-                        <Route component={NoMatchPage} />
-                    </Switch>
+                    <div className={"chart"}>
+                        <Breadcrumbs />
+                        <Switch>
+                            <Route exact path={"/about"} component={WaitingComponent(About)} />
+                            <Route exact path={"/world"} component={WaitingComponent(World)} />
+                            <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
+                            <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
+                            <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
+                            <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
+                            <Route exact path={"/report/:country"} component={WaitingComponent(Country)} />
+                            <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
+                            <Route exact path={"/"} component={Home} />
+                            <Route component={NoMatchPage} />
+                        </Switch>
 
-                    <p className={"footer"}>
-                        <a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by{" "}
-                        <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome{" "}
-                        <a href={"https://github.com/yetric/corona-2020"}>here</a>
-                    </p>
-                </div>
+                        <p className={"footer"}>
+                            <a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by{" "}
+                            <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome{" "}
+                            <a href={"https://github.com/yetric/corona-2020"}>here</a>
+                        </p>
+                    </div>
 
-                {showSaved && (
-                    <div className={"saved-items-toolbox"}>
-                        <div className={"card"}>
-                            <div className={"card-header"}>Saved Reports</div>
-                            <div className={"card-body"}>
-                                <strong>WiP</strong> ipsum dolor sit amet, consectetur adipisicing elit. Atque
-                                consequuntur debitis eius enim esse est explicabo inventore iure magni molestiae nisi
-                                quaerat ratione sapiente sed suscipit, unde, vel velit voluptatibus?
+                    {showSaved && (
+                        <div className={"saved-items-toolbox"}>
+                            <div className={"card"}>
+                                <div className={"card-header"}>Saved Reports</div>
+                                <div className={"card-body"}>
+                                    <strong>WiP</strong> ipsum dolor sit amet, consectetur adipisicing elit. Atque
+                                    consequuntur debitis eius enim esse est explicabo inventore iure magni molestiae
+                                    nisi quaerat ratione sapiente sed suscipit, unde, vel velit voluptatibus?
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-                {appStore.showPwa && <PwaPush />}
-                <Toolbar items={toolbarItems} />
-            </Analytics>
+                    )}
+                    {appStore.showPwa && <PwaPush />}
+                    <Toolbar items={toolbarItems} />
+                </Analytics>
+            </div>
         </Router>
     );
 });
