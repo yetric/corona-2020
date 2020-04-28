@@ -10,11 +10,11 @@ import { BarChart2 } from "react-feather";
 import { LoadingView } from "./views/Loading";
 import { Search } from "./components/Search";
 import Home from "./views/Home";
-import { Breadcrumbs } from "./components/Breadcrumbs";
 import { PwaPush } from "./components/PwaPush";
 import { appStore } from "./stores/AppStore";
 import { observer } from "mobx-react";
 import { isInStandaloneMode } from "./core/helpers";
+import { IncidensStore } from "./stores/IncidensStore";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -23,7 +23,6 @@ const Government = lazy(() => import("./views/Government"));
 const Expectancy = lazy(() => import("./views/Expectancy"));
 const Country = lazy(() => import("./views/Country"));
 const About = lazy(() => import("./views/About"));
-const World = lazy(() => import("./views/World"));
 
 const NoMatchPage = () => <div>File not found</div>;
 
@@ -99,17 +98,15 @@ const App = observer(() => {
                     )}
 
                     <div className={"chart"}>
-                        <Breadcrumbs />
                         <Switch>
                             <Route exact path={"/about"} component={WaitingComponent(About)} />
-                            <Route exact path={"/world"} component={WaitingComponent(World)} />
                             <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
                             <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
                             <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
                             <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
                             <Route exact path={"/report/:country"} component={WaitingComponent(Country)} />
                             <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
-                            <Route exact path={"/"} component={Home} />
+                            <Route exact path={"/"} component={() => <Home store={new IncidensStore()} />} />
                             <Route component={NoMatchPage} />
                         </Switch>
 
