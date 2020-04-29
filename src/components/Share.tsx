@@ -29,7 +29,7 @@ export const Share = () => {
                 duration: 2000
             });
         });
-    });
+    }, []);
 
     const onShare = async () => {
         await newNavigator
