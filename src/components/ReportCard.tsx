@@ -6,10 +6,12 @@ import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { relativeToPercentage } from "../core/functions";
-import { CheckSquare, Download, Square } from "react-feather";
+import { CheckSquare, Download, Square, Star } from "react-feather";
 import domtoimage from "dom-to-image";
 import { Link } from "react-router-dom";
 import { CountryMetadataCard } from "./CountryMetadataCard";
+import { Share } from "./Share";
+import { Fav, favStore } from "../stores/FavStore";
 
 type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
@@ -174,10 +176,23 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         incidensCases = Math.round(confirmed / (store.report.country.population / 100000)).toLocaleString("sv-se");
     }
 
+    let newFav: Fav = {
+        name: report
+    };
+
     return (
         <>
             <div ref={ref} className="card">
                 <div className="card-header">
+                    <Star
+                        className={favStore.has(newFav) ? "selected" : ""}
+                        onClick={() => {
+                            if (!favStore.has(newFav)) {
+                                favStore.save(newFav);
+                            }
+                        }}
+                        size={14}
+                    />{" "}
                     {reportFixed}
                     <small className={"meta"}>{dates}</small>
                 </div>
@@ -420,6 +435,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                     )}
                 </div>
                 <div className="card-footer">
+                    <Share />
                     <a
                         href={"#download"}
                         onClick={(event) => {

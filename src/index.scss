@@ -59,7 +59,6 @@
 
 #app-wrapper {
     &.web {
-
         .header {
             position: fixed;
             left: 0;
@@ -77,13 +76,13 @@
         }
     }
 
-
     &.pwa {
         -webkit-user-select: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
 
-        .header {}
+        .header {
+        }
         .chart {
             height: calc(100vh - 122px);
             overflow-y: scroll;
@@ -139,7 +138,7 @@ h6 {
         font-size: 18px;
         font-weight: 300;
         span {
-            opacity: .45;
+            opacity: 0.45;
         }
     }
     h3 {
@@ -158,7 +157,6 @@ h6 {
             color: var(--action-light);
         }
     }
-
 }
 
 a {
@@ -171,7 +169,6 @@ a {
     padding: 12px;
     max-width: 1280px;
     margin: 0 auto;
-
 }
 
 .toggle.pull-left {
@@ -194,7 +191,7 @@ a {
             display: inline-block;
             padding: 0 12px;
             line-height: 26px;
-            transition: color .85s;
+            transition: color 0.85s;
         }
         &.active {
             a {
@@ -339,6 +336,15 @@ select {
     line-height: 42px;
     font-size: 16px;
     padding: 0 12px;
+
+    svg {
+        color: var(--meta);
+        position: relative;
+        top: 2px;
+        &.selected {
+            color: var(--yellow);
+        }
+    }
 }
 
 .card-header small {
@@ -656,6 +662,7 @@ ol li:before {
     left: 0;
     right: 0;
     text-align: center;
+    z-index: 10000000;
 }
 
 .toast {
@@ -665,11 +672,11 @@ ol li:before {
     color: var(--white);
     font-size: 14px;
     padding: 8px;
-    opacity: .9;
+    opacity: 0.9;
     transition: opacity 1s;
     text-align: center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    box-shadow:0 0 1.5em var(--shadow-color);
+    box-shadow: 0 0 1.5em var(--shadow-color);
 }
 
 .toast.hide {
@@ -827,7 +834,6 @@ tfoot th {
     color: var(--meta);
     outline: 0;
     transition: color 0.85s;
-
 }
 
 .actions li a svg {
@@ -840,19 +846,19 @@ tfoot th {
 }
 
 .actions li a.selected.confirmed {
-    color: #66D9EF;
+    color: #66d9ef;
 }
 
 .actions li a.selected.recovered {
-    color: #A6E22E;
+    color: #a6e22e;
 }
 
 .actions li a.selected.deaths {
-    color: #F92672;
+    color: #f92672;
 }
 
 .actions li a.selected.active {
-    color: #E6DB74;
+    color: #e6db74;
 }
 
 .disabled-action {
@@ -943,7 +949,6 @@ hr {
         color: var(--nord4);
     }
 }
-
 
 .leaflet-container {
     min-height: 410px;

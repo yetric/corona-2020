@@ -2,7 +2,7 @@ import { action, observable } from "mobx";
 import { CachedList } from "../core/storage";
 
 export interface Fav {
-    id: number;
+    id?: number;
     name: string;
     province?: string;
 }
@@ -33,7 +33,7 @@ export class FavStore {
         // return this.cachedList.has(fav);
         for (let i = 0; i < this.favorites.length; i++) {
             let item = this.favorites[i];
-            if (item.id === fav.id) {
+            if (item.name === fav.name) {
                 return true;
             }
         }
@@ -50,11 +50,11 @@ export class FavStore {
     }
 
     @action
-    remove(id: number) {
+    remove(name: string) {
         let favs = FavStore.read();
         for (let i = 0; i < favs.length; i++) {
             let item = favs[i];
-            if (item.id === id) {
+            if (item.name === name) {
                 favs.splice(i, 1);
                 this.sync(favs);
                 break;
