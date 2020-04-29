@@ -15,6 +15,8 @@ import { appStore } from "./stores/AppStore";
 import { observer } from "mobx-react";
 import { isInStandaloneMode } from "./core/helpers";
 import { IncidensStore } from "./stores/IncidensStore";
+import { favStore } from "./stores/FavStore";
+import { ListFavs } from "./components/ListFavs";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -117,19 +119,8 @@ const App = observer(() => {
                         </p>
                     </div>
 
-                    {showSaved && (
-                        <div className={"saved-items-toolbox"}>
-                            <div className={"card"}>
-                                <div className={"card-header"}>Saved Reports</div>
-                                <div className={"card-body"}>
-                                    <strong>WiP</strong> ipsum dolor sit amet, consectetur adipisicing elit. Atque
-                                    consequuntur debitis eius enim esse est explicabo inventore iure magni molestiae
-                                    nisi quaerat ratione sapiente sed suscipit, unde, vel velit voluptatibus?
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    {appStore.showPwa && <PwaPush />}
+                    <ListFavs items={favStore.favorites} show={showSaved} />
+                    <PwaPush show={appStore.showPwa} />
                     <Toolbar items={toolbarItems} />
                 </Analytics>
             </div>

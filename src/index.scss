@@ -58,11 +58,38 @@
 }
 
 #app-wrapper {
-    &.web {}
+    &.web {
+
+        .header {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+        }
+        .chart {
+            padding: 68px 12px;
+        }
+        .toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+
     &.pwa {
         -webkit-user-select: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
+
+        .header {}
+        .chart {
+            height: calc(100vh - 122px);
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
+        }
     }
 }
 
@@ -142,13 +169,10 @@ a {
 
 .chart {
     background-color: var(--main-bg);
-    height: calc(100vh - 122px);
     padding: 12px;
     max-width: 1280px;
     margin: 0 auto;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    overflow-x: hidden;
+
 }
 
 .toggle.pull-left {
