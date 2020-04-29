@@ -80,12 +80,17 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: var(--main-bg);
+    background: var(--accent);
     color: var(--nord4);
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.5;
+}
+
+#root {
+    background-color: var(--main-bg);
+    height: 100vh;
 }
 
 h1,
@@ -98,10 +103,6 @@ h6 {
 }
 
 .header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
     background: var(--accent);
     z-index: 10000;
     text-align: center;
@@ -140,9 +141,13 @@ a {
 }
 
 .chart {
-    padding: 68px 12px;
+    background-color: var(--main-bg);
+    height: calc(100vh - 122px);
+    padding: 12px;
     max-width: 1280px;
     margin: 0 auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .toggle.pull-left {
@@ -843,10 +848,6 @@ hr {
 }
 
 .toolbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
     padding-bottom: 18px;
 
     background: var(--elevated-bg);
