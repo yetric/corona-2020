@@ -11,6 +11,14 @@ interface DimensionProps {
     value: string;
 }
 
+interface TimingProps {
+    category: string;
+    name: string;
+    timing: number;
+    label?: string | null;
+    props?: any | null;
+}
+
 export const GaDimension = {
     PLATFORM: 1
 };
@@ -35,3 +43,6 @@ export const trackEvent = ({ category, action, label = null, value = null, props
     g.send("event", category, action, label, value, props);
 
 export const setDimension = ({ index, value }: DimensionProps) => g.set(`dimension${index}`, value);
+
+export const userTiming = ({ category, name, timing, label = null, props = null }: TimingProps) =>
+    g.send("timing", category, name, timing, label, props);

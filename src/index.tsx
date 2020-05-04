@@ -4,7 +4,7 @@ import "./index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { isInStandaloneMode } from "./core/helpers";
-import { GaDimension, setDimension } from "./core/tracking";
+import { GaDimension, setDimension, userTiming } from "./core/tracking";
 
 serviceWorker.unregister();
 ReactDOM.render(<App />, document.getElementById("root"), () => {
@@ -14,4 +14,15 @@ ReactDOM.render(<App />, document.getElementById("root"), () => {
         value: platform,
         index: GaDimension.PLATFORM
     });
+
+    if ("appTimingStart" in window) {
+        let appTimingEnd = new Date().getTime();
+        // @ts-ignore
+        let timing = appTimingEnd - window["appTimingStart"];
+        userTiming({
+            category: "App",
+            name: "render",
+            timing
+        });
+    }
 });
