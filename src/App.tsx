@@ -1,21 +1,15 @@
-import React, { Suspense, lazy, useState, useEffect } from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Analytics from "react-router-ga";
-import { Home as HomeIcon, Info, Search as SearchIcon, Star } from "react-feather";
 
 import "./core/toaster";
 
-import { Toolbar, ToolbarItem } from "./components/Toolbar";
 import { BarChart2 } from "react-feather";
 import { LoadingView } from "./views/Loading";
-import { Search } from "./components/Search";
 import Home from "./views/Home";
-import { PwaPush } from "./components/PwaPush";
-import { appStore } from "./stores/AppStore";
 import { observer } from "mobx-react";
 import { isInStandaloneMode } from "./core/helpers";
-import { favStore } from "./stores/FavStore";
-import { ListFavs } from "./components/ListFavs";
+import { ContextTools } from "./components/ContextTools";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -39,29 +33,6 @@ const WaitingComponent = (Component: any) => {
 const App = observer(() => {
     const pwaClassName = isInStandaloneMode() ? "pwa" : "web";
 
-    const toolbarItems: ToolbarItem[] = [
-        {
-            icon: <HomeIcon size={16} />,
-            label: "Home",
-            link: "/"
-        },
-        {
-            icon: <SearchIcon size={16} />,
-            label: "Search",
-            onClick: () => {}
-        },
-        {
-            icon: <Star size={16} />,
-            label: "Saved",
-            onClick: () => {}
-        },
-        {
-            icon: <Info size={16} />,
-            label: "About",
-            link: "/about"
-        }
-    ];
-
     return (
         <Router>
             <div id="app-wrapper" className={pwaClassName}>
@@ -74,7 +45,6 @@ const App = observer(() => {
                             </Link>
                         </h2>
                     </div>
-                    <Search show={false} onClose={() => {}} />
 
                     <div className={"chart"}>
                         <Switch>
@@ -97,9 +67,7 @@ const App = observer(() => {
                         </p>
                     </div>
 
-                    <ListFavs items={favStore.favorites} show={false} />
-                    <PwaPush show={appStore.showPwa} />
-                    <Toolbar items={toolbarItems} />
+                    <ContextTools />
                 </Analytics>
             </div>
         </Router>
