@@ -105,7 +105,8 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
                     }
                 }
             ]
-        },
+        }
+        /*,
         annotation: {
             annotations: [
                 {
@@ -122,7 +123,7 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
                     }
                 }
             ]
-        }
+        }*/
     };
     return (
         <div className={"report-view"}>
