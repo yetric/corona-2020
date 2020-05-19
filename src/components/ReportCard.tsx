@@ -120,7 +120,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
 
     let updated = dataStore ? dataStore.labels[dataStore.labels.length - 1] : "";
 
-    const arrReport = report.split(":");
+    const arrReport = decodeURIComponent(report).split(":");
     let reportFixed = arrReport
         .map((item) => {
             return item.charAt(0).toUpperCase() + item.slice(1);
