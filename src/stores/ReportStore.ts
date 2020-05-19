@@ -33,6 +33,17 @@ const emptyReport = {
     }
 };
 
+interface ReportCacheInterface {
+    [key: string]: ReportInterface;
+}
+
+interface MetadataCacheInterface {
+    [key: string]: CountryMetadata;
+}
+
+const reportCache: ReportCacheInterface = {};
+const metaCache: MetadataCacheInterface = {};
+
 export class ReportStore {
     private client: DataClient;
     @observable report: ReportInterface | null = null;
@@ -44,8 +55,14 @@ export class ReportStore {
 
     @action
     async loadReport(name: any, loadMetadata: boolean = false) {
-        const response = await this.client.getJSON("/api/corona/reports/" + encodeURIComponent(name));
-        this.report = response.data;
+        if (reportCache.hasOwnProperty(name)) {
+            this.report = reportCache[name];
+        } else {
+            const response = await this.client.getJSON("/api/corona/reports/" + encodeURIComponent(name));
+            this.report = response.data;
+            reportCache[name] = response.data;
+        }
+
         if (loadMetadata) {
             await this.loadMetadata(name);
         }
@@ -142,7 +159,12 @@ export class ReportStore {
 
     @action
     private async loadMetadata(name: any) {
-        let { metadata } = await this.client.getJSON(`/api/corona/report/${encodeURIComponent(name)}/metadata`);
-        this.metadata = metadata;
+        if (metaCache.hasOwnProperty(name)) {
+            this.metadata = metaCache[name];
+        } else {
+            let { metadata } = await this.client.getJSON(`/api/corona/report/${encodeURIComponent(name)}/metadata`);
+            this.metadata = metadata;
+            metaCache[name] = metadata;
+        }
     }
 }
