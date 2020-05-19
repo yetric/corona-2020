@@ -980,3 +980,23 @@ hr {
         }
     }
 }
+
+ul.pills {
+    margin: 12px 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    li {
+        a {
+            display: block;
+            line-height: 42px;
+            padding: 0 12px;
+            color: var(--action);
+            svg {
+                position: relative;
+                top: 2px;
+            }
+        }
+    }
+}
+
