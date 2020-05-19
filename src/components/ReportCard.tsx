@@ -226,7 +226,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                                     event.preventDefault();
                                     setCurrentRange(currentRange === "death" ? "ma" : "death");
                                 }}>
-                                (Smoother)
+                                {currentRange === "ma" ? <CheckSquare size={13} /> : <Square size={13} />} Smoother
                             </small>
                         </li>
                         <li>

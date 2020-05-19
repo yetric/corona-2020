@@ -14,7 +14,6 @@ import { PwaPush } from "./components/PwaPush";
 import { appStore } from "./stores/AppStore";
 import { observer } from "mobx-react";
 import { isInStandaloneMode } from "./core/helpers";
-import { IncidensStore } from "./stores/IncidensStore";
 import { favStore } from "./stores/FavStore";
 import { ListFavs } from "./components/ListFavs";
 
@@ -25,6 +24,7 @@ const Government = lazy(() => import("./views/Government"));
 const Expectancy = lazy(() => import("./views/Expectancy"));
 const Country = lazy(() => import("./views/Country"));
 const About = lazy(() => import("./views/About"));
+const World = lazy(() => import("./views/World"));
 
 const NoMatchPage = () => <div>File not found</div>;
 
@@ -37,20 +37,7 @@ const WaitingComponent = (Component: any) => {
 };
 
 const App = observer(() => {
-    const [showSearch, setShowSearch] = useState(false);
-    const [showSaved, setShowSaved] = useState(false);
-
     const pwaClassName = isInStandaloneMode() ? "pwa" : "web";
-
-    useEffect(() => {
-        document.addEventListener("keydown", (event) => {
-            const { key } = event;
-            if (key === "Escape") {
-                setShowSearch(false);
-                setShowSaved(false);
-            }
-        });
-    }, []);
 
     const toolbarItems: ToolbarItem[] = [
         {
@@ -61,16 +48,12 @@ const App = observer(() => {
         {
             icon: <SearchIcon size={16} />,
             label: "Search",
-            onClick: () => {
-                setShowSearch(true);
-            }
+            onClick: () => {}
         },
         {
             icon: <Star size={16} />,
             label: "Saved",
-            onClick: () => {
-                setShowSaved(!showSaved);
-            }
+            onClick: () => {}
         },
         {
             icon: <Info size={16} />,
@@ -91,24 +74,19 @@ const App = observer(() => {
                             </Link>
                         </h2>
                     </div>
-                    {showSearch && (
-                        <Search
-                            onClose={() => {
-                                setShowSearch(false);
-                            }}
-                        />
-                    )}
+                    <Search show={false} onClose={() => {}} />
 
                     <div className={"chart"}>
                         <Switch>
                             <Route exact path={"/about"} component={WaitingComponent(About)} />
+                            <Route exact path={"/world"} component={WaitingComponent(World)} />
                             <Route exact path={"/continent/:continent"} component={WaitingComponent(Continent)} />
                             <Route exact path={"/region/:region"} component={WaitingComponent(Region)} />
                             <Route exact path={"/government/:government"} component={WaitingComponent(Government)} />
                             <Route exact path={"/expectancy/:expectancy"} component={WaitingComponent(Expectancy)} />
                             <Route exact path={"/report/:country"} component={WaitingComponent(Country)} />
                             <Route exact path={"/:country"} component={WaitingComponent(Geo)} />
-                            <Route exact path={"/"} component={() => <Home store={new IncidensStore()} />} />
+                            <Route exact path={"/"} component={() => <Home />} />
                             <Route component={NoMatchPage} />
                         </Switch>
 
@@ -119,7 +97,7 @@ const App = observer(() => {
                         </p>
                     </div>
 
-                    <ListFavs items={favStore.favorites} show={showSaved} />
+                    <ListFavs items={favStore.favorites} show={false} />
                     <PwaPush show={appStore.showPwa} />
                     <Toolbar items={toolbarItems} />
                 </Analytics>

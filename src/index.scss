@@ -822,8 +822,13 @@ tfoot th {
         color: var(--nord3);
         line-height: 12px;
         font-size: 12px;
+        cursor: pointer;
         &.selected {
-            color: var(--action-light);
+            color: var(--yellow);
+        }
+        svg {
+            position: relative;
+            top: 2px;
         }
     }
 }

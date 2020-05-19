@@ -1,7 +1,9 @@
 import { DataClient } from "../clients/DataClient";
 import { action, computed, observable } from "mobx";
-import { expMovingAverage, ma } from "../core/stats";
+import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
+
+const MOVING_AVG_DAYS = 14;
 
 export interface CountryMetaDataInterface {
     population?: number;
@@ -68,9 +70,9 @@ export class ReportStore {
     flattenThatReport() {
         let report = this.firstDeathReport();
         return {
-            recovered: expMovingAverage(report.recovered, 14),
-            deaths: expMovingAverage(report.deaths, 14),
-            confirmed: expMovingAverage(report.confirmed, 14),
+            recovered: expMovingAverage(report.recovered, MOVING_AVG_DAYS),
+            deaths: expMovingAverage(report.deaths, MOVING_AVG_DAYS),
+            confirmed: expMovingAverage(report.confirmed, MOVING_AVG_DAYS),
             labels: report.labels,
             name: report.name,
             country: report.country || {

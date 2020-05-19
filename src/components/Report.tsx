@@ -2,9 +2,10 @@ import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
 import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
-import { blue, green, red, yellow } from "../core/colors";
+import { blue, green, red, yellow, orange, purple } from "../core/colors";
 import "./Report.css";
 import { Loading } from "./Loading";
+import "chartjs-plugin-annotation";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -101,6 +102,23 @@ export const Report = memo(({ report, type, showConfirmed, showDeaths, showRecov
                     },
                     gridLines: {
                         display: false
+                    }
+                }
+            ]
+        },
+        annotation: {
+            annotations: [
+                {
+                    type: "line",
+                    mode: "vertical",
+                    scaleID: "x-axis-0",
+                    value: "2020-04-20",
+                    borderColor: purple,
+                    borderWidth: 1,
+                    label: {
+                        backgroundColor: purple,
+                        content: "1 Million",
+                        enabled: true
                     }
                 }
             ]

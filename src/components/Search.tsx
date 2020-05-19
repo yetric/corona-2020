@@ -9,10 +9,11 @@ import { XCircle, Search as SearchIcon } from "react-feather";
 
 interface SearchProps {
     onClose?: () => void;
+    show: boolean;
 }
 
 const searchStore = new SearchStore();
-export const Search = observer(({ onClose = () => {} }: SearchProps) => {
+export const Search = observer(({ onClose = () => {}, show = false }: SearchProps) => {
     const [query, setQuery] = useState("");
     let history = useHistory();
 
@@ -84,7 +85,7 @@ export const Search = observer(({ onClose = () => {} }: SearchProps) => {
         );
     });
 
-    return (
+    return show ? (
         <div className="search-wrapper">
             <div className={"search-component"}>
                 <SearchIcon className={"prefix-icon"} size={16} />
@@ -108,5 +109,5 @@ export const Search = observer(({ onClose = () => {} }: SearchProps) => {
                 )}
             </div>
         </div>
-    );
+    ) : null;
 });
