@@ -7,8 +7,6 @@ export const expMovingAverage = (source, range = 3) => ema(source, range);
 export const smoothedMovingAverage = sma;
 export const dynMovingAverage = dma;
 
-const average = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
-
 export function EMACalc(mArray, mRange) {
     const k = 2 / (mRange + 1);
     // first item is just the same as the first item in the input
