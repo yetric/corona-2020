@@ -17,6 +17,10 @@
     top: 17px;
 }
 
+.prefix-icon.icon-focus {
+    color: var(--action);
+}
+
 .search-component {
     position: relative;
     width: 90vw;

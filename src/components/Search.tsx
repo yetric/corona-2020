@@ -15,6 +15,7 @@ interface SearchProps {
 const searchStore = new SearchStore();
 export const Search = observer(({ onClose = () => {}, show = false }: SearchProps) => {
     const [query, setQuery] = useState("");
+    const [isFocus, setIsFocus] = useState(false);
     let history = useHistory();
 
     const [debouncedCallback] = useDebouncedCallback(
@@ -88,7 +89,20 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
     return show ? (
         <div className="search-wrapper">
             <div className={"search-component"}>
-                <SearchIcon className={"prefix-icon"} size={16} />
+                <SearchIcon className={"prefix-icon" + (isFocus ? " icon-focus" : "")} size={16} />
+                <input
+                    autoFocus={true}
+                    type={"text"}
+                    value={query}
+                    onChange={onChange}
+                    onFocus={() => {
+                        setIsFocus(true);
+                    }}
+                    onBlur={() => {
+                        setIsFocus(false);
+                    }}
+                    placeholder={"Search for country ..."}
+                />
                 <a
                     href="#close-search"
                     onClick={(event) => {
@@ -97,13 +111,6 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
                     }}>
                     <XCircle size={16} /> Close
                 </a>
-                <input
-                    autoFocus={true}
-                    type={"text"}
-                    value={query}
-                    onChange={onChange}
-                    placeholder={"Search for country ..."}
-                />
                 {(searchStore.result.countries.length > 0 ||
                     searchStore.result.regions.length > 0 ||
                     searchStore.result.continents.length > 0) && (
