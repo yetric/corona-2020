@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Extras.scss";
 import { Bell, MapPin } from "react-feather";
 import { Modal } from "./core/Modal";
+import { appStore } from "../stores/AppStore";
 
 export const Extras = () => {
     const [showPosition, setShowPosition] = useState(false);
@@ -46,7 +47,16 @@ export const Extras = () => {
                     }>
                     We can use your position to show reports that are closer to you and set the country you are in as
                     your standard report.
-                    <p>.... Work in Progress ...</p>
+                    <p>
+                        <button
+                            className={"btn"}
+                            onClick={(event) => {
+                                appStore.enablePositioning();
+                            }}>
+                            Use my Position
+                        </button>{" "}
+                        {appStore.enableUserPositioning}
+                    </p>
                 </Modal>
             )}
 
@@ -69,6 +79,69 @@ export const Extras = () => {
                     }>
                     If you want to have digested emails or notifications in the browser, you can subscribe to your
                     preferred reports.
+                    <fieldset>
+                        <legend>Reports to track</legend>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Report</th>
+                                    <th>Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sweden</td>
+                                    <td>Daily</td>
+                                    <td>
+                                        <a href={"#edit"}>Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sweden</td>
+                                    <td>Daily</td>
+                                    <td>
+                                        <a href={"#edit"}>Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sweden</td>
+                                    <td>Daily</td>
+                                    <td>
+                                        <a href={"#edit"}>Edit</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    {appStore.supportsNotifications && (
+                        <fieldset>
+                            <legend>Browser Notifications</legend>
+                            {appStore.enableUserNotifications && (
+                                <div>You have already enabled browser notifications</div>
+                            )}
+                            {!appStore.enableUserNotifications && (
+                                <p>
+                                    <button
+                                        className={"btn"}
+                                        onClick={(event) => {
+                                            appStore.enableNotifications();
+                                        }}>
+                                        Allow Notifications
+                                    </button>
+                                </p>
+                            )}
+                        </fieldset>
+                    )}
+                    <fieldset>
+                        <legend>E-mail Notifications</legend>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus autem dolore ex
+                            explicabo fugit illum ipsum iure laborum magnam, modi nulla quidem quos sequi sit velit vero
+                            voluptas voluptate?
+                        </p>
+                        <input type={"email"} placeholder={"Your e-mail address"} />
+                    </fieldset>
                     <p>.... Work in Progress ...</p>
                 </Modal>
             )}

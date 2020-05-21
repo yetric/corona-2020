@@ -33,6 +33,17 @@ const emptyReport = {
     }
 };
 
+export interface GeoOverview {
+    active: number;
+    confirmed: number;
+    deaths: number;
+    recovered: number;
+}
+
+export interface GeoCollection {
+    [name: string]: GeoOverview;
+}
+
 interface ReportCacheInterface {
     [key: string]: ReportInterface;
 }
@@ -48,6 +59,7 @@ export class ReportStore {
     private client: DataClient;
     @observable report: ReportInterface | null = null;
     @observable metadata: CountryMetadata | null = null;
+    @observable collection: GeoCollection | null = null;
 
     constructor() {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
@@ -165,6 +177,43 @@ export class ReportStore {
             let { metadata } = await this.client.getJSON(`/api/corona/report/${encodeURIComponent(name)}/metadata`);
             this.metadata = metadata;
             metaCache[name] = metadata;
+        }
+    }
+
+    @action
+    async loadContinent(continent: string) {
+        let { geos } = await this.client.getJSON("/api/corona/continent/" + continent);
+        this.collection = geos;
+        this.sortBy("country");
+    }
+
+    @action
+    sortBy(sort: string) {
+        if (!this.collection) return;
+        const ordered: GeoCollection = {};
+        if (sort === "country") {
+            Object.keys(this.collection)
+                .sort()
+                .forEach((key) => {
+                    if (this.collection) {
+                        ordered[key] = this.collection[key];
+                    }
+                });
+            this.collection = ordered;
+        }
+
+        if (sort === "deaths" || sort === "confirmed" || sort === "recovered" || sort === "active") {
+            let countries = Object.keys(this.collection);
+            countries.sort((a: string, b: string) => {
+                if (!this.collection) return 0;
+                return this.collection[b][sort] - this.collection[a][sort];
+            });
+            countries.forEach((key) => {
+                if (this.collection) {
+                    ordered[key] = this.collection[key];
+                }
+            });
+            this.collection = ordered;
         }
     }
 }

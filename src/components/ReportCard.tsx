@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from "react";
-import { ReportInterface, ReportStore } from "../stores/ReportStore";
+import { GeoCollection, GeoOverview, ReportInterface, ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Annotation, Report } from "./Report";
 import { CasesList } from "./CasesList";
@@ -28,6 +28,14 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
     const [showDeaths, setShowDeaths] = useState(true);
     const [showRecovered, setShowRecovered] = useState(false);
     const [showActive, setShowActive] = useState(false);
+
+    useEffect(() => {
+        if (report.startsWith("continent") && standalone) {
+            //;
+            let continent = decodeURIComponent(report).split(":")[1];
+            store.loadContinent(continent);
+        }
+    }, [report]);
 
     const [loaded, setLoaded] = useState(false);
     const [observing, setObserving] = useState(false);
@@ -200,6 +208,26 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
             }
         }
     }
+
+    const collectionToRows = (collection: GeoCollection) => {
+        let rows = [];
+        for (let key in collection) {
+            if (!collection.hasOwnProperty(key)) continue;
+            let country: GeoOverview = collection[key];
+            rows.push(
+                <tr key={key}>
+                    <td>
+                        <Link to={"/report/" + key}>{key}</Link>
+                    </td>
+                    <td className={"text-right confirmed"}>{country.confirmed.toLocaleString("sv-se")}</td>
+                    <td className={"text-right deaths"}>{country.deaths.toLocaleString("sv-se")}</td>
+                    <td className={"text-right recovered"}>{country.recovered.toLocaleString("sv-se")}</td>
+                    <td className={"text-right active"}>{country.active.toLocaleString("sv-se")}</td>
+                </tr>
+            );
+        }
+        return rows;
+    };
 
     return (
         <>
@@ -480,6 +508,31 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                 </div>
             </div>
             {standalone && <CountryMetadataCard metadata={store.metadata} />}
+            {store.collection && (
+                <div className={"card"}>
+                    <div className="card-header">Countries</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th onClick={() => store.sortBy("country")}>Country</th>
+                                <th onClick={() => store.sortBy("confirmed")} className={"text-right"}>
+                                    Cases
+                                </th>
+                                <th onClick={() => store.sortBy("deaths")} className={"text-right"}>
+                                    Deaths
+                                </th>
+                                <th onClick={() => store.sortBy("recovered")} className={"text-right"}>
+                                    Recovered
+                                </th>
+                                <th onClick={() => store.sortBy("active")} className={"text-right"}>
+                                    Active
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>{collectionToRows(store.collection)}</tbody>
+                    </table>
+                </div>
+            )}
         </>
     );
 });

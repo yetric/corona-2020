@@ -45,7 +45,7 @@
     --main-bg: #253344;
     --elevated-bg: #2c3d51;
     --elevated-border: #354a62;
-    --transparent-bg: rgba(34, 53, 71, 0.95);
+    --transparent-bg: rgba(34, 53, 71, 0.78);
     --shadow-color: rgba(0, 0, 0, 0.3);
 
     --change: #9fc3cb;
@@ -435,7 +435,7 @@ dd small {
     line-height: 32px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"] {
     width: 100%;
     margin: 0 0 12px 0;
     line-height: 24px;
@@ -446,6 +446,9 @@ input[type="text"] {
     color: var(--nord4);
     border: none;
     border-bottom: 1px solid var(--nord4);
+    &:focus {
+        border-bottom-color: var(--action);
+    }
 }
 
 .list-group {
@@ -1010,6 +1013,19 @@ ul.pills {
                 top: 4px;
             }
         }
+    }
+}
+
+fieldset {
+    border:1px solid var(--nord3);
+    margin: 20px 0;
+    padding: 20px;
+    font-size: 14px;
+    legend {
+        padding: 0 12px;
+        font-size: 20px;
+        font-weight: 300;
+        color: var(--nord4);
     }
 }
 
