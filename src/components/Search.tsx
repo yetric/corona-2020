@@ -97,7 +97,13 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
                     }}>
                     <XCircle size={16} /> Close
                 </a>
-                <input type={"text"} value={query} onChange={onChange} placeholder={"Search for country ..."} />
+                <input
+                    autoFocus={true}
+                    type={"text"}
+                    value={query}
+                    onChange={onChange}
+                    placeholder={"Search for country ..."}
+                />
                 {(searchStore.result.countries.length > 0 ||
                     searchStore.result.regions.length > 0 ||
                     searchStore.result.continents.length > 0) && (

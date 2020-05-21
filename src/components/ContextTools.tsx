@@ -3,7 +3,7 @@ import { favStore } from "../stores/FavStore";
 import { PwaPush } from "./PwaPush";
 import { appStore } from "../stores/AppStore";
 import { Toolbar, ToolbarItem } from "./Toolbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search } from "./Search";
 import { Home as HomeIcon, Info, Search as SearchIcon, Star } from "react-feather";
 
@@ -36,6 +36,26 @@ export const ContextTools = () => {
             link: "/about"
         }
     ];
+
+    const handleKeyUp = (event: any) => {
+        if (event.key === "Escape") {
+            setShowSearch(false);
+            setShowFavs(false);
+        }
+
+        if (event.shiftKey && event.key.toLowerCase() === "s") {
+            setShowSearch(true);
+        }
+
+        if (event.shiftKey && event.key.toLowerCase() === "f") {
+            setShowFavs(true);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("keyup", handleKeyUp, false);
+    }, []);
+
     return (
         <>
             <Search
