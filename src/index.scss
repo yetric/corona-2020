@@ -541,6 +541,13 @@ ol li:before {
     color: var(--action);
     line-height: 42px;
     padding: 0 18px;
+    svg {
+        margin-right: 4px;
+    }
+}
+
+button.btn {
+    background: transparent;
 }
 
 .btn.btn-sm {
@@ -919,9 +926,9 @@ hr {
     align-items: center;
     .btn {
         line-height: 28px;
-        font-size: 15px;
-        border-color: var(--action-light);
-        color: var(--action-light);
+        font-size: 14px;
+        border-color: var(--action);
+        color: var(--action);
         & ~ .btn {
             border-left: none;
         }

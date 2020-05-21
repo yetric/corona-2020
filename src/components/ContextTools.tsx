@@ -6,8 +6,9 @@ import { Toolbar, ToolbarItem } from "./Toolbar";
 import React, { useEffect, useState } from "react";
 import { Search } from "./Search";
 import { Home as HomeIcon, Info, Search as SearchIcon, Star } from "react-feather";
+import { observer } from "mobx-react";
 
-export const ContextTools = () => {
+export const ContextTools = observer(() => {
     const [showSearch, setShowSearch] = useState(false);
     const [showFavs, setShowFavs] = useState(false);
     const toolbarItems: ToolbarItem[] = [
@@ -69,4 +70,4 @@ export const ContextTools = () => {
             <Toolbar items={toolbarItems} />
         </>
     );
-};
+});

@@ -8,9 +8,10 @@ interface ModalProps {
     header?: any;
     footer?: any;
     steps?: any[];
+    onClose?: () => void;
 }
 
-export const Modal = ({ children, header, footer, allowClose, steps }: ModalProps) => {
+export const Modal = ({ children, header, footer, allowClose, steps, onClose }: ModalProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const closeModal = () => {
         if (ref.current) {
@@ -20,7 +21,7 @@ export const Modal = ({ children, header, footer, allowClose, steps }: ModalProp
     const escEventHandler = (event: KeyboardEvent) => {
         const { key } = event;
         if (key === "Escape" && allowClose) {
-            closeModal();
+            onClose ? onClose() : closeModal();
         }
     };
     useEffect(() => {
