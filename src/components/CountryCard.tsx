@@ -33,7 +33,7 @@ export const CountryCard = ({ dataStore, country }: CountryCardProps) => (
                     <tr>
                         <th>Continent</th>
                         <td>
-                            <Link to={"/continent/" + dataStore.metadata.continent}>
+                            <Link to={"/report/continent:" + dataStore.metadata.continent}>
                                 {dataStore.metadata.continent}
                             </Link>
                         </td>
@@ -41,7 +41,7 @@ export const CountryCard = ({ dataStore, country }: CountryCardProps) => (
                     <tr>
                         <th>Region</th>
                         <td>
-                            <Link to={"/region/" + dataStore.metadata.region}>{dataStore.metadata.region}</Link>
+                            <Link to={"/report/region:" + dataStore.metadata.region}>{dataStore.metadata.region}</Link>
                         </td>
                     </tr>
                     <tr>

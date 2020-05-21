@@ -43,13 +43,13 @@ export const CountryMetadataCard = ({ metadata }: CountryMetadataCardProps) => {
                         <tr>
                             <th>Continent</th>
                             <td>
-                                <Link to={"/continent/" + metadata.continent}>{metadata.continent}</Link>
+                                <Link to={"/report/continent:" + metadata.continent}>{metadata.continent}</Link>
                             </td>
                         </tr>
                         <tr>
                             <th>Region</th>
                             <td>
-                                <Link to={"/region/" + metadata.region}>{metadata.region}</Link>
+                                <Link to={"/report/region:" + metadata.region}>{metadata.region}</Link>
                             </td>
                         </tr>
                         <tr>

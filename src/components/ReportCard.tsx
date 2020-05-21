@@ -1,7 +1,7 @@
 import React, { createRef, useEffect, useState } from "react";
 import { ReportInterface, ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
-import { Report } from "./Report";
+import { Annotation, Report } from "./Report";
 import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
@@ -180,6 +180,21 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         name: report
     };
 
+    let annotations: Annotation[] = [];
+    if (dataStore && (currentRange === "all" || currentRange === "death")) {
+        let casesToAnnotate = [100, 1000, 10000, 100000];
+        for (let i = 0; i < dataStore.deaths.length; i++) {
+            let confirmCount = dataStore.deaths[i];
+            if (confirmCount >= casesToAnnotate[0]) {
+                annotations.push({
+                    date: dataStore.labels[i],
+                    label: casesToAnnotate[0].toLocaleString("sv-se")
+                });
+                casesToAnnotate.shift();
+            }
+        }
+    }
+
     return (
         <>
             <div ref={ref} className="card">
@@ -287,6 +302,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                             report={dataStore}
                             showActive={showActive}
                             type={chartType}
+                            annotations={annotations}
                         />
                     )}
                     {chart === "daily" && (
