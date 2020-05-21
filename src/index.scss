@@ -991,10 +991,11 @@ ul.pills {
             display: block;
             line-height: 42px;
             padding: 0 12px;
+            font-size: 14px;
             color: var(--action);
             svg {
                 position: relative;
-                top: 2px;
+                top: 4px;
             }
         }
     }
