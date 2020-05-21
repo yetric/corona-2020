@@ -34,7 +34,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
     const [currentRange, setCurrentRange] = useState(range);
 
     const loadReport = async () => {
-        if (!loaded) {
+        if (!loaded && !standalone) {
             observer.disconnect();
             await store.loadReport(report, standalone);
             setLoaded(true);
@@ -55,11 +55,17 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
     );
 
     useEffect(() => {
-        if (ref.current && !observing) {
+        if (!standalone && ref.current && !observing) {
             observer.observe(ref.current);
             setObserving(true);
         }
-    }, [ref, observing, observer]);
+    }, [standalone, ref, observing, observer]);
+
+    useEffect(() => {
+        if (standalone) {
+            store.loadReport(report, standalone).catch(() => {});
+        }
+    }, [standalone, report, store]);
 
     const [chart, setChart] = useState("daily");
     const [chartType, setChartType] = useState("logarithmic");

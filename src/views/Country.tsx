@@ -8,7 +8,13 @@ const Country = () => {
     let { country } = useParams();
     useEffect(() => {
         if (country) {
-            document.title = country + " - Covid-19 - CoronaData.se";
+            document.title =
+                decodeURIComponent(country)
+                    .split(":")
+                    .map((item) => {
+                        return item.charAt(0).toUpperCase() + item.slice(1);
+                    })
+                    .join(" / ") + " - Covid-19 - CoronaData.se";
         }
     });
     let markup = country ? (
