@@ -548,6 +548,11 @@ ol li:before {
 
 button.btn {
     background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    overflow: visible;
+    margin: 0;
 }
 
 .btn.btn-sm {
