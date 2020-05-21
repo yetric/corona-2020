@@ -60,7 +60,7 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
                     event.preventDefault();
                     searchStore.clear();
                     setQuery("");
-                    history.push(`/region/${encodeURIComponent(geo)}`);
+                    history.push(`/report/region:${encodeURIComponent(geo)}`);
                     onClose();
                 }}>
                 {geo} <small>(Region)</small>
@@ -77,7 +77,7 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
                     event.preventDefault();
                     searchStore.clear();
                     setQuery("");
-                    history.push(`/continent/${encodeURIComponent(geo)}`);
+                    history.push(`/report/continent:${encodeURIComponent(geo)}`);
                     onClose();
                 }}>
                 {geo} <small>(Continent)</small>
