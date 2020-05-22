@@ -28,29 +28,9 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
     const [showDeaths, setShowDeaths] = useState(true);
     const [showRecovered, setShowRecovered] = useState(false);
     const [showActive, setShowActive] = useState(false);
-
-    useEffect(() => {
-        if (report.startsWith("continent") && standalone) {
-            //;
-            let continent = decodeURIComponent(report).split(":")[1];
-            store.loadContinent(continent);
-        } else if (report.startsWith("region") && standalone) {
-            let continent = decodeURIComponent(report).split(":")[1];
-            store.loadRegion(continent);
-        }
-    }, [report]);
-
     const [loaded, setLoaded] = useState(false);
     const [observing, setObserving] = useState(false);
     const [currentRange, setCurrentRange] = useState(range);
-
-    const loadReport = async () => {
-        if (!loaded && !standalone) {
-            observer.disconnect();
-            await store.loadReport(report, standalone);
-            setLoaded(true);
-        }
-    };
 
     const observer = new IntersectionObserver(
         ([entry]) => {
@@ -64,6 +44,24 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
             threshold: 0.3
         }
     );
+
+    const loadReport = async () => {
+        if (!loaded && !standalone) {
+            observer.disconnect();
+            await store.loadReport(report, standalone);
+            setLoaded(true);
+        }
+    };
+
+    useEffect(() => {
+        if (report.startsWith("continent") && standalone) {
+            let continent = decodeURIComponent(report).split(":")[1];
+            store.loadContinent(continent).catch(() => {});
+        } else if (report.startsWith("region") && standalone) {
+            let continent = decodeURIComponent(report).split(":")[1];
+            store.loadRegion(continent).catch(() => {});
+        }
+    }, [report, store, standalone]);
 
     useEffect(() => {
         if (!standalone && ref.current && !observing) {
@@ -79,7 +77,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
     }, [standalone, report, store]);
 
     const [chart, setChart] = useState("daily");
-    const [chartType, setChartType] = useState("logarithmic");
+    const [chartType, setChartType] = useState("linear");
     let dataStore: ReportInterface | null = null;
     switch (currentRange) {
         case "all":
@@ -199,14 +197,14 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
 
     let annotations: Annotation[] = [];
     if (dataStore && (currentRange === "all" || currentRange === "death")) {
-        let casesToAnnotate = [100, 1000, 10000, 100000];
+        let casesToAnnotate = [1000, 10000, 100000];
         for (let i = 0; i < dataStore.deaths.length; i++) {
             let confirmCount = dataStore.deaths[i];
             if (confirmCount >= casesToAnnotate[0]) {
-                annotations.push({
+                /*annotations.push({
                     date: dataStore.labels[i],
                     label: casesToAnnotate[0].toLocaleString("sv-se")
-                });
+                });*/
                 casesToAnnotate.shift();
             }
         }
@@ -319,31 +317,49 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                         </li>
                     </ul>
 
-                    <Toggle
-                        items={[
-                            {
-                                key: "accumulated",
-                                label: "Accumulated"
-                            },
-                            {
-                                key: "daily",
-                                label: "Daily"
-                            }
-                        ]}
-                        selected={chart}
-                        onSelect={setChart}
-                    />
+                    <div className="toggles">
+                        <Toggle
+                            items={[
+                                {
+                                    key: "linear",
+                                    label: "Linear"
+                                },
+                                {
+                                    key: "logarithmic",
+                                    label: "Logarithmic"
+                                }
+                            ]}
+                            selected={chartType}
+                            onSelect={setChartType}
+                        />
+                        <Toggle
+                            items={[
+                                {
+                                    key: "accumulated",
+                                    label: "Accumulated"
+                                },
+                                {
+                                    key: "daily",
+                                    label: "Daily"
+                                }
+                            ]}
+                            selected={chart}
+                            onSelect={setChart}
+                        />
+                    </div>
 
                     {chart === "accumulated" && (
-                        <Report
-                            showConfirmed={showConfirmed}
-                            showDeaths={showDeaths}
-                            showRecovered={showRecovered}
-                            report={dataStore}
-                            showActive={showActive}
-                            type={chartType}
-                            annotations={annotations}
-                        />
+                        <>
+                            <Report
+                                showConfirmed={showConfirmed}
+                                showDeaths={showDeaths}
+                                showRecovered={showRecovered}
+                                report={dataStore}
+                                showActive={showActive}
+                                type={chartType}
+                                annotations={annotations}
+                            />
+                        </>
                     )}
                     {chart === "daily" && (
                         <BarReport
@@ -352,6 +368,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                             showRecovered={showRecovered}
                             report={dataStore}
                             stacked={false}
+                            type={chartType}
                         />
                     )}
 

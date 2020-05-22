@@ -11,9 +11,17 @@ interface BarReportProps {
     showDeaths: boolean;
     showRecovered: boolean;
     stacked?: boolean;
+    type?: string;
 }
 
-export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered, stacked = true }: BarReportProps) => {
+export const BarReport = ({
+    report,
+    showConfirmed,
+    showDeaths,
+    showRecovered,
+    stacked = true,
+    type = "linear"
+}: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
     }
@@ -73,7 +81,8 @@ export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered, st
                 data: change.map((item) => item.recovered)
             })
         );
-
+    const showYaxis = [0, 100, 1000, 10000, 100000, 1000000, 2500000, 5000000, 10000000];
+    const isLogarithmic = type === "logarithmic";
     const options = {
         legend: {
             display: false
@@ -83,13 +92,22 @@ export const BarReport = ({ report, showConfirmed, showDeaths, showRecovered, st
         scales: {
             yAxes: [
                 {
+                    type,
                     display: true,
                     stacked,
                     gridLines: false,
                     ticks: {
-                        beginAtZero: true,
+                        beginAtZero: false,
                         suggestedMin: 0,
-                        min: 0
+                        min: 0,
+                        autoSkip: !isLogarithmic,
+                        callback: isLogarithmic
+                            ? (value: any, index: any, values: any) => {
+                                  return showYaxis.includes(value) ? value.toLocaleString("sv-se") : "";
+                              }
+                            : (value: any, index: any, values: any) => {
+                                  return value % 1 === 0 ? value : "";
+                              }
                     }
                 }
             ],
