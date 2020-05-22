@@ -188,6 +188,13 @@ export class ReportStore {
     }
 
     @action
+    async loadRegion(region: string) {
+        let { geos } = await this.client.getJSON("/api/corona/region/" + region);
+        this.collection = geos;
+        this.sortBy("country");
+    }
+
+    @action
     sortBy(sort: string) {
         if (!this.collection) return;
         const ordered: GeoCollection = {};

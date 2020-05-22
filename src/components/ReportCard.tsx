@@ -34,6 +34,9 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
             //;
             let continent = decodeURIComponent(report).split(":")[1];
             store.loadContinent(continent);
+        } else if (report.startsWith("region") && standalone) {
+            let continent = decodeURIComponent(report).split(":")[1];
+            store.loadRegion(continent);
         }
     }, [report]);
 

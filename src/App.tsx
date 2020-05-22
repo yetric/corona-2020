@@ -10,7 +10,6 @@ import Home from "./views/Home";
 import { observer } from "mobx-react";
 import { isInStandaloneMode } from "./core/helpers";
 import { ContextTools } from "./components/ContextTools";
-import { Extras } from "./components/Extras";
 
 const Geo = lazy(() => import("./views/Geo"));
 const Continent = lazy(() => import("./views/Continent"));
@@ -47,7 +46,6 @@ const App = observer(() => {
                         </h2>
                     </div>
                     <div className={"chart"}>
-                        <Extras />
                         <Switch>
                             <Route exact path={"/about"} component={WaitingComponent(About)} />
                             <Route exact path={"/world"} component={WaitingComponent(World)} />
