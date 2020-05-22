@@ -226,6 +226,9 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                     <td className={"text-right deaths"}>{country.deaths.toLocaleString("sv-se")}</td>
                     <td className={"text-right recovered"}>{country.recovered.toLocaleString("sv-se")}</td>
                     <td className={"text-right active"}>{country.active.toLocaleString("sv-se")}</td>
+                    <td className={"text-right deaths"}>{relativeToPercentage(country.deathRate)}</td>
+                    <td className={"text-right recovered"}>{relativeToPercentage(country.recoveryRate)}</td>
+                    <td className={"text-right active"}>{relativeToPercentage(country.activityRate)}</td>
                 </tr>
             );
         }
@@ -487,53 +490,66 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                         </div>
                     )}
                 </div>
-                <div className="card-footer">
-                    <Share />
-                    <a
-                        href={"#download"}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            domtoimage
-                                .toPng(ref.current)
-                                .then(function(dataUrl) {
-                                    let link = document.createElement("a");
-                                    link.download = encodeURIComponent(reportFixed.toLowerCase()) + ".png";
-                                    link.href = dataUrl;
-                                    link.click();
-                                })
-                                .catch(function(error) {
-                                    console.error("oops, something went wrong!", error);
-                                });
-                        }}>
-                        <Download size={14} /> Export as png
-                    </a>{" "}
-                    - coronadata.se
-                </div>
+                {standalone && (
+                    <div className="card-footer">
+                        <Share />
+                        <a
+                            href={"#download"}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                domtoimage
+                                    .toPng(ref.current)
+                                    .then(function(dataUrl) {
+                                        let link = document.createElement("a");
+                                        link.download = encodeURIComponent(reportFixed.toLowerCase()) + ".png";
+                                        link.href = dataUrl;
+                                        link.click();
+                                    })
+                                    .catch(function(error) {
+                                        console.error("oops, something went wrong!", error);
+                                    });
+                            }}>
+                            <Download size={14} /> Export as png
+                        </a>{" "}
+                        - coronadata.se
+                    </div>
+                )}
             </div>
             {standalone && <CountryMetadataCard metadata={store.metadata} />}
             {store.collection && (
                 <div className={"card"}>
                     <div className="card-header">Countries</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th onClick={() => store.sortBy("country")}>Country</th>
-                                <th onClick={() => store.sortBy("confirmed")} className={"text-right"}>
-                                    Cases
-                                </th>
-                                <th onClick={() => store.sortBy("deaths")} className={"text-right"}>
-                                    Deaths
-                                </th>
-                                <th onClick={() => store.sortBy("recovered")} className={"text-right"}>
-                                    Recovered
-                                </th>
-                                <th onClick={() => store.sortBy("active")} className={"text-right"}>
-                                    Active
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>{collectionToRows(store.collection)}</tbody>
-                    </table>
+                    <div className="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th onClick={() => store.sortBy("country")}>Country</th>
+                                    <th onClick={() => store.sortBy("confirmed")} className={"text-right"}>
+                                        Cases
+                                    </th>
+                                    <th onClick={() => store.sortBy("deaths")} className={"text-right"}>
+                                        Deaths
+                                    </th>
+                                    <th onClick={() => store.sortBy("recovered")} className={"text-right"}>
+                                        Recovered
+                                    </th>
+                                    <th onClick={() => store.sortBy("active")} className={"text-right"}>
+                                        Active
+                                    </th>
+                                    <th onClick={() => store.sortBy("deathRate")} className={"text-right"}>
+                                        Death Rate
+                                    </th>
+                                    <th onClick={() => store.sortBy("recoveryRate")} className={"text-right"}>
+                                        Recovery Rate
+                                    </th>
+                                    <th onClick={() => store.sortBy("activityRate")} className={"text-right"}>
+                                        Acitivity Rate
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>{collectionToRows(store.collection)}</tbody>
+                        </table>
+                    </div>
                 </div>
             )}
         </>

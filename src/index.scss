@@ -234,8 +234,8 @@ a {
     }
 
     .cards .card {
-        flex-basis: 0;
-        flex-grow: 1;
+        flex: 1 1 0;
+        width: 0;
         margin-left: 6px;
     }
 

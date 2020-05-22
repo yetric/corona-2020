@@ -38,6 +38,9 @@ export interface GeoOverview {
     confirmed: number;
     deaths: number;
     recovered: number;
+    deathRate: number;
+    recoveryRate: number;
+    activityRate: number;
 }
 
 export interface GeoCollection {
@@ -180,17 +183,29 @@ export class ReportStore {
         }
     }
 
+    addRates(geo: any): GeoCollection {
+        for (const geoKey in geo) {
+            if (geo.hasOwnProperty(geoKey)) {
+                let item: GeoOverview = geo[geoKey];
+                item.activityRate = item.active / item.confirmed;
+                item.recoveryRate = item.recovered / item.confirmed;
+                item.deathRate = item.deaths / item.confirmed;
+            }
+        }
+        return geo;
+    }
+
     @action
     async loadContinent(continent: string) {
         let { geos } = await this.client.getJSON("/api/corona/continent/" + continent);
-        this.collection = geos;
+        this.collection = this.addRates(geos);
         this.sortBy("country");
     }
 
     @action
     async loadRegion(region: string) {
         let { geos } = await this.client.getJSON("/api/corona/region/" + region);
-        this.collection = geos;
+        this.collection = this.addRates(geos);
         this.sortBy("country");
     }
 
@@ -209,7 +224,15 @@ export class ReportStore {
             this.collection = ordered;
         }
 
-        if (sort === "deaths" || sort === "confirmed" || sort === "recovered" || sort === "active") {
+        if (
+            sort === "deaths" ||
+            sort === "confirmed" ||
+            sort === "recovered" ||
+            sort === "active" ||
+            sort === "deathRate" ||
+            sort === "recoveryRate" ||
+            sort === "activityRate"
+        ) {
             let countries = Object.keys(this.collection);
             countries.sort((a: string, b: string) => {
                 if (!this.collection) return 0;
