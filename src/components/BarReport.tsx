@@ -2,7 +2,7 @@ import { ReportInterface } from "../stores/ReportStore";
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { createDataset } from "../core/helpers";
-import { blue, green, red } from "../core/colors";
+import { blue, green, red, yellow } from "../core/colors";
 import "./BarReport.css";
 
 interface BarReportProps {
@@ -10,6 +10,7 @@ interface BarReportProps {
     showConfirmed: boolean;
     showDeaths: boolean;
     showRecovered: boolean;
+    showActive: boolean;
     stacked?: boolean;
     type?: string;
 }
@@ -19,6 +20,7 @@ export const BarReport = ({
     showConfirmed,
     showDeaths,
     showRecovered,
+    showActive,
     stacked = true,
     type = "linear"
 }: BarReportProps) => {
@@ -79,6 +81,15 @@ export const BarReport = ({
                 label: "Recovered",
                 color: green,
                 data: change.map((item) => item.recovered)
+            })
+        );
+
+    showActive &&
+        data.datasets.push(
+            createDataset({
+                label: "Active",
+                data: change.map((item) => item.active),
+                color: yellow
             })
         );
     const showYaxis = [0, 100, 1000, 10000, 100000, 1000000, 2500000, 5000000, 10000000];

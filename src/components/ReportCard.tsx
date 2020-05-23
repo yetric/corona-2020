@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { CountryMetadataCard } from "./CountryMetadataCard";
 import { Share } from "./Share";
 import { Fav, favStore } from "../stores/FavStore";
+import { CountryTable } from "./CountryTable";
 
 type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
@@ -201,6 +202,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         for (let i = 0; i < dataStore.deaths.length; i++) {
             let confirmCount = dataStore.deaths[i];
             if (confirmCount >= casesToAnnotate[0]) {
+                // TODO: Make this a little bit smarter
                 /*annotations.push({
                     date: dataStore.labels[i],
                     label: casesToAnnotate[0].toLocaleString("sv-se")
@@ -209,29 +211,6 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
             }
         }
     }
-
-    const collectionToRows = (collection: GeoCollection) => {
-        let rows = [];
-        for (let key in collection) {
-            if (!collection.hasOwnProperty(key)) continue;
-            let country: GeoOverview = collection[key];
-            rows.push(
-                <tr key={key}>
-                    <td>
-                        <Link to={"/report/" + key}>{key}</Link>
-                    </td>
-                    <td className={"text-right confirmed"}>{country.confirmed.toLocaleString("sv-se")}</td>
-                    <td className={"text-right deaths"}>{country.deaths.toLocaleString("sv-se")}</td>
-                    <td className={"text-right recovered"}>{country.recovered.toLocaleString("sv-se")}</td>
-                    <td className={"text-right active"}>{country.active.toLocaleString("sv-se")}</td>
-                    <td className={"text-right deaths"}>{relativeToPercentage(country.deathRate)}</td>
-                    <td className={"text-right recovered"}>{relativeToPercentage(country.recoveryRate)}</td>
-                    <td className={"text-right active"}>{relativeToPercentage(country.activityRate)}</td>
-                </tr>
-            );
-        }
-        return rows;
-    };
 
     return (
         <>
@@ -366,6 +345,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                             showConfirmed={showConfirmed}
                             showDeaths={showDeaths}
                             showRecovered={showRecovered}
+                            showActive={showActive}
                             report={dataStore}
                             stacked={false}
                             type={chartType}
@@ -409,11 +389,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                         <li>
                             <a
                                 href={"#active"}
-                                className={
-                                    "active" +
-                                    (showActive ? " selected" : "") +
-                                    (disableAccumulatedActions ? " disabled-action" : "")
-                                }
+                                className={"active" + (showActive ? " selected" : "")}
                                 onClick={(event) => {
                                     event.preventDefault();
                                     setShowActive(!showActive);
@@ -532,43 +508,8 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                     </div>
                 )}
             </div>
-            {standalone && <CountryMetadataCard metadata={store.metadata} />}
-            {store.collection && (
-                <div className={"card"}>
-                    <div className="card-header">Countries</div>
-                    <div className="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th onClick={() => store.sortBy("country")}>Country</th>
-                                    <th onClick={() => store.sortBy("confirmed")} className={"text-right"}>
-                                        Cases
-                                    </th>
-                                    <th onClick={() => store.sortBy("deaths")} className={"text-right"}>
-                                        Deaths
-                                    </th>
-                                    <th onClick={() => store.sortBy("recovered")} className={"text-right"}>
-                                        Recovered
-                                    </th>
-                                    <th onClick={() => store.sortBy("active")} className={"text-right"}>
-                                        Active
-                                    </th>
-                                    <th onClick={() => store.sortBy("deathRate")} className={"text-right"}>
-                                        Death Rate
-                                    </th>
-                                    <th onClick={() => store.sortBy("recoveryRate")} className={"text-right"}>
-                                        Recovery Rate
-                                    </th>
-                                    <th onClick={() => store.sortBy("activityRate")} className={"text-right"}>
-                                        Acitivity Rate
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>{collectionToRows(store.collection)}</tbody>
-                        </table>
-                    </div>
-                </div>
-            )}
+            <CountryMetadataCard metadata={store.metadata} />
+            <CountryTable store={store} />
         </>
     );
 });
