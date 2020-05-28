@@ -5,6 +5,13 @@
       window.appTimingStart = new Date().getTime();
     </script>
     <meta charset="utf-8" />
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin />
+
+    <link rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;600&display=swap" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1" />
     <meta name="theme-color" content="#2e3440" />
@@ -29,7 +36,7 @@
     <link href="%PUBLIC_URL%/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
     <link href="%PUBLIC_URL%/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
 
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;600&display=swap" media="print" rel="stylesheet" onload="this.media='all'">
 
     <meta property="og:title" content="Corona (Covid-19) Data 2020 - Graph and Table - CoronaData.se">
     <meta property="og:description" content="Data, graphs and tables on Corona (Covid-19) outbreak 2020. Confirmed, Recovered and Death cases categorized per geographic area all over the world.">
