@@ -1,7 +1,7 @@
 import { action, computed, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
-import { sortLocation } from "../core/helpers";
+import { cacheOrGet, sortLocation } from "../core/helpers";
 
 let continentCache: any = {};
 
@@ -27,30 +27,10 @@ export class ContinentStore {
     async loadContinent() {
         this.loading = true;
         const url = `/continent/${this.continent}`;
-        if (continentCache.hasOwnProperty(url)) {
-            this.locations = continentCache[url];
-        } else {
-            const payload = await this.client.getJSON(url);
-            const all = payload.geos.map((item: any) => {
-                return item;
-            });
-            this.locations = all;
-            continentCache[url] = all;
-        }
-        let confirmed = 0;
-        let deaths = 0;
-        let recovered = 0;
-
-        this.locations.forEach((value: GeoLocation) => {
-            let rec = (value.recovered && value.recovered.count && parseInt(value.recovered.count)) || 0;
-            recovered += rec;
-            deaths += value.deaths ? parseInt(value.deaths.count) : 0;
-            confirmed += value.confirmed && value.confirmed.count ? parseInt(value.confirmed.count) : 0;
-        });
-
-        this.confirmed = confirmed;
-        this.deaths = deaths;
-        this.recovered = recovered;
+        const calculated = await cacheOrGet(url, this.client, continentCache);
+        this.confirmed = calculated.confirmed;
+        this.deaths = calculated.deaths;
+        this.recovered = calculated.recovered;
         this.loading = false;
     }
 
