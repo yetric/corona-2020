@@ -2,3 +2,6 @@
 
 # Redirect default Netlify subdomain to primary domain
 https://corona-swe.netlify.com/* https://coronadata.se/:splat 301!
+
+# Redirect /api to yetric.se
+/api/*  https://yetric.se/api/corona/:splat  200
