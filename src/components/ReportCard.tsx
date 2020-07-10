@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from "react";
-import { GeoCollection, GeoOverview, ReportInterface, ReportStore } from "../stores/ReportStore";
+import { ReportInterface, ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Annotation, Report } from "./Report";
 import { CasesList } from "./CasesList";
@@ -42,7 +42,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         {
             root: null,
             rootMargin: "0px",
-            threshold: 0.3
+            threshold: 0.3,
         }
     );
 
@@ -122,7 +122,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         confirmed: confirmed - confirmedBefore,
         deaths: deaths - deathsBefore,
         recovered: recovered - recoveredBefore,
-        active: active - activeBefore
+        active: active - activeBefore,
     };
 
     let deathsCompare = changes.deaths / deathsBefore;
@@ -182,7 +182,6 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         return relativeToPercentage(change / compare);
     };
 
-    const disableAccumulatedActions = chart === "daily";
     let dates = dataStore ? dataStore.labels[0] + " - " + dataStore.labels[dataStore.labels.length - 1] : "";
 
     let incidensDeaths = null;
@@ -193,7 +192,7 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
     }
 
     let newFav: Fav = {
-        name: report
+        name: report,
     };
 
     let annotations: Annotation[] = [];
@@ -301,12 +300,12 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                             items={[
                                 {
                                     key: "linear",
-                                    label: "Linear"
+                                    label: "Linear",
                                 },
                                 {
                                     key: "logarithmic",
-                                    label: "Logarithmic"
-                                }
+                                    label: "Logarithmic",
+                                },
                             ]}
                             selected={chartType}
                             onSelect={setChartType}
@@ -315,12 +314,12 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                             items={[
                                 {
                                     key: "accumulated",
-                                    label: "Accumulated"
+                                    label: "Accumulated",
                                 },
                                 {
                                     key: "daily",
-                                    label: "Daily"
-                                }
+                                    label: "Daily",
+                                },
                             ]}
                             selected={chart}
                             onSelect={setChart}
@@ -492,13 +491,13 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                                 event.preventDefault();
                                 domtoimage
                                     .toPng(ref.current)
-                                    .then(function(dataUrl) {
+                                    .then(function (dataUrl) {
                                         let link = document.createElement("a");
                                         link.download = encodeURIComponent(reportFixed.toLowerCase()) + ".png";
                                         link.href = dataUrl;
                                         link.click();
                                     })
-                                    .catch(function(error) {
+                                    .catch(function (error) {
                                         console.error("oops, something went wrong!", error);
                                     });
                             }}>
