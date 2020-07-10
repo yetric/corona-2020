@@ -20,12 +20,12 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
 
     const [debouncedCallback] = useDebouncedCallback(
         // function
-        (query) => {
+        (query: string) => {
             searchStore.search(query);
             trackEvent({
                 category: "Search",
                 action: "Query",
-                label: query
+                label: query,
             });
         },
         // delay in ms
