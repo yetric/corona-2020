@@ -25,7 +25,7 @@ export class GovernmentStore {
     @action
     async loadRegion() {
         this.loading = true;
-        const url = `/api/corona/government/${this.governmentType}`;
+        const url = `/government/${this.governmentType}`;
         let { locations, confirmed, deaths, recovered } = await cacheOrGet(url, this.client, governmentCache);
         this.confirmed = confirmed;
         this.deaths = deaths;

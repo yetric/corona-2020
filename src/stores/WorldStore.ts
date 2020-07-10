@@ -23,7 +23,7 @@ export class WorldStore {
 
     @action
     async loadWorldData() {
-        const response = await this.client.getJSON("/api/corona/world");
+        const response = await this.client.getJSON("/world");
         this.confirmed = response.confirmed;
         this.deaths = response.deaths;
         this.recovered = response.recovered;

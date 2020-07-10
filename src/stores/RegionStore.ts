@@ -25,7 +25,7 @@ export class RegionStore {
     @action
     async loadRegion() {
         this.loading = true;
-        const url = `/api/corona/region/${this.region}`;
+        const url = `/region/${this.region}`;
         if (regionCache.hasOwnProperty(url)) {
             this.locations = regionCache[url];
         } else {

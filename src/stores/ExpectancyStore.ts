@@ -25,7 +25,7 @@ export class ExpectancyStore {
     @action
     async loadRegion() {
         this.loading = true;
-        const url = `/api/corona/expectancy/${Math.round(this.lifeExpectancy)}`;
+        const url = `/expectancy/${Math.round(this.lifeExpectancy)}`;
         let { locations, confirmed, deaths, recovered } = await cacheOrGet(url, this.client, expectancyCache);
         this.confirmed = confirmed;
         this.deaths = deaths;

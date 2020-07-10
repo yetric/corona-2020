@@ -5,7 +5,7 @@ import { relativeToPercentage } from "../core/functions";
 
 const Timespan = {
     WEEKLY: "weekly",
-    ALL: "all"
+    ALL: "all",
 };
 
 interface Case {
@@ -78,20 +78,20 @@ export class DataStore {
 
     @observable confirmed: TypeCollection = {
         data: [],
-        labels: []
+        labels: [],
     };
     @observable deaths: TypeCollection = {
         data: [],
-        labels: []
+        labels: [],
     };
     @observable recovered: TypeCollection = {
         data: [],
-        labels: []
+        labels: [],
     };
 
     cachedConfirmed: TypeCollection = {
         data: [],
-        labels: []
+        labels: [],
     };
 
     @observable provinces: any[] = [];
@@ -105,7 +105,7 @@ export class DataStore {
     reset() {
         const defaultCases = {
             data: [],
-            labels: []
+            labels: [],
         };
         this.data = null;
         this.metadata = {};
@@ -120,7 +120,7 @@ export class DataStore {
     async loadCountry(countryId: number) {
         this.loading = true;
         this.reset();
-        this.data = await this.client.getJSON(`/api/corona/geo/${countryId}`);
+        this.data = await this.client.getJSON(`/geo/${countryId}`);
         await this.loadConfirmed(countryId);
         await this.loadDeaths(countryId);
         await this.loadRecovered(countryId);
@@ -137,14 +137,14 @@ export class DataStore {
     @action
     async loadCountryMetaData(countryId: any) {
         countryId = parseInt(countryId);
-        const json = await this.client.getJSON(`/api/corona/country/${countryId}/metadata`);
+        const json = await this.client.getJSON(`/country/${countryId}/metadata`);
         const { metadata } = json;
         this.metadata = metadata;
     }
 
     @action
     async loadConfirmed(countryId: number) {
-        const json = await this.client.getJSON(`/api/corona/geo/${countryId}/confirmed`);
+        const json = await this.client.getJSON(`/geo/${countryId}/confirmed`);
         const { confirmed } = json;
         let labels = confirmed.map((item: Case) => {
             return item.date;
@@ -156,13 +156,13 @@ export class DataStore {
         this.confirmed = {
             labels,
             data,
-            name: "Confirmed"
+            name: "Confirmed",
         };
     }
 
     @action
     async loadDeaths(countryId: number) {
-        const json = await this.client.getJSON(`/api/corona/geo/${countryId}/deaths`);
+        const json = await this.client.getJSON(`/geo/${countryId}/deaths`);
         const { deaths } = json;
         let labels = deaths.map((item: Case) => {
             return item.date;
@@ -174,13 +174,13 @@ export class DataStore {
         this.deaths = {
             labels,
             data,
-            name: "Deaths"
+            name: "Deaths",
         };
     }
 
     @action
     async loadRecovered(countryId: number) {
-        const json = await this.client.getJSON(`/api/corona/geo/${countryId}/recovered`);
+        const json = await this.client.getJSON(`/geo/${countryId}/recovered`);
         const { recovered } = json;
         let labels = recovered.map((item: Case) => {
             return item.date;
@@ -192,7 +192,7 @@ export class DataStore {
         this.recovered = {
             labels,
             data,
-            name: "Recovered"
+            name: "Recovered",
         };
     }
 
@@ -212,7 +212,7 @@ export class DataStore {
 
     @action
     async loadProvinces(geoId: number) {
-        let response = await this.client.getJSON(`/api/corona/country/${geoId}`);
+        let response = await this.client.getJSON(`/country/${geoId}`);
         this.provinces = response.country;
     }
 
@@ -223,7 +223,7 @@ export class DataStore {
         return {
             data,
             labels: this.labels,
-            name: "Active"
+            name: "Active",
         };
     }
 
@@ -235,7 +235,7 @@ export class DataStore {
         return {
             data: deathRate,
             labels: this.labels,
-            name: "Death Rate"
+            name: "Death Rate",
         };
     }
 
@@ -247,7 +247,7 @@ export class DataStore {
         return {
             data: recoveryRate,
             labels: this.labels,
-            name: "Recovery Rate"
+            name: "Recovery Rate",
         };
     }
 
@@ -259,7 +259,7 @@ export class DataStore {
         return {
             data: actitityRate,
             labels: this.labels,
-            name: "Activity Rate"
+            name: "Activity Rate",
         };
     }
 
@@ -276,7 +276,7 @@ export class DataStore {
         return {
             data: expAvg ? expMovingAverage(growthRate, 14) : growthRate,
             labels: this.labels,
-            name
+            name,
         };
     }
 
@@ -326,7 +326,7 @@ export class DataStore {
                 let newConfirmed: TypeCollection = {
                     labels: this.confirmed.labels.slice(-7),
                     data: this.confirmed.data.slice(-7),
-                    name: this.confirmed.name
+                    name: this.confirmed.name,
                 };
                 this.confirmed = newConfirmed;
                 break;

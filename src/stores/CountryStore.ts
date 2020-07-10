@@ -19,10 +19,10 @@ export class CountryStore {
 
     @action
     async loadCountry() {
-        const url = `/api/corona/geo/${this.id}`;
+        const url = `/geo/${this.id}`;
         const data = countryCache.hasOwnProperty(url)
             ? countryCache[url]
-            : await this.client.getJSON(`/api/corona/geo/${this.id}`);
+            : await this.client.getJSON(`/geo/${this.id}`);
         this.confirmed = data.confirmed.count;
         this.deaths = data.deaths.count;
         this.recovered = data.recovered.count;

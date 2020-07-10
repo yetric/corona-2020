@@ -24,25 +24,25 @@ export class IncidensStore {
 
     @action
     async loadDeaths() {
-        let { incidens } = await this.client.getJSON("/api/corona/incidens/deaths");
+        let { incidens } = await this.client.getJSON("/incidens/deaths");
         this.deaths = incidens;
     }
 
     @action
     async loadDoubling() {
-        let { doubling } = await this.client.getJSON("/api/corona/doubling/deaths");
+        let { doubling } = await this.client.getJSON("/doubling/deaths");
         this.doubling = doubling;
     }
 
     @action
     async loadConfirmed() {
-        let { incidens } = await this.client.getJSON("/api/corona/incidens/confirmed");
+        let { incidens } = await this.client.getJSON("/incidens/confirmed");
         this.confirmed = incidens;
     }
 
     @action
     async loadGrowth() {
-        let { growth } = await this.client.getJSON("/api/corona/growth/deaths");
+        let { growth } = await this.client.getJSON("/growth/deaths");
         this.growth = growth;
     }
 

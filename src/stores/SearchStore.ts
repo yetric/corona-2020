@@ -23,13 +23,13 @@ export class SearchStore {
         norge: "Norway",
         danmark: "Denmark",
         island: "Iceland",
-        suomi: "Finland"
+        suomi: "Finland",
     };
 
     @observable result: SearchResult = {
         continents: [],
         countries: [],
-        regions: []
+        regions: [],
     };
 
     constructor() {
@@ -48,7 +48,7 @@ export class SearchStore {
         this.result = {
             continents: [],
             countries: [],
-            regions: []
+            regions: [],
         };
         this.query = "";
     }
@@ -57,7 +57,7 @@ export class SearchStore {
     async apiSearch() {
         if (this.query.length > 1) {
             let query = this.lookup[this.query.toLowerCase()] || this.query;
-            this.result = await this.client.getJSON(`/api/corona/country?query=${query}`);
+            this.result = await this.client.getJSON(`/country?query=${query}`);
         }
     }
 }

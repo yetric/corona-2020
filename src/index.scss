@@ -447,7 +447,8 @@ dd small {
     line-height: 32px;
 }
 
-input[type="text"], input[type="email"] {
+input[type="text"],
+input[type="email"] {
     width: 100%;
     margin: 0 0 12px 0;
     line-height: 24px;
@@ -1029,7 +1030,7 @@ ul.pills {
 }
 
 fieldset {
-    border:1px solid var(--nord3);
+    border: 1px solid var(--nord3);
     margin: 20px 0;
     padding: 20px;
     font-size: 14px;
@@ -1040,4 +1041,3 @@ fieldset {
         color: var(--nord4);
     }
 }
-

@@ -10,7 +10,7 @@ class GeoStore {
 
     @action
     async getNearby(id: number) {
-        const nearby = await this.client.getJSON(`/api/corona/country/${id}/nearby`);
+        const nearby = await this.client.getJSON(`/country/${id}/nearby`);
         this.nearby = nearby.nearby;
     }
 }

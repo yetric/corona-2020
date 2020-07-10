@@ -26,7 +26,7 @@ export class ContinentStore {
     @action
     async loadContinent() {
         this.loading = true;
-        const url = `/api/corona/continent/${this.continent}`;
+        const url = `/continent/${this.continent}`;
         if (continentCache.hasOwnProperty(url)) {
             this.locations = continentCache[url];
         } else {

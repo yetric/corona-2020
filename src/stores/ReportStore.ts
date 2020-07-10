@@ -29,8 +29,8 @@ const emptyReport = {
     country: {
         population: 0,
         geometry: null,
-        coord: null
-    }
+        coord: null,
+    },
 };
 
 export interface GeoOverview {
@@ -73,7 +73,7 @@ export class ReportStore {
         if (reportCache.hasOwnProperty(name)) {
             this.report = reportCache[name];
         } else {
-            const response = await this.client.getJSON("/api/corona/reports/" + encodeURIComponent(name));
+            const response = await this.client.getJSON("/reports/" + encodeURIComponent(name));
             this.report = response.data;
             reportCache[name] = response.data;
         }
@@ -94,8 +94,8 @@ export class ReportStore {
             country: this.report.country || {
                 coord: null,
                 geometry: null,
-                population: null
-            }
+                population: null,
+            },
         };
     }
 
@@ -110,8 +110,8 @@ export class ReportStore {
             country: report.country || {
                 coord: null,
                 geometry: null,
-                population: null
-            }
+                population: null,
+            },
         };
     }
 
@@ -163,8 +163,8 @@ export class ReportStore {
             country: this.report.country || {
                 coord: null,
                 geometry: null,
-                population: null
-            }
+                population: null,
+            },
         };
     }
 
@@ -177,7 +177,7 @@ export class ReportStore {
         if (metaCache.hasOwnProperty(name)) {
             this.metadata = metaCache[name];
         } else {
-            let { metadata } = await this.client.getJSON(`/api/corona/report/${encodeURIComponent(name)}/metadata`);
+            let { metadata } = await this.client.getJSON(`/report/${encodeURIComponent(name)}/metadata`);
             this.metadata = metadata;
             metaCache[name] = metadata;
         }
@@ -197,14 +197,14 @@ export class ReportStore {
 
     @action
     async loadContinent(continent: string) {
-        let { geos } = await this.client.getJSON("/api/corona/continent/" + continent);
+        let { geos } = await this.client.getJSON("/continent/" + continent);
         this.collection = this.addRates(geos);
         this.sortBy("country");
     }
 
     @action
     async loadRegion(region: string) {
-        let { geos } = await this.client.getJSON("/api/corona/region/" + region);
+        let { geos } = await this.client.getJSON("/region/" + region);
         this.collection = this.addRates(geos);
         this.sortBy("country");
     }
