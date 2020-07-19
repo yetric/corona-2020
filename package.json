@@ -20,7 +20,7 @@
     "csv-parser": "^2.3.3",
     "dom-to-image": "^2.6.0",
     "leaflet": "^1.6.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "moving-averages": "^4.0.5",
