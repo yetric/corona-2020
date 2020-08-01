@@ -1045,9 +1045,9 @@ fieldset {
     display: flex;
     justify-content: center;
     > div {
-        font-size: 12px;
+        font-size: 13px;
         padding: 0 12px;
-        color: var(--change);
+        color: var(--yellow);
         > span {
             color: var(--meta-light);
         }
