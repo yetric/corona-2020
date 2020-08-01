@@ -11,7 +11,7 @@ export class ContinentStore {
     @observable deaths: number = 0;
     @observable recovered: number = 0;
     @observable loading: boolean = false;
-    private client: DataClient;
+    private readonly client: DataClient;
     private readonly continent: string;
 
     constructor(continentName: string) {

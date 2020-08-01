@@ -11,7 +11,7 @@ export class RegionStore {
     @observable deaths: number = 0;
     @observable recovered: number = 0;
     @observable loading: boolean = false;
-    private client: DataClient;
+    private readonly client: DataClient;
     private readonly region: string;
 
     constructor(regionName: string) {
