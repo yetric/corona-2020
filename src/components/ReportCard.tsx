@@ -415,6 +415,14 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                         changes={changes}
                     />
 
+                    <div className="max-date">
+                        <div>
+                            <span>Peak Confirmed:</span> {store.peakConfirmed}
+                        </div>
+                        <div>
+                            <span>Peak Deaths:</span> {store.peakDeaths}
+                        </div>
+                    </div>
                     <hr />
 
                     <div className="row-xs meta-info">

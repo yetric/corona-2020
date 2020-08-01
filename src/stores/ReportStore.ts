@@ -172,6 +172,27 @@ export class ReportStore {
         return this.firstDeathReport();
     }
 
+    @computed get peakConfirmed(): string {
+        let confirmedDaily = this.toDaily(this.report?.confirmed);
+        const indexOfMaxValue = confirmedDaily.indexOf(Math.max(...confirmedDaily));
+        return this.report ? this.report.labels[indexOfMaxValue] : "";
+    }
+
+    @computed get peakDeaths(): string {
+        let deathsDaily = this.toDaily(this.report?.deaths);
+        const indexOfMaxValue = deathsDaily.indexOf(Math.max(...deathsDaily));
+        return this.report ? this.report.labels[indexOfMaxValue] : "";
+    }
+
+    private toDaily(collection: number[] | undefined) {
+        if (collection) {
+            return collection.map((count, index) => {
+                return collection[index - 1] ? count - collection[index - 1] : count;
+            });
+        }
+        return [];
+    }
+
     @action
     private async loadMetadata(name: any) {
         if (metaCache.hasOwnProperty(name)) {

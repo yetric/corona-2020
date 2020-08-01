@@ -205,7 +205,6 @@ a {
         }
         &.active {
             a {
-                border-radius: 2px;
                 border: 1px solid var(--action);
                 color: var(--action);
             }
@@ -1039,5 +1038,18 @@ fieldset {
         font-size: 20px;
         font-weight: 300;
         color: var(--nord4);
+    }
+}
+
+.max-date {
+    display: flex;
+    justify-content: center;
+    > div {
+        font-size: 12px;
+        padding: 0 12px;
+        color: var(--change);
+        > span {
+            color: var(--meta-light);
+        }
     }
 }
