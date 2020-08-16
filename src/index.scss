@@ -1047,7 +1047,11 @@ fieldset {
     > div {
         font-size: 13px;
         padding: 0 12px;
-        color: var(--yellow);
+        color: var(--orange);
+        text-align: center;
+        p {
+            margin: 0;
+        }
         > span {
             color: var(--meta-light);
         }

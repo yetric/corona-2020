@@ -3,7 +3,7 @@ import { action, computed, observable } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
 
-const MOVING_AVG_DAYS = 14;
+const MOVING_AVG_DAYS = 7;
 
 export interface CountryMetaDataInterface {
     population?: number;
@@ -18,6 +18,11 @@ export interface ReportInterface {
     deaths: number[];
     recovered: number[];
     country: CountryMetaDataInterface;
+}
+
+export interface DateSpecifics {
+    date: string;
+    count: number;
 }
 
 const emptyReport = {
@@ -83,12 +88,23 @@ export class ReportStore {
         }
     }
 
-    sliceThatReport(slice: number) {
+    sliceThatReport(slice: number, flatten: boolean = false) {
         if (!this.report) return emptyReport;
+
+        let recoveredBase = this.report?.recovered || [];
+        let deathsBase = this.report?.deaths || [];
+        let confirmedBase = this.report?.confirmed || [];
+
+        if (flatten) {
+            recoveredBase = expMovingAverage(recoveredBase, MOVING_AVG_DAYS);
+            deathsBase = expMovingAverage(deathsBase, MOVING_AVG_DAYS);
+            confirmedBase = expMovingAverage(confirmedBase, MOVING_AVG_DAYS);
+        }
+
         return {
-            recovered: this.report?.recovered.slice(slice) || [],
-            deaths: this.report?.deaths.slice(slice) || [],
-            confirmed: this.report?.confirmed.slice(slice) || [],
+            recovered: recoveredBase.slice(slice),
+            deaths: deathsBase.slice(slice),
+            confirmed: confirmedBase.slice(slice),
             labels: this.report?.labels.slice(slice) || [],
             name: this.report?.name || "",
             country: this.report.country || {
@@ -125,11 +141,15 @@ export class ReportStore {
     }
 
     @computed get biweekly(): ReportInterface {
-        return this.sliceThatReport(-15);
+        return this.sliceThatReport(-15, true);
     }
 
     @computed get monthly(): ReportInterface {
-        return this.sliceThatReport(-31);
+        return this.sliceThatReport(-31, true);
+    }
+
+    @computed get trimonthly(): ReportInterface {
+        return this.sliceThatReport(-91, true);
     }
 
     @computed get flatten(): ReportInterface {
@@ -146,13 +166,18 @@ export class ReportStore {
         return 0;
     }
 
-    private firstDeathReport(): ReportInterface {
+    private firstDeathReport(flatten: boolean = false): ReportInterface {
         if (!this.report) return emptyReport;
 
         let deathIndex = this.daysToFirstDeath();
-        let recovered = [...this.report.recovered].splice(deathIndex);
-        let deaths = [...this.report.deaths].splice(deathIndex);
-        let confirmed = [...this.report.confirmed].splice(deathIndex);
+
+        let recoveredBase = flatten ? expMovingAverage(this.report.recovered, MOVING_AVG_DAYS) : this.report.recovered;
+        let confirmedBase = flatten ? expMovingAverage(this.report.confirmed, MOVING_AVG_DAYS) : this.report.confirmed;
+        let deathBase = flatten ? expMovingAverage(this.report.deaths, MOVING_AVG_DAYS) : this.report.deaths;
+
+        let recovered = [...recoveredBase].splice(deathIndex);
+        let deaths = [...deathBase].splice(deathIndex);
+        let confirmed = [...confirmedBase].splice(deathIndex);
         let labels = [...this.report.labels].splice(deathIndex);
         return {
             recovered,
@@ -168,20 +193,34 @@ export class ReportStore {
         };
     }
 
-    @computed get firstDeath(): ReportInterface {
-        return this.firstDeathReport();
+    @computed get toWeekly() {
+        return [];
     }
 
-    @computed get peakConfirmed(): string {
+    @computed get firstDeath(): ReportInterface {
+        return this.firstDeathReport(true);
+    }
+
+    @computed get peakConfirmed(): DateSpecifics | null {
         let confirmedDaily = this.toDaily(this.report?.confirmed);
         const indexOfMaxValue = confirmedDaily.indexOf(Math.max(...confirmedDaily));
-        return this.report ? this.report.labels[indexOfMaxValue] : "";
+        return this.report
+            ? {
+                  count: Math.max(...confirmedDaily),
+                  date: this.report.labels[indexOfMaxValue],
+              }
+            : null;
     }
 
-    @computed get peakDeaths(): string {
+    @computed get peakDeaths(): DateSpecifics | null {
         let deathsDaily = this.toDaily(this.report?.deaths);
         const indexOfMaxValue = deathsDaily.indexOf(Math.max(...deathsDaily));
-        return this.report ? this.report.labels[indexOfMaxValue] : "";
+        return this.report
+            ? {
+                  count: Math.max(...deathsDaily),
+                  date: this.report.labels[indexOfMaxValue],
+              }
+            : null;
     }
 
     private toDaily(collection: number[] | undefined) {

@@ -14,7 +14,7 @@ import { Share } from "./Share";
 import { Fav, favStore } from "../stores/FavStore";
 import { CountryTable } from "./CountryTable";
 
-type DataRange = "all" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
+type DataRange = "all" | "trimonthly" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
 interface ReportCardProps {
     report: string;
@@ -23,7 +23,7 @@ interface ReportCardProps {
     standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "ma", standalone = false }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "death", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
@@ -84,14 +84,11 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
         case "all":
             dataStore = store.report;
             break;
-        case "ma":
-            dataStore = store.flatten;
+        case "trimonthly":
+            dataStore = store.trimonthly;
             break;
         case "monthly":
             dataStore = store.monthly;
-            break;
-        case "weekly":
-            dataStore = store.weekly;
             break;
         case "biweekly":
             dataStore = store.biweekly;
@@ -250,15 +247,17 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                                 }}>
                                 1st Death
                             </a>
-                            <br />
-                            <small
-                                className={currentRange === "ma" ? "selected" : ""}
+                        </li>
+                        <li>
+                            <a
+                                href={"#trimonthly"}
+                                className={currentRange === "trimonthly" ? "selected" : ""}
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    setCurrentRange(currentRange === "death" ? "ma" : "death");
+                                    setCurrentRange("trimonthly");
                                 }}>
-                                {currentRange === "ma" ? <CheckSquare size={13} /> : <Square size={13} />} Smooth
-                            </small>
+                                90 days
+                            </a>
                         </li>
                         <li>
                             <a
@@ -280,17 +279,6 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
                                     setCurrentRange("biweekly");
                                 }}>
                                 14 days
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#weekly"}
-                                className={currentRange === "weekly" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("weekly");
-                                }}>
-                                Week
                             </a>
                         </li>
                     </ul>
@@ -417,10 +405,20 @@ export const ReportCard = observer(({ report, store, range = "ma", standalone = 
 
                     <div className="max-date">
                         <div>
-                            <span>Peak Confirmed:</span> {store.peakConfirmed}
+                            <span>Peak Confirmed:</span>
+                            <p>
+                                {store.peakConfirmed?.date}
+                                <br />
+                                {store.peakConfirmed?.count.toLocaleString("sv-se")}
+                            </p>
                         </div>
                         <div>
-                            <span>Peak Deaths:</span> {store.peakDeaths}
+                            <span>Peak Deaths:</span>
+                            <p>
+                                {store.peakDeaths?.date}
+                                <br />
+                                {store.peakDeaths?.count.toLocaleString("sv-se")}
+                            </p>
                         </div>
                     </div>
                     <hr />
