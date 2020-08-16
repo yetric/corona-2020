@@ -407,7 +407,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                         <div>
                             <span>Peak Confirmed:</span>
                             <p>
-                                {store.peakConfirmed?.date}
+                                <span className={"date"}>{store.peakConfirmed?.date}</span>
                                 <br />
                                 {store.peakConfirmed?.count.toLocaleString("sv-se")}
                             </p>
@@ -415,7 +415,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                         <div>
                             <span>Peak Deaths:</span>
                             <p>
-                                {store.peakDeaths?.date}
+                                <span className={"date"}>{store.peakDeaths?.date}</span>
                                 <br />
                                 {store.peakDeaths?.count.toLocaleString("sv-se")}
                             </p>

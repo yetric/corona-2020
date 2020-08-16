@@ -1047,13 +1047,16 @@ fieldset {
     > div {
         font-size: 13px;
         padding: 0 12px;
-        color: var(--orange);
+        color: var(--yellow);
         text-align: center;
         p {
             margin: 0;
         }
         > span {
             color: var(--meta-light);
+        }
+        .date {
+            color: var(--meta);
         }
     }
 }
