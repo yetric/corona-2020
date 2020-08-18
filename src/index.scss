@@ -245,9 +245,8 @@ a {
     }
 
     .cards .card {
-        flex: 1 1 0;
-        width: 0;
         margin-left: 6px;
+        width: 50%;
     }
 
     .cards .card:first-child {
@@ -1009,6 +1008,27 @@ hr {
 }
 
 ul.pills {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    display: flex;
+    font-size: 14px;
+    li {
+        padding: 0;
+        margin: 0;
+        line-height: 21px;
+        position: relative;
+        a {
+            color: var(--yellow);
+        }
+        svg {
+            position: relative;
+            top: 3px;
+        }
+    }
+}
+
+ul.pills {
     margin: 12px 0;
     padding: 0;
     list-style: none;
@@ -1045,18 +1065,27 @@ fieldset {
     display: flex;
     justify-content: center;
     > div {
-        font-size: 13px;
+        font-size: 14px;
         padding: 0 12px;
-        color: var(--yellow);
+        color: var(--action-light);
         text-align: center;
         p {
             margin: 0;
         }
         > span {
             color: var(--meta-light);
+            font-weight: bold;
         }
         .date {
             color: var(--meta);
         }
     }
+}
+
+.divider-text {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--elevated-bg);
 }
