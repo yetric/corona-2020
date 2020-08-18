@@ -403,9 +403,10 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                         changes={changes}
                     />
 
+                    <p className={"divider-text"}>Peak Dates</p>
                     <div className="max-date">
                         <div>
-                            <span>Peak Confirmed:</span>
+                            <span>Confirmed</span>
                             <p>
                                 <span className={"date"}>{store.peakConfirmed?.date}</span>
                                 <br />
@@ -413,7 +414,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                             </p>
                         </div>
                         <div>
-                            <span>Peak Deaths:</span>
+                            <span>Deaths</span>
                             <p>
                                 <span className={"date"}>{store.peakDeaths?.date}</span>
                                 <br />
@@ -473,12 +474,6 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                             </div>
                         </div>
                     </div>
-
-                    <p className={"text-center"}>
-                        <small>
-                            Days since first death: <span className="focus">{store.daysSinceFirstDeath} days</span>
-                        </small>
-                    </p>
 
                     {!standalone && (
                         <div className="btn-group">
