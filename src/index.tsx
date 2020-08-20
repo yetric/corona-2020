@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "mobx-react-lite/batchingForReactDom";
 import "./index.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -12,7 +13,7 @@ ReactDOM.render(<App />, document.getElementById("root"), () => {
     document.body.classList.add(platform);
     setDimension({
         value: platform,
-        index: GaDimension.PLATFORM
+        index: GaDimension.PLATFORM,
     });
 
     if ("appTimingStart" in window) {
@@ -22,7 +23,7 @@ ReactDOM.render(<App />, document.getElementById("root"), () => {
         userTiming({
             category: "App",
             name: "render",
-            timing
+            timing,
         });
     }
 });

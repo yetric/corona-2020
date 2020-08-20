@@ -84,7 +84,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
     let dataStore: ReportInterface | null = null;
     switch (currentRange) {
         case "all":
-            dataStore = store.report;
+            dataStore = store.weeklyReport;
             break;
         case "trimonthly":
             dataStore = store.trimonthly;
@@ -220,7 +220,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                                     event.preventDefault();
                                     setCurrentRange("all");
                                 }}>
-                                All
+                                Weekly
                             </a>
                         </li>
                         <li>
@@ -269,7 +269,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                         </li>
                     </ul>
 
-                    <p className={"controls"}>
+                    <div className={"controls"}>
                         <Checkbox
                             onChange={(flatten: boolean) => {
                                 store.setUseMovingAvg(flatten);
@@ -285,7 +285,7 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                             value={store.movingAvgSpan}
                             label={"%d days"}
                         />
-                    </p>
+                    </div>
 
                     <div className="toggles">
                         <Toggle

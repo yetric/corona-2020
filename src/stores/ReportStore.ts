@@ -2,6 +2,8 @@ import { DataClient } from "../clients/DataClient";
 import { action, computed, observable } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
+import chunk from "lodash/chunk";
+import { sum } from "lodash";
 
 const MOVING_AVG_DAYS_DEFAULT = 7;
 
@@ -66,6 +68,7 @@ const metaCache: MetadataCacheInterface = {};
 export class ReportStore {
     private client: DataClient;
     @observable report: ReportInterface | null = null;
+    @observable weeklyReport: ReportInterface | null = null;
     @observable metadata: CountryMetadata | null = null;
     @observable collection: GeoCollection | null = null;
     @observable movingAvg: boolean = false;
@@ -88,6 +91,7 @@ export class ReportStore {
         if (loadMetadata) {
             await this.loadMetadata(name);
         }
+        this.dataToWeeks();
     }
 
     sliceThatReport(slice: number) {
@@ -321,5 +325,35 @@ export class ReportStore {
     @action
     setMovingAvgSpan(num: number) {
         this.movingAvgSpan = num;
+    }
+
+    toWeek(data: number[]) {
+        return chunk(data, 7).map((arr) => {
+            return sum(arr);
+        });
+    }
+
+    daysToWeekLabels(data: any[]) {
+        return chunk(data, 7).map((arr, index) => {
+            return index.toString();
+        });
+    }
+
+    @action
+    dataToWeeks() {
+        if (!this.report) {
+            return null;
+        }
+
+        this.weeklyReport = {
+            labels: this.daysToWeekLabels(this.report.labels),
+            confirmed: this.toWeek(this.report.confirmed),
+            deaths: this.toWeek(this.report.deaths),
+            recovered: this.toWeek(this.report.recovered),
+            name: this.report.name,
+            country: this.report.country,
+        };
+
+        console.log(this.weeklyReport);
     }
 }
