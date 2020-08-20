@@ -1,7 +1,7 @@
 import React, { createRef, useEffect, useState } from "react";
 import { ReportInterface, ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
-import { Annotation, Report } from "./Report";
+import { Report } from "./Report";
 import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
@@ -13,6 +13,8 @@ import { CountryMetadataCard } from "./CountryMetadataCard";
 import { Share } from "./Share";
 import { Fav, favStore } from "../stores/FavStore";
 import { CountryTable } from "./CountryTable";
+import { Checkbox } from "./core/Checkbox";
+import { NumBox } from "./NumBox";
 
 type DataRange = "all" | "trimonthly" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
@@ -192,22 +194,6 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
         name: report,
     };
 
-    let annotations: Annotation[] = [];
-    if (dataStore && (currentRange === "all" || currentRange === "death")) {
-        let casesToAnnotate = [1000, 10000, 100000];
-        for (let i = 0; i < dataStore.deaths.length; i++) {
-            let confirmCount = dataStore.deaths[i];
-            if (confirmCount >= casesToAnnotate[0]) {
-                // TODO: Make this a little bit smarter
-                /*annotations.push({
-                    date: dataStore.labels[i],
-                    label: casesToAnnotate[0].toLocaleString("sv-se")
-                });*/
-                casesToAnnotate.shift();
-            }
-        }
-    }
-
     return (
         <>
             <div ref={ref} className="card">
@@ -283,6 +269,17 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                         </li>
                     </ul>
 
+                    <p className={"controls"}>
+                        <Checkbox
+                            onChange={(flatten: boolean) => {
+                                store.setUseMovingAvg(flatten);
+                            }}
+                            checked={store.movingAvg}
+                            label={"Moving Avg."}
+                        />
+                        <NumBox value={store.movingAvgSpan} label={"%d days"} />
+                    </p>
+
                     <div className="toggles">
                         <Toggle
                             items={[
@@ -323,7 +320,6 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                                 report={dataStore}
                                 showActive={showActive}
                                 type={chartType}
-                                annotations={annotations}
                             />
                         </>
                     )}

@@ -3,7 +3,7 @@ import { action, computed, observable } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
 
-const MOVING_AVG_DAYS = 7;
+const MOVING_AVG_DAYS_DEFAULT = 7;
 
 export interface CountryMetaDataInterface {
     population?: number;
@@ -68,6 +68,8 @@ export class ReportStore {
     @observable report: ReportInterface | null = null;
     @observable metadata: CountryMetadata | null = null;
     @observable collection: GeoCollection | null = null;
+    @observable movingAvg: boolean = false;
+    @observable movingAvgSpan: number = MOVING_AVG_DAYS_DEFAULT;
 
     constructor() {
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
@@ -88,17 +90,17 @@ export class ReportStore {
         }
     }
 
-    sliceThatReport(slice: number, flatten: boolean = false) {
+    sliceThatReport(slice: number) {
         if (!this.report) return emptyReport;
 
         let recoveredBase = this.report?.recovered || [];
         let deathsBase = this.report?.deaths || [];
         let confirmedBase = this.report?.confirmed || [];
 
-        if (flatten) {
-            recoveredBase = expMovingAverage(recoveredBase, MOVING_AVG_DAYS);
-            deathsBase = expMovingAverage(deathsBase, MOVING_AVG_DAYS);
-            confirmedBase = expMovingAverage(confirmedBase, MOVING_AVG_DAYS);
+        if (this.movingAvg) {
+            recoveredBase = expMovingAverage(recoveredBase, this.movingAvgSpan);
+            deathsBase = expMovingAverage(deathsBase, this.movingAvgSpan);
+            confirmedBase = expMovingAverage(confirmedBase, this.movingAvgSpan);
         }
 
         return {
@@ -118,9 +120,9 @@ export class ReportStore {
     flattenThatReport() {
         let report = this.firstDeathReport();
         return {
-            recovered: expMovingAverage(report.recovered, MOVING_AVG_DAYS),
-            deaths: expMovingAverage(report.deaths, MOVING_AVG_DAYS),
-            confirmed: expMovingAverage(report.confirmed, MOVING_AVG_DAYS),
+            recovered: expMovingAverage(report.recovered, this.movingAvgSpan),
+            deaths: expMovingAverage(report.deaths, this.movingAvgSpan),
+            confirmed: expMovingAverage(report.confirmed, this.movingAvgSpan),
             labels: report.labels,
             name: report.name,
             country: report.country || {
@@ -141,15 +143,15 @@ export class ReportStore {
     }
 
     @computed get biweekly(): ReportInterface {
-        return this.sliceThatReport(-15, true);
+        return this.sliceThatReport(-15);
     }
 
     @computed get monthly(): ReportInterface {
-        return this.sliceThatReport(-31, true);
+        return this.sliceThatReport(-31);
     }
 
     @computed get trimonthly(): ReportInterface {
-        return this.sliceThatReport(-91, true);
+        return this.sliceThatReport(-91);
     }
 
     @computed get flatten(): ReportInterface {
@@ -166,14 +168,18 @@ export class ReportStore {
         return 0;
     }
 
-    private firstDeathReport(flatten: boolean = false): ReportInterface {
+    private firstDeathReport(): ReportInterface {
         if (!this.report) return emptyReport;
 
         let deathIndex = this.daysToFirstDeath();
 
-        let recoveredBase = flatten ? expMovingAverage(this.report.recovered, MOVING_AVG_DAYS) : this.report.recovered;
-        let confirmedBase = flatten ? expMovingAverage(this.report.confirmed, MOVING_AVG_DAYS) : this.report.confirmed;
-        let deathBase = flatten ? expMovingAverage(this.report.deaths, MOVING_AVG_DAYS) : this.report.deaths;
+        let recoveredBase = this.movingAvg
+            ? expMovingAverage(this.report.recovered, this.movingAvgSpan)
+            : this.report.recovered;
+        let confirmedBase = this.movingAvg
+            ? expMovingAverage(this.report.confirmed, this.movingAvgSpan)
+            : this.report.confirmed;
+        let deathBase = this.movingAvg ? expMovingAverage(this.report.deaths, this.movingAvgSpan) : this.report.deaths;
 
         let recovered = [...recoveredBase].splice(deathIndex);
         let deaths = [...deathBase].splice(deathIndex);
@@ -198,7 +204,7 @@ export class ReportStore {
     }
 
     @computed get firstDeath(): ReportInterface {
-        return this.firstDeathReport(true);
+        return this.firstDeathReport();
     }
 
     @computed get peakConfirmed(): DateSpecifics | null {
@@ -305,5 +311,10 @@ export class ReportStore {
             });
             this.collection = ordered;
         }
+    }
+
+    @action
+    setUseMovingAvg(movingAvg: boolean) {
+        this.movingAvg = movingAvg;
     }
 }
