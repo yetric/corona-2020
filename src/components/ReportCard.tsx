@@ -84,7 +84,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
     let dataStore: ReportInterface | null = null;
     switch (currentRange) {
         case "all":
-            dataStore = store.weeklyReport;
+            dataStore = store.report;
             break;
         case "trimonthly":
             dataStore = store.trimonthly;
@@ -220,7 +220,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
                                     event.preventDefault();
                                     setCurrentRange("all");
                                 }}>
-                                Weekly
+                                All
                             </a>
                         </li>
                         <li>
