@@ -1,0 +1,32 @@
+.base {
+    color: var(--meta-light);
+}
+.actions {
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+.actions a {
+    display: block;
+    line-height: 16px;
+    min-width: 16px;
+    color: var(--action);
+    border: 1px solid var(--action);
+    margin-left: 6px;
+}
+
+.actions a.plain {
+    border: none;
+    position: relative;
+    top: 2px;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+.disabled a {
+    border-color: var(--meta);
+    color: var(--meta);
+}

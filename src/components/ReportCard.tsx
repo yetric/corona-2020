@@ -277,7 +277,14 @@ export const ReportCard = observer(({ report, store, range = "death", standalone
                             checked={store.movingAvg}
                             label={"Moving Avg."}
                         />
-                        <NumBox value={store.movingAvgSpan} label={"%d days"} />
+                        <NumBox
+                            onChange={(num: number) => {
+                                store.setMovingAvgSpan(num);
+                            }}
+                            enabled={store.movingAvg}
+                            value={store.movingAvgSpan}
+                            label={"%d days"}
+                        />
                     </p>
 
                     <div className="toggles">

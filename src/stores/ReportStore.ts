@@ -317,4 +317,9 @@ export class ReportStore {
     setUseMovingAvg(movingAvg: boolean) {
         this.movingAvg = movingAvg;
     }
+
+    @action
+    setMovingAvgSpan(num: number) {
+        this.movingAvgSpan = num;
+    }
 }
