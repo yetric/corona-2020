@@ -25,7 +25,7 @@ interface ReportCardProps {
     standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "death", standalone = false }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "all", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
