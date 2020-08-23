@@ -1100,3 +1100,8 @@ fieldset {
     padding-bottom: 6px;
     border-bottom: 1px solid var(--elevated-bg);
 }
+
+td small {
+    font-size: 10px;
+    filter: brightness(0.7) contrast(0.5);
+}

@@ -19,12 +19,21 @@ const collectionToRows = (collection: GeoCollection) => {
                     <Link to={"/report/" + key}>{key}</Link>
                 </td>
                 <td className={"text-right confirmed"}>{country.confirmed.toLocaleString("sv-se")}</td>
-                <td className={"text-right deaths"}>{country.deaths.toLocaleString("sv-se")}</td>
-                <td className={"text-right recovered"}>{country.recovered.toLocaleString("sv-se")}</td>
-                <td className={"text-right active"}>{country.active.toLocaleString("sv-se")}</td>
-                <td className={"text-right deaths"}>{relativeToPercentage(country.deathRate)}</td>
-                <td className={"text-right recovered"}>{relativeToPercentage(country.recoveryRate)}</td>
-                <td className={"text-right active"}>{relativeToPercentage(country.activityRate)}</td>
+                <td className={"text-right deaths"}>
+                    {country.deaths.toLocaleString("sv-se")}
+                    <br />
+                    <small className={"deaths"}>{relativeToPercentage(country.deathRate)}</small>
+                </td>
+                <td className={"text-right recovered"}>
+                    {country.recovered.toLocaleString("sv-se")}
+                    <br />
+                    <small className={"recovered"}>{relativeToPercentage(country.recoveryRate)}</small>
+                </td>
+                <td className={"text-right active"}>
+                    {country.active.toLocaleString("sv-se")}
+                    <br />
+                    <small className={"active"}>{relativeToPercentage(country.activityRate)}</small>
+                </td>
             </tr>
         );
     }
@@ -51,15 +60,6 @@ export const CountryTable = observer(({ store }: CountryTableProps) => {
                             </th>
                             <th onClick={() => store.sortBy("active")} className={"text-right"}>
                                 Active
-                            </th>
-                            <th onClick={() => store.sortBy("deathRate")} className={"text-right"}>
-                                Death Rate
-                            </th>
-                            <th onClick={() => store.sortBy("recoveryRate")} className={"text-right"}>
-                                Recovery Rate
-                            </th>
-                            <th onClick={() => store.sortBy("activityRate")} className={"text-right"}>
-                                Acitivity Rate
                             </th>
                         </tr>
                     </thead>
