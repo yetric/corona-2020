@@ -71,7 +71,7 @@ export class ReportStore {
     @observable weeklyReport: ReportInterface | null = null;
     @observable metadata: CountryMetadata | null = null;
     @observable collection: GeoCollection | null = null;
-    @observable movingAvg: boolean = false;
+    @observable movingAvg: boolean = true;
     @observable movingAvgSpan: number = MOVING_AVG_DAYS_DEFAULT;
 
     constructor() {

@@ -25,7 +25,7 @@ interface ReportCardProps {
     standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "all", standalone = false }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "trimonthly", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
@@ -80,7 +80,7 @@ export const ReportCard = observer(({ report, store, range = "all", standalone =
     }, [standalone, report, store]);
 
     const [chart, setChart] = useState("daily");
-    const [chartType, setChartType] = useState("linear");
+    const [chartType, setChartType] = useState("logarithmic");
     let dataStore: ReportInterface | null = null;
     switch (currentRange) {
         case "all":
