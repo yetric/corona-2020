@@ -15,6 +15,7 @@ import { Fav, favStore } from "../stores/FavStore";
 import { CountryTable } from "./CountryTable";
 import { Checkbox } from "./core/Checkbox";
 import { NumBox } from "./NumBox";
+import World from "../views/World";
 
 type DataRange = "all" | "trimonthly" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
@@ -511,6 +512,11 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                     </div>
                 )}
             </div>
+            {report === "world" && (
+                <div className={"card world-extra"}>
+                    <World />
+                </div>
+            )}
             <CountryMetadataCard metadata={store.metadata} />
             <CountryTable store={store} />
         </>
