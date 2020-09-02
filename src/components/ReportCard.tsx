@@ -512,7 +512,7 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                     </div>
                 )}
             </div>
-            {report === "world" && (
+            {report === "world" && standalone && (
                 <div className={"card world-extra"}>
                     <World />
                 </div>
