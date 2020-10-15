@@ -26,7 +26,7 @@ const dataStore = new DataStore();
 
 const Geo = withRouter(
     observer(({ history }: GeoProps) => {
-        let { country } = useParams();
+        let { country }: any = useParams();
         useEffect(() => {
             country && dataStore.loadCountry(parseInt(country));
             window.scrollTo(0, 0);
@@ -71,7 +71,7 @@ const Geo = withRouter(
             showSaveBtn = !favStore.has({
                 id: parseInt(country),
                 name: dataStore.data.geo.country,
-                province: dataStore.data.geo.province
+                province: dataStore.data.geo.province,
             });
         }
 

@@ -5,7 +5,7 @@ import { GovernmentStore } from "../stores/GovernmentStore";
 import { LocationList } from "../components/LocationList";
 
 const Government = observer(() => {
-    let { government } = useParams();
+    let { government }: any = useParams();
     let governmentStore: GovernmentStore;
 
     if (!government) {

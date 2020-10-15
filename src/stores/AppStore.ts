@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { isInStandaloneMode, isIos } from "../core/helpers";
 
 interface Crumb {
@@ -16,6 +16,7 @@ class AppStore {
     @observable supportsGeolocations: boolean = "geolocation" in navigator;
 
     constructor() {
+        makeObservable(this);
         let showPwaPush = isIos() && !isInStandaloneMode();
         let hasShownPush = !!localStorage.getItem("pwa_push_shown");
         this.showPwa = showPwaPush && !hasShownPush;

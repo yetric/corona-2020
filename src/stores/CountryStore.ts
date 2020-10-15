@@ -1,5 +1,5 @@
 import { DataClient } from "../clients/DataClient";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 const countryCache: any = {};
 
@@ -10,6 +10,7 @@ export class CountryStore {
     private client: DataClient;
     private readonly id: number;
     constructor(id: number) {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.id = id;
         (async () => {

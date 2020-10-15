@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { CachedList } from "../core/storage";
 
 export interface Fav {
@@ -12,10 +12,11 @@ export class FavStore {
     private cachedList: CachedList;
 
     constructor() {
+        makeObservable(this);
         this.favorites = FavStore.read();
         this.cachedList = new CachedList({
             name: "cd_favs_test",
-            length: 10
+            length: 10,
         });
     }
 

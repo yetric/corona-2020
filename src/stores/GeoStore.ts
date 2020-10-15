@@ -1,10 +1,11 @@
 import { DataClient } from "../clients/DataClient";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 class GeoStore {
     @observable nearby: any[] = [];
     private client: DataClient;
     constructor() {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
 

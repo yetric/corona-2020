@@ -5,7 +5,7 @@ import { ReportCard } from "../components/ReportCard";
 import { LoadingView } from "./Loading";
 
 const Country = () => {
-    let { country } = useParams();
+    let { country }: any = useParams();
     useEffect(() => {
         if (country) {
             document.title =

@@ -1,4 +1,4 @@
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 
 type LocationType = "country" | "region" | "continent" | "geo";
@@ -38,7 +38,7 @@ export class LocationStore {
         deaths: 0,
         recovered: 0,
         active: 0,
-        date: ""
+        date: "",
     };
 
     @observable compare: CurrentProps = {
@@ -46,13 +46,13 @@ export class LocationStore {
         deaths: 0,
         recovered: 0,
         active: 0,
-        date: ""
+        date: "",
     };
 
     @observable rates: CurrentRatesProps = {
         active: 0,
         death: 0,
-        recovered: 0
+        recovered: 0,
     };
 
     @observable data: DataProps = {
@@ -60,19 +60,20 @@ export class LocationStore {
         confirmed: [],
         deaths: [],
         labels: [],
-        recovered: []
+        recovered: [],
     };
 
     @observable growth: GrowthProps = {
         active: [],
         confirmed: [],
         death: [],
-        recovered: []
+        recovered: [],
     };
 
     private client: DataClient;
 
     constructor() {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
 

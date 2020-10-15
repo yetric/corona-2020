@@ -1,5 +1,5 @@
 import { DataClient } from "../clients/DataClient";
-import { action, computed, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
 interface CountryIncidens {
     name: string;
@@ -15,11 +15,20 @@ export class IncidensStore {
     @observable growth: CountryIncidens[] = [];
 
     constructor() {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
-        this.loadConfirmed();
-        this.loadDeaths();
-        this.loadDoubling();
-        this.loadGrowth();
+        this.loadConfirmed().catch((e) => {
+            console.error(e);
+        });
+        this.loadDeaths().catch((e) => {
+            console.error(e);
+        });
+        this.loadDoubling().catch((e) => {
+            console.error(e);
+        });
+        this.loadGrowth().catch((e) => {
+            console.error(e);
+        });
     }
 
     @action

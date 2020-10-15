@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
 import { cacheOrGet, sortLocation } from "../core/helpers";
@@ -15,6 +15,7 @@ export class ContinentStore {
     private readonly continent: string;
 
     constructor(continentName: string) {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.continent = continentName;
         this.locations = [];

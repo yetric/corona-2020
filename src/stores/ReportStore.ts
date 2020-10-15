@@ -1,5 +1,5 @@
 import { DataClient } from "../clients/DataClient";
-import { action, computed, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
 import chunk from "lodash/chunk";
@@ -75,6 +75,7 @@ export class ReportStore {
     @observable movingAvgSpan: number = MOVING_AVG_DAYS_DEFAULT;
 
     constructor() {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
 

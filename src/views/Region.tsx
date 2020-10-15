@@ -8,7 +8,7 @@ import { ReportStore } from "../stores/ReportStore";
 const reportStore = new ReportStore();
 
 const Region = observer(() => {
-    let { region } = useParams();
+    let { region }: any = useParams();
     let regionStore: RegionStore;
 
     if (!region) {

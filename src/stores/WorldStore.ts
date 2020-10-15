@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 
 export class WorldStore {
@@ -17,8 +17,11 @@ export class WorldStore {
     @observable activeCompared: any = null;
 
     constructor() {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
-        this.loadWorldData();
+        this.loadWorldData().catch((e) => {
+            console.error(e);
+        });
     }
 
     @action

@@ -1,5 +1,5 @@
 import { DataClient } from "../clients/DataClient";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 interface SearchResult {
     countries: any[];
@@ -33,6 +33,7 @@ export class SearchStore {
     };
 
     constructor() {
+        makeObservable(this);
         this.query = "";
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }

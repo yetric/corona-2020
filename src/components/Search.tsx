@@ -18,7 +18,7 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
     const [isFocus, setIsFocus] = useState(false);
     let history = useHistory();
 
-    const [debouncedCallback] = useDebouncedCallback(
+    const debouncedCallback = useDebouncedCallback(
         // function
         (query: string) => {
             searchStore.search(query);
@@ -35,7 +35,7 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
     const onChange = (event: any) => {
         event.preventDefault();
         setQuery(event.target.value);
-        debouncedCallback(event.target.value);
+        debouncedCallback.callback(event.target.value);
     };
 
     const searchCountryResults = searchStore.result.countries.map((geo: any) => (

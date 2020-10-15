@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
 import { cacheOrGet, sortLocation } from "../core/helpers";
@@ -15,6 +15,7 @@ export class ExpectancyStore {
     private readonly lifeExpectancy: number;
 
     constructor(lifeExpectancy: number) {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.lifeExpectancy = lifeExpectancy;
         (async () => {

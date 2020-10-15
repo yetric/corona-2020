@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { DataClient } from "../clients/DataClient";
 import { GeoLocation } from "../models/GeoLocation";
 import { cacheOrGet, sortLocation } from "../core/helpers";
@@ -11,10 +11,11 @@ export class GovernmentStore {
     @observable deaths: number = 0;
     @observable recovered: number = 0;
     @observable loading: boolean = false;
-    private client: DataClient;
+    private readonly client: DataClient;
     private readonly governmentType: string;
 
     constructor(governmentType: string) {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
         this.governmentType = governmentType;
         (async () => {

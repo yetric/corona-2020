@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { DataClient } from "../clients/DataClient";
 import { relativeToPercentage } from "../core/functions";
@@ -98,6 +98,7 @@ export class DataStore {
     private client: DataClient;
 
     constructor() {
+        makeObservable(this);
         this.client = new DataClient(process.env.REACT_APP_BASE_URL);
     }
 

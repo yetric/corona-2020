@@ -5,7 +5,7 @@ import { ExpectancyStore } from "../stores/ExpectancyStore";
 import { LocationList } from "../components/LocationList";
 
 const Expectancy = observer(() => {
-    let { expectancy } = useParams();
+    let { expectancy }: any = useParams();
     let expectancyStore: ExpectancyStore;
 
     if (!expectancy) {
