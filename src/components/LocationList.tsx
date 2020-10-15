@@ -10,9 +10,9 @@ import { ContinentStore } from "../stores/ContinentStore";
 import { RegionStore } from "../stores/RegionStore";
 import { GovernmentStore } from "../stores/GovernmentStore";
 import { ExpectancyStore } from "../stores/ExpectancyStore";
-import { ReportInterface } from "../stores/ReportStore";
 import { Report } from "./Report";
 import { Toggle } from "./Toggle";
+import { ReportInterface } from "../models/Reports";
 
 interface LocationListProps {
     store: ContinentStore | RegionStore | GovernmentStore | ExpectancyStore;
@@ -107,12 +107,12 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                                     items={[
                                         {
                                             key: "linear",
-                                            label: "Linear"
+                                            label: "Linear",
                                         },
                                         {
                                             key: "logarithmic",
-                                            label: "Logarithmic"
-                                        }
+                                            label: "Logarithmic",
+                                        },
                                     ]}
                                     selected={listType}
                                     onSelect={setListType}

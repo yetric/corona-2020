@@ -1,11 +1,11 @@
 import React, { memo } from "react";
 import { Line } from "react-chartjs-2";
-import { ReportInterface } from "../stores/ReportStore";
 import { createDataset } from "../core/helpers";
 import { blue, green, red, yellow } from "../core/colors";
 import "./Report.css";
 import { Loading } from "./Loading";
 import "chartjs-plugin-annotation";
+import { ReportInterface } from "../models/Reports";
 
 export type ChartType = "linear" | "logarithmic";
 
@@ -37,7 +37,7 @@ export const Report = memo(
         const empty: any[] = [];
         const data = {
             labels: report.labels,
-            datasets: empty
+            datasets: empty,
         };
 
         const activeData = report.confirmed.map((count: number, index: number) => {
@@ -47,24 +47,24 @@ export const Report = memo(
         let confirmed = createDataset({
             label: "Confirmed",
             color: blue,
-            data: report.confirmed
+            data: report.confirmed,
         });
 
         let deaths = createDataset({
             label: "Deaths",
             color: red,
-            data: report.deaths
+            data: report.deaths,
         });
         let recovered = createDataset({
             label: "Recovered",
             color: green,
-            data: report.recovered
+            data: report.recovered,
         });
 
         let active = createDataset({
             label: "Active",
             color: yellow,
-            data: activeData
+            data: activeData,
         });
 
         showConfirmed && data.datasets.push(confirmed);
@@ -76,7 +76,7 @@ export const Report = memo(
 
         const options: any = {
             legend: {
-                display: false
+                display: false,
             },
             responsive: true,
             maintainAspectRatio: false,
@@ -94,9 +94,9 @@ export const Report = memo(
                                   }
                                 : (value: any, index: any, values: any) => {
                                       return value % 1 === 0 ? value : "";
-                                  }
-                        }
-                    }
+                                  },
+                        },
+                    },
                 ],
                 xAxes: [
                     {
@@ -105,17 +105,17 @@ export const Report = memo(
                             autoSkip: false,
                             callback: (value: any, index: any, values: any) => {
                                 return index % 5 === 0 ? value : "";
-                            }
+                            },
                         },
                         gridLines: {
-                            display: false
-                        }
-                    }
-                ]
+                            display: false,
+                        },
+                    },
+                ],
             },
             annotation: {
-                annotations: []
-            }
+                annotations: [],
+            },
         };
 
         // Find  cases
@@ -135,8 +135,8 @@ export const Report = memo(
                         content: a.label,
                         enabled: true,
                         foregroundColor: "#000000",
-                        position: "bottom"
-                    }
+                        position: "bottom",
+                    },
                 });
             });
         }

@@ -4,28 +4,16 @@ import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
 import chunk from "lodash/chunk";
 import { sum } from "lodash";
+import {
+    DateSpecifics,
+    GeoCollection,
+    GeoOverview,
+    MetadataCacheInterface,
+    ReportCacheInterface,
+    ReportInterface,
+} from "../models/Reports";
 
-const MOVING_AVG_DAYS_DEFAULT = 7;
-
-export interface CountryMetaDataInterface {
-    population?: number;
-    coord?: any;
-    geometry?: any;
-}
-
-export interface ReportInterface {
-    name: string;
-    labels: string[];
-    confirmed: number[];
-    deaths: number[];
-    recovered: number[];
-    country: CountryMetaDataInterface;
-}
-
-export interface DateSpecifics {
-    date: string;
-    count: number;
-}
+const MOVING_AVG_DAYS_DEFAULT = 14;
 
 const emptyReport = {
     recovered: [],
@@ -39,28 +27,6 @@ const emptyReport = {
         coord: null,
     },
 };
-
-export interface GeoOverview {
-    active: number;
-    confirmed: number;
-    deaths: number;
-    recovered: number;
-    deathRate: number;
-    recoveryRate: number;
-    activityRate: number;
-}
-
-export interface GeoCollection {
-    [name: string]: GeoOverview;
-}
-
-interface ReportCacheInterface {
-    [key: string]: ReportInterface;
-}
-
-interface MetadataCacheInterface {
-    [key: string]: CountryMetadata;
-}
 
 const reportCache: ReportCacheInterface = {};
 const metaCache: MetadataCacheInterface = {};

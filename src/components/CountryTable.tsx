@@ -1,8 +1,9 @@
 import React from "react";
-import { GeoCollection, GeoOverview, ReportStore } from "../stores/ReportStore";
+import { ReportStore } from "../stores/ReportStore";
 import { Link } from "react-router-dom";
 import { relativeToPercentage } from "../core/functions";
 import { observer } from "mobx-react";
+import { GeoCollection, GeoOverview } from "../models/Reports";
 
 interface CountryTableProps {
     store: ReportStore | null;

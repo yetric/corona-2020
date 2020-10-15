@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from "react";
-import { ReportInterface, ReportStore } from "../stores/ReportStore";
+import { ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Report } from "./Report";
 import { CasesList } from "./CasesList";
@@ -16,6 +16,7 @@ import { CountryTable } from "./CountryTable";
 import { Checkbox } from "./core/Checkbox";
 import { NumBox } from "./NumBox";
 import World from "../views/World";
+import { ReportInterface } from "../models/Reports";
 
 type DataRange = "all" | "trimonthly" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 

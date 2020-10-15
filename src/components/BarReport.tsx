@@ -1,9 +1,9 @@
-import { ReportInterface } from "../stores/ReportStore";
-import React from "react";
 import { Bar } from "react-chartjs-2";
 import { createDataset } from "../core/helpers";
 import { blue, green, red, yellow } from "../core/colors";
 import "./BarReport.css";
+import { ReportInterface } from "../models/Reports";
+import React from "react";
 
 interface BarReportProps {
     report: ReportInterface | null;
@@ -22,7 +22,7 @@ export const BarReport = ({
     showRecovered,
     showActive,
     stacked = true,
-    type = "linear"
+    type = "linear",
 }: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
@@ -39,7 +39,7 @@ export const BarReport = ({
             confirmed,
             deaths,
             recovered,
-            active: confirmed - (recovered + deaths)
+            active: confirmed - (recovered + deaths),
         };
         last = nr;
         lastDeath = report.deaths[index];
@@ -54,7 +54,7 @@ export const BarReport = ({
     const empty: any[] = [];
     const data = {
         labels: lbls,
-        datasets: empty
+        datasets: empty,
     };
 
     showConfirmed &&
@@ -62,7 +62,7 @@ export const BarReport = ({
             createDataset({
                 label: "Confirmed",
                 color: blue,
-                data: change.map((item) => item.confirmed)
+                data: change.map((item) => item.confirmed),
             })
         );
 
@@ -71,7 +71,7 @@ export const BarReport = ({
             createDataset({
                 label: "Deaths",
                 color: red,
-                data: change.map((item) => item.deaths)
+                data: change.map((item) => item.deaths),
             })
         );
 
@@ -80,7 +80,7 @@ export const BarReport = ({
             createDataset({
                 label: "Recovered",
                 color: green,
-                data: change.map((item) => item.recovered)
+                data: change.map((item) => item.recovered),
             })
         );
 
@@ -89,14 +89,14 @@ export const BarReport = ({
             createDataset({
                 label: "Active",
                 data: change.map((item) => item.active),
-                color: yellow
+                color: yellow,
             })
         );
     const showYaxis = [0, 100, 1000, 10000, 100000, 1000000, 2500000, 5000000, 10000000];
     const isLogarithmic = type === "logarithmic";
     const options = {
         legend: {
-            display: false
+            display: false,
         },
         responsive: true,
         maintainAspectRatio: false,
@@ -118,20 +118,20 @@ export const BarReport = ({
                               }
                             : (value: any, index: any, values: any) => {
                                   return value % 1 === 0 ? value : "";
-                              }
-                    }
-                }
+                              },
+                    },
+                },
             ],
             xAxes: [
                 {
                     display: false,
                     stacked,
                     gridLines: {
-                        display: false
-                    }
-                }
-            ]
-        }
+                        display: false,
+                    },
+                },
+            ],
+        },
     };
     return (
         <div className={"bar-report-wrapper"}>
