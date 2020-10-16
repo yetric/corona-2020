@@ -5,7 +5,6 @@ import { Report } from "./Report";
 import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
-import { relativeToPercentage } from "../core/functions";
 import { CheckSquare, Download, Square, Star } from "react-feather";
 import domtoimage from "dom-to-image";
 import { Link } from "react-router-dom";
@@ -17,6 +16,7 @@ import { Checkbox } from "./core/Checkbox";
 import { NumBox } from "./NumBox";
 import World from "../views/World";
 import { ReportInterface } from "../models/Reports";
+import { getDoublingSpeed, lastNthDaysShare, reportUrlToHeader, toDaily } from "../core/utils";
 
 type DataRange = "all" | "trimonthly" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
 
@@ -102,86 +102,16 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
             break;
     }
 
-    let deaths = store.report ? store.report.deaths[store.report.deaths.length - 1] : 0;
-    let confirmed = store.report ? store.report.confirmed[store.report.confirmed.length - 1] : 0;
-    let recovered = store.report ? store.report.recovered[store.report.recovered.length - 1] : 0;
-    let active = confirmed - (deaths + recovered);
+    let { deaths, confirmed, recovered, active } = store.today;
+    let { deathsBefore, confirmedBefore, recoveredBefore, activeBefore } = store.yesterday;
+    let changes = store.changes;
 
-    let deathsBefore =
-        store.report && store.report.deaths.length > 2 ? store.report.deaths[store.report.deaths.length - 2] : 0;
-    let confirmedBefore =
-        store.report && store.report.confirmed.length > 2
-            ? store.report.confirmed[store.report.confirmed.length - 2]
-            : 0;
-    let recoveredBefore =
-        store.report && store.report.recovered.length > 2
-            ? store.report.recovered[store.report.recovered.length - 2]
-            : 0;
-    let activeBefore = confirmedBefore - (deathsBefore + recoveredBefore);
-
-    let changes = {
-        confirmed: confirmed - confirmedBefore,
-        deaths: deaths - deathsBefore,
-        recovered: recovered - recoveredBefore,
-        active: active - activeBefore,
-    };
-
-    let deathsCompare = changes.deaths / deathsBefore;
-    let confirmedCompare = changes.confirmed / confirmedBefore;
-    let recoveredCompare = changes.recovered / recoveredBefore;
-    let activeCompare = changes.active / activeBefore;
-
-    let deathRate = deaths / confirmed;
-    let recoveryRate = recovered / confirmed;
-    let activityRate = active / confirmed;
+    let { deathsCompare, confirmedCompare, activeCompare, recoveredCompare } = store.dailyShareOfTotal;
+    let { deathRate, recoveryRate, activityRate } = store.rates;
 
     let updated = dataStore ? dataStore.labels[dataStore.labels.length - 1] : "";
 
-    const arrReport = decodeURIComponent(report).split(":");
-    let reportFixed = arrReport
-        .map((item) => {
-            return item.charAt(0).toUpperCase() + item.slice(1);
-        })
-        .join(" / ");
-
-    function getDoublingSpeed(prop: string = "confirmed") {
-        if (!store.report) {
-            return "";
-        }
-        let coll = store.report.confirmed;
-        if (prop === "deaths") {
-            coll = store.report.deaths;
-        }
-        let half = coll[coll.length - 1] / 2;
-        for (let i = coll.length - 1; i >= 0; i--) {
-            if (coll[i] <= half) {
-                return coll.length - i;
-            }
-        }
-        return "n/a";
-    }
-
-    const lastThreeDaysShare = (prop: string = "confirmed") => {
-        if (!dataStore) {
-            return 0;
-        }
-
-        let source = dataStore.confirmed;
-        let compare = confirmed;
-        switch (prop) {
-            case "deaths":
-                source = dataStore.deaths;
-                compare = deaths;
-                break;
-        }
-
-        let clone = [...source].slice(-4);
-        let change = 0;
-        for (let i = 0; i < clone.length - 1; i++) {
-            change += clone[i + 1] - clone[i];
-        }
-        return relativeToPercentage(change / compare);
-    };
+    let reportFixed = reportUrlToHeader(report);
 
     let dates = dataStore ? dataStore.labels[0] + " - " + dataStore.labels[dataStore.labels.length - 1] : "";
 
@@ -459,9 +389,15 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                                 <small>
                                     <strong>Doubling Rates</strong>
                                     <br />
-                                    Confirmed: <span className={"focus"}>{getDoublingSpeed()} days</span>
+                                    Confirmed:{" "}
+                                    <span className={"focus"}>
+                                        {store.report && getDoublingSpeed(store.report.confirmed)} days
+                                    </span>
                                     <br />
-                                    Deaths: <span className={"focus"}>{getDoublingSpeed("deaths")} days</span>
+                                    Deaths:{" "}
+                                    <span className={"focus"}>
+                                        {store.report && getDoublingSpeed(store.report.deaths)} days
+                                    </span>
                                     <br />
                                 </small>
                             </div>
@@ -472,9 +408,15 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                                 <small>
                                     <strong>Last 3 Days of Total</strong>
                                     <br />
-                                    Confirmed: <span className={"focus"}>{lastThreeDaysShare()}</span>
+                                    Confirmed:{" "}
+                                    <span className={"focus"}>
+                                        {store.report && lastNthDaysShare(toDaily(store.report.confirmed), 3)}%
+                                    </span>
                                     <br />
-                                    Deaths: <span className={"focus"}>{lastThreeDaysShare("deaths")}</span>
+                                    Deaths:{" "}
+                                    <span className={"focus"}>
+                                        {store.report && lastNthDaysShare(toDaily(store.report.deaths), 3)}%
+                                    </span>
                                 </small>
                             </div>
                         </div>
