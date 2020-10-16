@@ -56,3 +56,18 @@ export enum DateSpan {
     Month = "30 days",
     Halfmonth = "14 days",
 }
+
+export const MOVING_AVG_DAYS_DEFAULT = 14;
+
+export const emptyReport = {
+    recovered: [],
+    deaths: [],
+    confirmed: [],
+    labels: [],
+    name: "",
+    country: {
+        population: 0,
+        geometry: null,
+        coord: null,
+    },
+};

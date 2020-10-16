@@ -6,27 +6,14 @@ import chunk from "lodash/chunk";
 import { sum } from "lodash";
 import {
     DateSpecifics,
+    emptyReport,
     GeoCollection,
     GeoOverview,
     MetadataCacheInterface,
+    MOVING_AVG_DAYS_DEFAULT,
     ReportCacheInterface,
     ReportInterface,
 } from "../models/Reports";
-
-const MOVING_AVG_DAYS_DEFAULT = 14;
-
-const emptyReport = {
-    recovered: [],
-    deaths: [],
-    confirmed: [],
-    labels: [],
-    name: "",
-    country: {
-        population: 0,
-        geometry: null,
-        coord: null,
-    },
-};
 
 const reportCache: ReportCacheInterface = {};
 const metaCache: MetadataCacheInterface = {};
