@@ -1,0 +1,25 @@
+.base {
+    border: 1px solid var(--elevated-border);
+    min-width: 240px;
+    margin: 3px 3px 0 0;
+}
+.header {
+    border-bottom: 1px solid var(--elevated-border);
+    text-align: center;
+    line-height: 32px;
+    background: var(--elevated-bg);
+    font-weight: 300;
+}
+
+.footer {
+    border-top: 1px solid var(--elevated-border);
+    text-align: center;
+    line-height: 24px;
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: var(--meta-light);
+}
+
+.body {
+    padding: 12px;
+}
