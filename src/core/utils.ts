@@ -45,3 +45,29 @@ export const toPercentage = (relative: number, precision: number = 2) => {
 export const relativeToPercentage = (collection: number[], precision: number = 2) => {
     collection.map((item) => toPercentage(item, precision));
 };
+
+export const getDoublingSpeed = (collection: number[]) => {
+    let half = collection[collection.length - 1] / 2;
+    for (let i = collection.length - 1; i >= 0; i--) {
+        if (collection[i] <= half) {
+            return collection.length - i;
+        }
+    }
+    return "n/a";
+};
+
+export const lastNthDaysShare = (daily: number[], nthDays: number) => {
+    const lastNthDays = _.takeRight(daily, nthDays);
+    const lastNthDaysTotal = _.sum(lastNthDays);
+    const allTotal = _.sum(daily);
+    return toPercentage(lastNthDaysTotal / allTotal);
+};
+
+export const reportUrlToHeader = (reportName: string, separator: string = " / ") => {
+    return decodeURIComponent(reportName)
+        .split(":")
+        .map((item) => {
+            return item.charAt(0).toUpperCase() + item.slice(1);
+        })
+        .join(separator);
+};
