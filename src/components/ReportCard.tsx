@@ -103,7 +103,6 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
     }
 
     let { deaths, confirmed, recovered, active } = store.today;
-    let { deathsBefore, confirmedBefore, recoveredBefore, activeBefore } = store.yesterday;
     let changes = store.changes;
 
     let { deathsCompare, confirmedCompare, activeCompare, recoveredCompare } = store.dailyShareOfTotal;
