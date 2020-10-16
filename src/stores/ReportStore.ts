@@ -129,6 +129,77 @@ export class ReportStore {
         return this.flattenThatReport();
     }
 
+    @computed get today() {
+        let deaths = this.report ? this.report.deaths[this.report.deaths.length - 1] : 0;
+        let confirmed = this.report ? this.report.confirmed[this.report.confirmed.length - 1] : 0;
+        let recovered = this.report ? this.report.recovered[this.report.recovered.length - 1] : 0;
+        let active = confirmed - (deaths + recovered);
+        return {
+            deaths,
+            confirmed,
+            recovered,
+            active,
+        };
+    }
+
+    @computed get yesterday() {
+        let deathsBefore =
+            this.report && this.report.deaths.length > 2 ? this.report.deaths[this.report.deaths.length - 2] : 0;
+        let confirmedBefore =
+            this.report && this.report.confirmed.length > 2
+                ? this.report.confirmed[this.report.confirmed.length - 2]
+                : 0;
+        let recoveredBefore =
+            this.report && this.report.recovered.length > 2
+                ? this.report.recovered[this.report.recovered.length - 2]
+                : 0;
+        let activeBefore = confirmedBefore - (deathsBefore + recoveredBefore);
+        return {
+            deathsBefore,
+            confirmedBefore,
+            recoveredBefore,
+            activeBefore,
+        };
+    }
+
+    @computed get changes() {
+        let today = this.today;
+        let yesterday = this.yesterday;
+        return {
+            confirmed: today.confirmed - yesterday.confirmedBefore,
+            deaths: today.deaths - yesterday.deathsBefore,
+            recovered: today.recovered - yesterday.recoveredBefore,
+            active: today.active - yesterday.activeBefore,
+        };
+    }
+
+    @computed get dailyShareOfTotal() {
+        const changes = this.changes;
+        const yesterday = this.yesterday;
+        const deathsCompare = changes.deaths / yesterday.deathsBefore;
+        const confirmedCompare = changes.confirmed / yesterday.confirmedBefore;
+        const recoveredCompare = changes.recovered / yesterday.recoveredBefore;
+        const activeCompare = changes.active / yesterday.activeBefore;
+        return {
+            deathsCompare,
+            confirmedCompare,
+            recoveredCompare,
+            activeCompare,
+        };
+    }
+
+    @computed get rates() {
+        let today = this.today;
+        let deathRate = today.deaths / today.confirmed;
+        let recoveryRate = today.recovered / today.confirmed;
+        let activityRate = today.active / today.confirmed;
+        return {
+            deathRate,
+            recoveryRate,
+            activityRate,
+        };
+    }
+
     public daysToFirstDeath(): number {
         if (!this.report) return 0;
         for (let i = 0; i < this.report.deaths.length; i++) {
