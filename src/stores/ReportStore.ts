@@ -48,7 +48,7 @@ export class ReportStore {
         this.dataToWeeks();
     }
 
-    sliceThatReport(slice: number) {
+    sliceReport(slice: number) {
         if (!this.report) return emptyReport;
 
         let recoveredBase = this.report?.recovered || [];
@@ -75,7 +75,7 @@ export class ReportStore {
         };
     }
 
-    flattenThatReport() {
+    flattenReport() {
         let report = this.firstDeathReport();
         return {
             recovered: expMovingAverage(report.recovered, this.movingAvgSpan),
@@ -97,23 +97,23 @@ export class ReportStore {
     }
 
     @computed get weekly(): ReportInterface {
-        return this.sliceThatReport(-8);
+        return this.sliceReport(-8);
     }
 
     @computed get biweekly(): ReportInterface {
-        return this.sliceThatReport(-15);
+        return this.sliceReport(-15);
     }
 
     @computed get monthly(): ReportInterface {
-        return this.sliceThatReport(-31);
+        return this.sliceReport(-31);
     }
 
     @computed get trimonthly(): ReportInterface {
-        return this.sliceThatReport(-91);
+        return this.sliceReport(-91);
     }
 
     @computed get flatten(): ReportInterface {
-        return this.flattenThatReport();
+        return this.flattenReport();
     }
 
     @computed get today() {

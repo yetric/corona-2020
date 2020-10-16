@@ -34,51 +34,42 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
     const [showRecovered, setShowRecovered] = useState(false);
     const [showActive, setShowActive] = useState(false);
     const [loaded, setLoaded] = useState(false);
-    const [observing, setObserving] = useState(false);
     const [currentRange, setCurrentRange] = useState(range);
-
     const observer = new IntersectionObserver(
-        ([entry]) => {
-            if (entry.intersectionRatio > 0.3 && !loaded) {
-                loadReport().then(() => {});
+        async ([entry]) => {
+            if (entry.intersectionRatio > 0.15 && !loaded) {
+                observer.disconnect();
+                await store.loadReport(report, standalone);
+                setLoaded(true);
             }
         },
         {
             root: null,
-            rootMargin: "0px",
-            threshold: 0.3,
+            rootMargin: "60px",
+            threshold: 0.15,
         }
     );
 
-    const loadReport = async () => {
-        if (!loaded && !standalone) {
-            observer.disconnect();
-            await store.loadReport(report, standalone);
-            setLoaded(true);
+    const standaloneLoading = async () => {
+        await store.loadReport(report, standalone);
+        if (report.startsWith("continent")) {
+            let continent = decodeURIComponent(report).split(":")[1];
+            await store.loadContinent(continent);
+        } else if (report.startsWith("region")) {
+            let continent = decodeURIComponent(report).split(":")[1];
+            await store.loadRegion(continent);
+        }
+    };
+
+    const lazyLoading = async () => {
+        if (ref.current) {
+            observer.observe(ref.current);
         }
     };
 
     useEffect(() => {
-        if (report.startsWith("continent") && standalone) {
-            let continent = decodeURIComponent(report).split(":")[1];
-            store.loadContinent(continent).catch(() => {});
-        } else if (report.startsWith("region") && standalone) {
-            let continent = decodeURIComponent(report).split(":")[1];
-            store.loadRegion(continent).catch(() => {});
-        }
-    }, [report, store, standalone]);
-
-    useEffect(() => {
-        if (!standalone && ref.current && !observing) {
-            observer.observe(ref.current);
-            setObserving(true);
-        }
-    }, [standalone, ref, observing, observer]);
-
-    useEffect(() => {
-        if (standalone) {
-            store.loadReport(report, standalone).catch(() => {});
-        }
+        standalone && standaloneLoading();
+        !standalone && lazyLoading();
     }, [standalone, report, store]);
 
     const [chart, setChart] = useState("daily");
