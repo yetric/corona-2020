@@ -27,6 +27,8 @@ interface CasesListProps {
         recovered: number;
         active: number;
     } | null;
+
+    standalone: boolean;
 }
 
 const emptyOrRelative = (num: number | null | undefined) => {
@@ -50,6 +52,7 @@ export const CasesList = (props: CasesListProps) => {
                     count={props.confirmed}
                     label={"Confirmed"}
                     rate={props.updated}
+                    standalone={props.standalone}
                 />
                 <CaseListItem
                     label={"Deaths"}
@@ -57,6 +60,7 @@ export const CasesList = (props: CasesListProps) => {
                     rate={props.deathRate}
                     change={props.changes?.deaths}
                     changeRate={deathChange}
+                    standalone={props.standalone}
                 />
                 <CaseListItem
                     label={"Recovered"}
@@ -64,6 +68,7 @@ export const CasesList = (props: CasesListProps) => {
                     rate={props.recoveryRate}
                     change={props.changes?.recovered}
                     changeRate={recoveredChange}
+                    standalone={props.standalone}
                 />
                 <CaseListItem
                     label={"Active"}
@@ -71,6 +76,7 @@ export const CasesList = (props: CasesListProps) => {
                     rate={props.activityRate}
                     change={props.changes?.active}
                     changeRate={activeChange}
+                    standalone={props.standalone}
                 />
             </dl>
         </>

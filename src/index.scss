@@ -40,6 +40,7 @@
     --white: #f2f5fa;
 
     --action: #52d8b9;
+    --action-semi: #a2fae5;
     --action-light: #abded2;
 
     --main-bg: #253344;
@@ -132,6 +133,7 @@ h6 {
     text-align: center;
     padding: 12px 0;
     border-bottom: 1px solid var(--accent);
+    position: relative;
     h2 {
         margin: 0;
         font-size: 18px;
@@ -139,21 +141,32 @@ h6 {
         span {
             opacity: 0.45;
         }
+        a {
+            color: var(--nord4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: 0;
+
+            svg {
+                color: var(--action-light);
+            }
+        }
     }
     h3 {
         margin: 0;
         color: var(--nord4);
         font-size: 14px;
     }
-    a {
-        color: var(--nord4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        outline: 0;
 
-        svg {
-            color: var(--action-light);
+    > small {
+        position: absolute;
+        right: 12px;
+        top: 16px;
+        font-size: 12px;
+        color: #5a98e2;
+        a {
+            color: #a1cbfd;
         }
     }
 }
@@ -241,7 +254,6 @@ a {
     margin-bottom: 0;
 }
 @media screen and (min-width: 768px) {
-
     .world-extra .cards {
         display: block;
         .card {
@@ -564,8 +576,13 @@ ol li:before {
     color: var(--action);
     line-height: 42px;
     padding: 0 18px;
+    border-radius: 3px;
     svg {
         margin-right: 4px;
+    }
+    &:hover {
+        color: var(--action-semi);
+        border-color: var(--action-semi);
     }
 }
 
@@ -953,10 +970,6 @@ hr {
     justify-content: center;
     align-items: center;
     .btn {
-        line-height: 28px;
-        font-size: 14px;
-        border-color: var(--action);
-        color: var(--action);
         & ~ .btn {
             border-left: none;
         }

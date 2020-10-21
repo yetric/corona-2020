@@ -44,6 +44,12 @@ const App = observer(() => {
                                 coronadata<span>.se</span>
                             </Link>
                         </h2>
+                        <small>
+                            by{" "}
+                            <a href={"https://yetric.com"} target={"_blank"}>
+                                Yetric AB
+                            </a>
+                        </small>
                     </div>
                     <div className={"chart"}>
                         <Switch>

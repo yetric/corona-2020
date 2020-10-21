@@ -10,6 +10,7 @@ interface CaseListProps {
     rate: any | null | undefined;
     change: number | null | undefined;
     changeRate: number | null | undefined;
+    standalone: boolean;
 }
 
 const prefixNum = (num: number) => {
@@ -27,11 +28,15 @@ export const CaseListItem = (props: CaseListProps) => (
                     <CountUp end={relativeToPercentage(props.rate, false)} decimals={2} suffix={"%"} redraw={false} />
                 )) || <Placeholder />}
             </small>
-            <div className="daily-change">
-                <span className={"yesterday"}>{props.change && prefixNum(props.change)}</span>
-                <span className={"compare"}>{props.changeRate || (props.change === 0 ? <>&plusmn;0</> : "n/a")}</span>
-                <span className="info">Since Yesterday</span>
-            </div>
+            {props.standalone && (
+                <div className="daily-change">
+                    <span className={"yesterday"}>{props.change && prefixNum(props.change)}</span>
+                    <span className={"compare"}>
+                        {props.changeRate || (props.change === 0 ? <>&plusmn;0</> : "n/a")}
+                    </span>
+                    <span className="info">Since Yesterday</span>
+                </div>
+            )}
         </dd>
     </>
 );

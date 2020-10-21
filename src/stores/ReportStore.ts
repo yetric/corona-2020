@@ -112,6 +112,10 @@ export class ReportStore {
         return this.sliceReport(-91);
     }
 
+    @computed get halfyear(): ReportInterface {
+        return this.sliceReport(-181);
+    }
+
     @computed get flatten(): ReportInterface {
         return this.flattenReport();
     }

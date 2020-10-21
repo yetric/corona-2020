@@ -18,7 +18,7 @@ import World from "../views/World";
 import { ReportInterface } from "../models/Reports";
 import { getDoublingSpeed, lastNthDaysShare, reportUrlToHeader, toDaily } from "../core/utils";
 
-type DataRange = "all" | "trimonthly" | "monthly" | "weekly" | "biweekly" | "ma" | "death";
+type DataRange = "all" | "trimonthly" | "monthly" | "halfyear" | "weekly" | "biweekly" | "ma" | "death";
 
 interface ReportCardProps {
     report: string;
@@ -27,7 +27,7 @@ interface ReportCardProps {
     standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "trimonthly", standalone = false }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "halfyear", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
     const [showDeaths, setShowDeaths] = useState(true);
@@ -78,6 +78,9 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
     switch (currentRange) {
         case "all":
             dataStore = store.report;
+            break;
+        case "halfyear":
+            dataStore = store.halfyear;
             break;
         case "trimonthly":
             dataStore = store.trimonthly;
@@ -158,6 +161,17 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                         </li>
                         <li>
                             <a
+                                href={"#halfyear"}
+                                className={currentRange === "halfyear" ? "selected" : ""}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setCurrentRange("halfyear");
+                                }}>
+                                180 days
+                            </a>
+                        </li>
+                        <li>
+                            <a
                                 href={"#trimonthly"}
                                 className={currentRange === "trimonthly" ? "selected" : ""}
                                 onClick={(event) => {
@@ -178,67 +192,60 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                                 30 days
                             </a>
                         </li>
-                        <li>
-                            <a
-                                href={"#biweekly"}
-                                className={currentRange === "biweekly" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("biweekly");
-                                }}>
-                                14 days
-                            </a>
-                        </li>
                     </ul>
 
-                    <div className={"controls"}>
-                        <Checkbox
-                            onChange={(flatten: boolean) => {
-                                store.setUseMovingAvg(flatten);
-                            }}
-                            checked={store.movingAvg}
-                            label={"Moving Avg."}
-                        />
-                        <NumBox
-                            onChange={(num: number) => {
-                                store.setMovingAvgSpan(num);
-                            }}
-                            enabled={store.movingAvg}
-                            value={store.movingAvgSpan}
-                            label={"%d days"}
-                        />
-                    </div>
+                    {standalone && (
+                        <>
+                            <div className={"controls"}>
+                                <Checkbox
+                                    onChange={(flatten: boolean) => {
+                                        store.setUseMovingAvg(flatten);
+                                    }}
+                                    checked={store.movingAvg}
+                                    label={"Moving Avg."}
+                                />
+                                <NumBox
+                                    onChange={(num: number) => {
+                                        store.setMovingAvgSpan(num);
+                                    }}
+                                    enabled={store.movingAvg}
+                                    value={store.movingAvgSpan}
+                                    label={"%d days"}
+                                />
+                            </div>
 
-                    <div className="toggles">
-                        <Toggle
-                            items={[
-                                {
-                                    key: "linear",
-                                    label: "Linear",
-                                },
-                                {
-                                    key: "logarithmic",
-                                    label: "Logarithmic",
-                                },
-                            ]}
-                            selected={chartType}
-                            onSelect={setChartType}
-                        />
-                        <Toggle
-                            items={[
-                                {
-                                    key: "accumulated",
-                                    label: "Accumulated",
-                                },
-                                {
-                                    key: "daily",
-                                    label: "Daily",
-                                },
-                            ]}
-                            selected={chart}
-                            onSelect={setChart}
-                        />
-                    </div>
+                            <div className="toggles">
+                                <Toggle
+                                    items={[
+                                        {
+                                            key: "linear",
+                                            label: "Linear",
+                                        },
+                                        {
+                                            key: "logarithmic",
+                                            label: "Logarithmic",
+                                        },
+                                    ]}
+                                    selected={chartType}
+                                    onSelect={setChartType}
+                                />
+                                <Toggle
+                                    items={[
+                                        {
+                                            key: "accumulated",
+                                            label: "Accumulated",
+                                        },
+                                        {
+                                            key: "daily",
+                                            label: "Daily",
+                                        },
+                                    ]}
+                                    selected={chart}
+                                    onSelect={setChart}
+                                />
+                            </div>
+                        </>
+                    )}
 
                     {chart === "accumulated" && (
                         <>
@@ -264,54 +271,58 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                         />
                     )}
 
-                    <ul className={"actions"}>
-                        <li>
-                            <a
-                                href={"#confirmed"}
-                                className={"confirmed" + (showConfirmed ? " selected" : "")}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setShowConfirmed(!showConfirmed);
-                                }}>
-                                {showConfirmed ? <CheckSquare size={14} /> : <Square size={14} />} Confirmed
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#deaths"}
-                                className={"deaths" + (showDeaths ? " selected" : "")}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setShowDeaths(!showDeaths);
-                                }}>
-                                {showDeaths ? <CheckSquare size={14} /> : <Square size={14} />} Deaths
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#recovered"}
-                                className={"recovered" + (showRecovered ? " selected" : "")}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setShowRecovered(!showRecovered);
-                                }}>
-                                {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#active"}
-                                className={"active" + (showActive ? " selected" : "")}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setShowActive(!showActive);
-                                }}>
-                                {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
-                            </a>
-                        </li>
-                    </ul>
+                    {standalone && (
+                        <>
+                            <ul className={"actions"}>
+                                <li>
+                                    <a
+                                        href={"#confirmed"}
+                                        className={"confirmed" + (showConfirmed ? " selected" : "")}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            setShowConfirmed(!showConfirmed);
+                                        }}>
+                                        {showConfirmed ? <CheckSquare size={14} /> : <Square size={14} />} Confirmed
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href={"#deaths"}
+                                        className={"deaths" + (showDeaths ? " selected" : "")}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            setShowDeaths(!showDeaths);
+                                        }}>
+                                        {showDeaths ? <CheckSquare size={14} /> : <Square size={14} />} Deaths
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href={"#recovered"}
+                                        className={"recovered" + (showRecovered ? " selected" : "")}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            setShowRecovered(!showRecovered);
+                                        }}>
+                                        {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href={"#active"}
+                                        className={"active" + (showActive ? " selected" : "")}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            setShowActive(!showActive);
+                                        }}>
+                                        {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
+                                    </a>
+                                </li>
+                            </ul>
 
-                    <hr />
+                            <hr />
+                        </>
+                    )}
                     <CasesList
                         deaths={deaths}
                         confirmed={confirmed}
@@ -326,96 +337,107 @@ export const ReportCard = observer(({ report, store, range = "trimonthly", stand
                         recoveredCompare={recoveredCompare}
                         activeCompare={activeCompare}
                         changes={changes}
+                        standalone={standalone}
                     />
 
-                    <p className={"divider-text"}>Peak Dates</p>
-                    <div className="max-date">
-                        <div>
-                            <span>Confirmed</span>
-                            <p>
-                                <span className={"date"}>{store.peakConfirmed?.date}</span>
-                                <br />
-                                {store.peakConfirmed?.count.toLocaleString("sv-se")}
-                            </p>
-                        </div>
-                        <div>
-                            <span>Deaths</span>
-                            <p>
-                                <span className={"date"}>{store.peakDeaths?.date}</span>
-                                <br />
-                                {store.peakDeaths?.count.toLocaleString("sv-se")}
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div className="row-xs meta-info">
-                        <div className="col-xs">
-                            {incidensDeaths && (
-                                <div className={"muted text-center"}>
-                                    <small>
-                                        <strong>Incidens</strong>
+                    {standalone && (
+                        <>
+                            <p className={"divider-text"}>Peak Dates</p>
+                            <div className="max-date">
+                                <div>
+                                    <span>Confirmed</span>
+                                    <p>
+                                        <span className={"date"}>{store.peakConfirmed?.date}</span>
                                         <br />
-                                        <span className={"focus"}>{incidensDeaths} deaths</span> <small>/ 100K</small>
-                                    </small>
+                                        {store.peakConfirmed?.count.toLocaleString("sv-se")}
+                                    </p>
                                 </div>
-                            )}
-                        </div>
-                        <div className="col-xs">
-                            {incidensCases && (
-                                <div className={"muted text-center"}>
-                                    <small>
-                                        <strong>Incidens</strong>
+                                <div>
+                                    <span>Deaths</span>
+                                    <p>
+                                        <span className={"date"}>{store.peakDeaths?.date}</span>
                                         <br />
-                                        <span className={"focus"}>{incidensCases} cases</span> <small>/ 100K</small>
-                                    </small>
+                                        {store.peakDeaths?.count.toLocaleString("sv-se")}
+                                    </p>
                                 </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className="row-xs meta-info">
-                        <div className="col-xs">
-                            <div className={"muted text-center"}>
-                                <small>
-                                    <strong>Doubling Rates</strong>
-                                    <br />
-                                    Confirmed:{" "}
-                                    <span className={"focus"}>
-                                        {store.report && getDoublingSpeed(store.report.confirmed)} days
-                                    </span>
-                                    <br />
-                                    Deaths:{" "}
-                                    <span className={"focus"}>
-                                        {store.report && getDoublingSpeed(store.report.deaths)} days
-                                    </span>
-                                    <br />
-                                </small>
                             </div>
-                        </div>
+                            <hr />
+                        </>
+                    )}
 
-                        <div className="col-xs">
-                            <div className={"muted text-center"}>
-                                <small>
-                                    <strong>Last 3 Days of Total</strong>
-                                    <br />
-                                    Confirmed:{" "}
-                                    <span className={"focus"}>
-                                        {store.report && lastNthDaysShare(toDaily(store.report.confirmed), 3)}%
-                                    </span>
-                                    <br />
-                                    Deaths:{" "}
-                                    <span className={"focus"}>
-                                        {store.report && lastNthDaysShare(toDaily(store.report.deaths), 3)}%
-                                    </span>
-                                </small>
+                    {standalone && (
+                        <>
+                            <div className="row-xs meta-info">
+                                <div className="col-xs">
+                                    {incidensDeaths && (
+                                        <div className={"muted text-center"}>
+                                            <small>
+                                                <strong>Incidens</strong>
+                                                <br />
+                                                <span className={"focus"}>{incidensDeaths} deaths</span>{" "}
+                                                <small>/ 100K</small>
+                                            </small>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="col-xs">
+                                    {incidensCases && (
+                                        <div className={"muted text-center"}>
+                                            <small>
+                                                <strong>Incidens</strong>
+                                                <br />
+                                                <span className={"focus"}>{incidensCases} cases</span>{" "}
+                                                <small>/ 100K</small>
+                                            </small>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                            <div className="row-xs meta-info">
+                                <div className="col-xs">
+                                    <div className={"muted text-center"}>
+                                        <small>
+                                            <strong>Doubling Rates</strong>
+                                            <br />
+                                            Confirmed:{" "}
+                                            <span className={"focus"}>
+                                                {store.report && getDoublingSpeed(store.report.confirmed)} days
+                                            </span>
+                                            <br />
+                                            Deaths:{" "}
+                                            <span className={"focus"}>
+                                                {store.report && getDoublingSpeed(store.report.deaths)} days
+                                            </span>
+                                            <br />
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div className="col-xs">
+                                    <div className={"muted text-center"}>
+                                        <small>
+                                            <strong>Last 3 Days of Total</strong>
+                                            <br />
+                                            Confirmed:{" "}
+                                            <span className={"focus"}>
+                                                {store.report && lastNthDaysShare(toDaily(store.report.confirmed), 3)}%
+                                            </span>
+                                            <br />
+                                            Deaths:{" "}
+                                            <span className={"focus"}>
+                                                {store.report && lastNthDaysShare(toDaily(store.report.deaths), 3)}%
+                                            </span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
 
                     {!standalone && (
                         <div className="btn-group">
                             <Link to={`/report/${encodeURIComponent(report)}`} className="btn">
-                                Full Report
+                                Detailed Report
                             </Link>
                         </div>
                     )}
