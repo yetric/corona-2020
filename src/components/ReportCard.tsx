@@ -50,24 +50,23 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
         }
     );
 
-    const standaloneLoading = async () => {
-        await store.loadReport(report, standalone);
-        if (report.startsWith("continent")) {
-            let continent = decodeURIComponent(report).split(":")[1];
-            await store.loadContinent(continent);
-        } else if (report.startsWith("region")) {
-            let continent = decodeURIComponent(report).split(":")[1];
-            await store.loadRegion(continent);
-        }
-    };
-
-    const lazyLoading = async () => {
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
-    };
-
     useEffect(() => {
+        const standaloneLoading = async () => {
+            await store.loadReport(report, standalone);
+            if (report.startsWith("continent")) {
+                let continent = decodeURIComponent(report).split(":")[1];
+                await store.loadContinent(continent);
+            } else if (report.startsWith("region")) {
+                let continent = decodeURIComponent(report).split(":")[1];
+                await store.loadRegion(continent);
+            }
+        };
+
+        const lazyLoading = async () => {
+            if (ref.current) {
+                observer.observe(ref.current);
+            }
+        };
         standalone && standaloneLoading();
         !standalone && lazyLoading();
     }, [standalone, report, store]);
