@@ -15,10 +15,14 @@ import { CountryTable } from "./CountryTable";
 import { Checkbox } from "./core/Checkbox";
 import { NumBox } from "./NumBox";
 import World from "../views/World";
-import { ReportInterface } from "../models/Reports";
+import { DataRange, LabelActionProps, ReportInterface, TimeSpanActionProps } from "../models/Reports";
 import { getDoublingSpeed, lastNthDaysShare, reportUrlToHeader, toDaily } from "../core/utils";
-
-type DataRange = "all" | "trimonthly" | "monthly" | "halfyear" | "weekly" | "biweekly" | "ma" | "death";
+import { TimeSpan } from "./TimeSpan";
+import { GraphLabelActions } from "./GraphLabelActions";
+import { MovingAvg } from "./MovingAvg";
+import { PeakDates } from "./PeakDates";
+import { DoublingDates } from "./DoublingDates";
+import { DownloadReport } from "./DownloadReport";
 
 interface ReportCardProps {
     report: string;
@@ -118,18 +122,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
         name: report,
     };
 
-    interface TimeSpanActionProps {
-        reportName: DataRange;
-        label: string;
-    }
-
-    interface LabelActionProps {
-        short: string;
-        visible: boolean;
-        label: string;
-        callback: any;
-    }
-
     const timeSpans: TimeSpanActionProps[] = [
         {
             reportName: "all",
@@ -196,42 +188,10 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                     <small className={"meta"}>{dates}</small>
                 </div>
                 <div className="card-body">
-                    <ul className={"actions"}>
-                        {timeSpans.map((timepsan: TimeSpanActionProps) => (
-                            <li>
-                                <a
-                                    href={"#" + timepsan.reportName}
-                                    className={currentRange === timepsan.reportName ? "selected" : ""}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        setCurrentRange(timepsan.reportName);
-                                    }}>
-                                    {timepsan.label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-
+                    <TimeSpan timeSpans={timeSpans} currentRange={currentRange} callback={setCurrentRange} />
                     {standalone && (
                         <>
-                            <div className={"controls"}>
-                                <Checkbox
-                                    onChange={(flatten: boolean) => {
-                                        store.setUseMovingAvg(flatten);
-                                    }}
-                                    checked={store.movingAvg}
-                                    label={"Moving Avg."}
-                                />
-                                <NumBox
-                                    onChange={(num: number) => {
-                                        store.setMovingAvgSpan(num);
-                                    }}
-                                    enabled={store.movingAvg}
-                                    value={store.movingAvgSpan}
-                                    label={"%d days"}
-                                />
-                            </div>
-
+                            <MovingAvg store={store} />
                             <div className="toggles">
                                 <Toggle
                                     items={[
@@ -291,23 +251,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
 
                     {standalone && (
                         <>
-                            <ul className={"actions"}>
-                                {labelActions.map((action) => (
-                                    <li>
-                                        <a
-                                            className={`${action.short} ${action.visible ? " selected" : ""}`}
-                                            href={`#${action.short}`}
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                action.callback(!action.visible);
-                                            }}>
-                                            {action.visible ? <CheckSquare size={14} /> : <Square size={14} />}{" "}
-                                            {action.label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-
+                            <GraphLabelActions labelActions={labelActions} />
                             <hr />
                         </>
                     )}
@@ -328,98 +272,9 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                         standalone={standalone}
                     />
 
+                    {standalone && <PeakDates store={store} />}
                     {standalone && (
-                        <>
-                            <p className={"divider-text"}>Peak Dates</p>
-                            <div className="max-date">
-                                <div>
-                                    <span>Confirmed</span>
-                                    <p>
-                                        <span className={"date"}>{store.peakConfirmed?.date}</span>
-                                        <br />
-                                        {store.peakConfirmed?.count.toLocaleString("sv-se")}
-                                    </p>
-                                </div>
-                                <div>
-                                    <span>Deaths</span>
-                                    <p>
-                                        <span className={"date"}>{store.peakDeaths?.date}</span>
-                                        <br />
-                                        {store.peakDeaths?.count.toLocaleString("sv-se")}
-                                    </p>
-                                </div>
-                            </div>
-                            <hr />
-                        </>
-                    )}
-
-                    {standalone && (
-                        <>
-                            <div className="row-xs meta-info">
-                                <div className="col-xs">
-                                    {incidensDeaths && (
-                                        <div className={"muted text-center"}>
-                                            <small>
-                                                <strong>Incidens</strong>
-                                                <br />
-                                                <span className={"focus"}>{incidensDeaths} deaths</span>{" "}
-                                                <small>/ 100K</small>
-                                            </small>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="col-xs">
-                                    {incidensCases && (
-                                        <div className={"muted text-center"}>
-                                            <small>
-                                                <strong>Incidens</strong>
-                                                <br />
-                                                <span className={"focus"}>{incidensCases} cases</span>{" "}
-                                                <small>/ 100K</small>
-                                            </small>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="row-xs meta-info">
-                                <div className="col-xs">
-                                    <div className={"muted text-center"}>
-                                        <small>
-                                            <strong>Doubling Rates</strong>
-                                            <br />
-                                            Confirmed:{" "}
-                                            <span className={"focus"}>
-                                                {store.report && getDoublingSpeed(store.report.confirmed)} days
-                                            </span>
-                                            <br />
-                                            Deaths:{" "}
-                                            <span className={"focus"}>
-                                                {store.report && getDoublingSpeed(store.report.deaths)} days
-                                            </span>
-                                            <br />
-                                        </small>
-                                    </div>
-                                </div>
-
-                                <div className="col-xs">
-                                    <div className={"muted text-center"}>
-                                        <small>
-                                            <strong>Last 3 Days of Total</strong>
-                                            <br />
-                                            Confirmed:{" "}
-                                            <span className={"focus"}>
-                                                {store.report && lastNthDaysShare(toDaily(store.report.confirmed), 3)}%
-                                            </span>
-                                            <br />
-                                            Deaths:{" "}
-                                            <span className={"focus"}>
-                                                {store.report && lastNthDaysShare(toDaily(store.report.deaths), 3)}%
-                                            </span>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </>
+                        <DoublingDates store={store} incidensCases={incidensCases} incidensDeaths={incidensDeaths} />
                     )}
 
                     {!standalone && (
@@ -433,25 +288,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                 {standalone && (
                     <div className="card-footer">
                         <Share />
-                        <a
-                            href={"#download"}
-                            onClick={(event) => {
-                                event.preventDefault();
-                                domtoimage
-                                    .toPng(ref.current)
-                                    .then(function (dataUrl) {
-                                        let link = document.createElement("a");
-                                        link.download = encodeURIComponent(reportFixed.toLowerCase()) + ".png";
-                                        link.href = dataUrl;
-                                        link.click();
-                                    })
-                                    .catch(function (error) {
-                                        console.error("oops, something went wrong!", error);
-                                    });
-                            }}>
-                            <Download size={14} /> Export as png
-                        </a>{" "}
-                        - coronadata.se
+                        <DownloadReport element={ref.current} name={reportFixed} /> - coronadata.se
                     </div>
                 )}
             </div>
