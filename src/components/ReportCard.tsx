@@ -118,6 +118,67 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
         name: report,
     };
 
+    interface TimeSpanActionProps {
+        reportName: DataRange;
+        label: string;
+    }
+
+    interface LabelActionProps {
+        short: string;
+        visible: boolean;
+        label: string;
+        callback: any;
+    }
+
+    const timeSpans: TimeSpanActionProps[] = [
+        {
+            reportName: "all",
+            label: "All",
+        },
+        {
+            reportName: "death",
+            label: "1st Death",
+        },
+        {
+            reportName: "halfyear",
+            label: "180 Days",
+        },
+        {
+            reportName: "trimonthly",
+            label: "90 Days",
+        },
+        {
+            reportName: "monthly",
+            label: "30 Days",
+        },
+    ];
+
+    const labelActions: LabelActionProps[] = [
+        {
+            label: "Confirmed",
+            short: "confirmed",
+            visible: showConfirmed,
+            callback: setShowConfirmed,
+        },
+        {
+            label: "Deaths",
+            short: "deaths",
+            visible: showDeaths,
+            callback: setShowDeaths,
+        },
+        {
+            label: "Recovered",
+            short: "recovered",
+            visible: showRecovered,
+            callback: setShowRecovered,
+        },
+        {
+            label: "Active",
+            short: "active",
+            visible: showActive,
+            callback: setShowActive,
+        },
+    ];
     return (
         <>
             <div ref={ref} className="card">
@@ -136,61 +197,19 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                 </div>
                 <div className="card-body">
                     <ul className={"actions"}>
-                        <li>
-                            <a
-                                href={"#all"}
-                                className={currentRange === "all" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("all");
-                                }}>
-                                All
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#death"}
-                                className={currentRange === "ma" || currentRange === "death" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("death");
-                                }}>
-                                1st Death
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#halfyear"}
-                                className={currentRange === "halfyear" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("halfyear");
-                                }}>
-                                180 days
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#trimonthly"}
-                                className={currentRange === "trimonthly" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("trimonthly");
-                                }}>
-                                90 days
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href={"#monthly"}
-                                className={currentRange === "monthly" ? "selected" : ""}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    setCurrentRange("monthly");
-                                }}>
-                                30 days
-                            </a>
-                        </li>
+                        {timeSpans.map((timepsan: TimeSpanActionProps) => (
+                            <li>
+                                <a
+                                    href={"#" + timepsan.reportName}
+                                    className={currentRange === timepsan.reportName ? "selected" : ""}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        setCurrentRange(timepsan.reportName);
+                                    }}>
+                                    {timepsan.label}
+                                </a>
+                            </li>
+                        ))}
                     </ul>
 
                     {standalone && (
@@ -273,50 +292,20 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                     {standalone && (
                         <>
                             <ul className={"actions"}>
-                                <li>
-                                    <a
-                                        href={"#confirmed"}
-                                        className={"confirmed" + (showConfirmed ? " selected" : "")}
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            setShowConfirmed(!showConfirmed);
-                                        }}>
-                                        {showConfirmed ? <CheckSquare size={14} /> : <Square size={14} />} Confirmed
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href={"#deaths"}
-                                        className={"deaths" + (showDeaths ? " selected" : "")}
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            setShowDeaths(!showDeaths);
-                                        }}>
-                                        {showDeaths ? <CheckSquare size={14} /> : <Square size={14} />} Deaths
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href={"#recovered"}
-                                        className={"recovered" + (showRecovered ? " selected" : "")}
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            setShowRecovered(!showRecovered);
-                                        }}>
-                                        {showRecovered ? <CheckSquare size={14} /> : <Square size={14} />} Recovered
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        href={"#active"}
-                                        className={"active" + (showActive ? " selected" : "")}
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            setShowActive(!showActive);
-                                        }}>
-                                        {showActive ? <CheckSquare size={14} /> : <Square size={14} />} Active
-                                    </a>
-                                </li>
+                                {labelActions.map((action) => (
+                                    <li>
+                                        <a
+                                            className={`${action.short} ${action.visible ? " selected" : ""}`}
+                                            href={`#${action.short}`}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                action.callback(!action.visible);
+                                            }}>
+                                            {action.visible ? <CheckSquare size={14} /> : <Square size={14} />}{" "}
+                                            {action.label}
+                                        </a>
+                                    </li>
+                                ))}
                             </ul>
 
                             <hr />
