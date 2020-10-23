@@ -133,6 +133,23 @@ export class ReportStore {
         };
     }
 
+    @computed get incidens() {
+        let incidensCases = null;
+        let incidensDeaths = null;
+        if (this.report && this.report.country && this.report.country.population) {
+            incidensDeaths = Math.round(this.today.deaths / (this.report.country.population / 100000)).toLocaleString(
+                "sv-se"
+            );
+            incidensCases = Math.round(this.today.confirmed / (this.report.country.population / 100000)).toLocaleString(
+                "sv-se"
+            );
+        }
+        return {
+            deaths: incidensDeaths,
+            confirmed: incidensCases,
+        };
+    }
+
     @computed get yesterday() {
         let deathsBefore =
             this.report && this.report.deaths.length > 2 ? this.report.deaths[this.report.deaths.length - 2] : 0;

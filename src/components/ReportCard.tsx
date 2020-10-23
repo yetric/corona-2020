@@ -5,18 +5,15 @@ import { Report } from "./Report";
 import { CasesList } from "./CasesList";
 import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
-import { CheckSquare, Download, Square, Star } from "react-feather";
-import domtoimage from "dom-to-image";
+import { Star } from "react-feather";
 import { Link } from "react-router-dom";
 import { CountryMetadataCard } from "./CountryMetadataCard";
 import { Share } from "./Share";
 import { Fav, favStore } from "../stores/FavStore";
 import { CountryTable } from "./CountryTable";
-import { Checkbox } from "./core/Checkbox";
-import { NumBox } from "./NumBox";
 import World from "../views/World";
 import { DataRange, LabelActionProps, ReportInterface, TimeSpanActionProps } from "../models/Reports";
-import { getDoublingSpeed, lastNthDaysShare, reportUrlToHeader, toDaily } from "../core/utils";
+import { reportUrlToHeader } from "../core/utils";
 import { TimeSpan } from "./TimeSpan";
 import { GraphLabelActions } from "./GraphLabelActions";
 import { MovingAvg } from "./MovingAvg";
@@ -110,13 +107,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
     let reportFixed = reportUrlToHeader(report);
 
     let dates = dataStore ? dataStore.labels[0] + " - " + dataStore.labels[dataStore.labels.length - 1] : "";
-
-    let incidensDeaths = null;
-    let incidensCases = null;
-    if (store.report && store.report.country && store.report.country.population) {
-        incidensDeaths = Math.round(deaths / (store.report.country.population / 100000)).toLocaleString("sv-se");
-        incidensCases = Math.round(confirmed / (store.report.country.population / 100000)).toLocaleString("sv-se");
-    }
 
     let newFav: Fav = {
         name: report,
@@ -274,7 +264,11 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
 
                     {standalone && <PeakDates store={store} />}
                     {standalone && (
-                        <DoublingDates store={store} incidensCases={incidensCases} incidensDeaths={incidensDeaths} />
+                        <DoublingDates
+                            store={store}
+                            incidensCases={store.incidens.confirmed}
+                            incidensDeaths={store.incidens.deaths}
+                        />
                     )}
 
                     {!standalone && (
