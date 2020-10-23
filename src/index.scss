@@ -179,7 +179,7 @@ a {
 .chart {
     background-color: var(--main-bg);
     padding: 12px;
-    max-width: 1280px;
+    max-width: 1620px;
     margin: 0 auto;
 }
 
@@ -272,6 +272,10 @@ a {
 
     .cards .card:first-child {
         margin-left: 0;
+    }
+
+    .word-overview .cards .card {
+        width: 33%;
     }
 }
 
@@ -420,10 +424,11 @@ dl {
 }
 
 dt {
-    flex-basis: 45%;
-    line-height: 48px;
-    padding: 0 20px 0 0;
+    flex-basis: 40%;
+    line-height: 42px;
+    padding: 0 12px 0 0;
     text-align: right;
+    font-size: 14px;
     color: var(--meta-light);
 }
 
@@ -440,12 +445,13 @@ dl.small-dl {
 }
 
 dd {
-    flex-basis: 55%;
+    flex-basis: 60%;
     margin: 0;
     padding: 0;
-    font-size: 24px;
-    line-height: 30px;
-    color: var(--nord6);
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--white);
+    font-weight: 500;
 }
 
 dd small {
@@ -1125,4 +1131,26 @@ fieldset {
 td small {
     font-size: 10px;
     filter: brightness(0.7) contrast(0.5);
+}
+
+.breadcrumbs {
+    list-style: none;
+    li {
+        display: inline;
+        font-size: 13px;
+        &:after {
+            content: " / ";
+            color: var(--nord3);
+            margin: 0 6px;
+        }
+        &:last-child:after {
+            content: "";
+        }
+        &.active {
+            color: var(--nord4);
+        }
+        a {
+            color: var(--action-semi);
+        }
+    }
 }

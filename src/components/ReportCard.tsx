@@ -96,6 +96,10 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
             break;
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     let { deaths, confirmed, recovered, active } = store.today;
     let changes = store.changes;
 

@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { Suspense, lazy, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link, useLocation, withRouter } from "react-router-dom";
 import Analytics from "react-router-ga";
 
 import "./core/toaster";
@@ -30,11 +30,22 @@ const WaitingComponent = (Component: any) => {
     );
 };
 
+export const ScrollToTop = withRouter(() => {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+});
+
 const App = observer(() => {
     const pwaClassName = isInStandaloneMode() ? "pwa" : "web";
 
     return (
         <Router>
+            <ScrollToTop />
             <div id="app-wrapper" className={pwaClassName}>
                 <Analytics id={"UA-103000963-8"}>
                     <div className="header">
