@@ -264,6 +264,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                         activeCompare={activeCompare}
                         changes={changes}
                         standalone={standalone}
+                        avg={store.yesterdayMovingAvg}
                     />
 
                     {standalone && <PeakDates store={store} />}

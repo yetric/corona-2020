@@ -29,6 +29,7 @@ interface CasesListProps {
     } | null;
 
     standalone: boolean;
+    avg: any;
 }
 
 const emptyOrRelative = (num: number | null | undefined) => {
@@ -53,6 +54,7 @@ export const CasesList = (props: CasesListProps) => {
                     label={"Confirmed"}
                     rate={props.updated}
                     standalone={props.standalone}
+                    avg={props.avg.confirmed}
                 />
                 <CaseListItem
                     label={"Deaths"}
@@ -61,23 +63,28 @@ export const CasesList = (props: CasesListProps) => {
                     change={props.changes?.deaths}
                     changeRate={deathChange}
                     standalone={props.standalone}
+                    avg={props.avg.deaths}
                 />
-                <CaseListItem
-                    label={"Recovered"}
-                    count={props.recovered}
-                    rate={props.recoveryRate}
-                    change={props.changes?.recovered}
-                    changeRate={recoveredChange}
-                    standalone={props.standalone}
-                />
-                <CaseListItem
-                    label={"Active"}
-                    count={props.active}
-                    rate={props.activityRate}
-                    change={props.changes?.active}
-                    changeRate={activeChange}
-                    standalone={props.standalone}
-                />
+                {props.standalone && (
+                    <CaseListItem
+                        label={"Recovered"}
+                        count={props.recovered}
+                        rate={props.recoveryRate}
+                        change={props.changes?.recovered}
+                        changeRate={recoveredChange}
+                        standalone={props.standalone}
+                    />
+                )}
+                {props.standalone && (
+                    <CaseListItem
+                        label={"Active"}
+                        count={props.active}
+                        rate={props.activityRate}
+                        change={props.changes?.active}
+                        changeRate={activeChange}
+                        standalone={props.standalone}
+                    />
+                )}
             </dl>
         </>
     );

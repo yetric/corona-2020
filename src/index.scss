@@ -580,9 +580,10 @@ ol li:before {
     display: inline-block;
     border: 1px solid var(--action);
     color: var(--action);
-    line-height: 42px;
+    line-height: 32px;
     padding: 0 18px;
     border-radius: 3px;
+    font-size: 14px;
     svg {
         margin-right: 4px;
     }

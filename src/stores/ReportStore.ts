@@ -279,6 +279,21 @@ export class ReportStore {
             : null;
     }
 
+    @computed get yesterdayMovingAvg() {
+        if (!this.report) {
+            return {
+                confirmed: 0,
+                deaths: 0,
+            };
+        }
+        let confirmedAvg = this.toDaily(expMovingAverage(this.report?.confirmed, this.movingAvgSpan));
+        let deathsAvg = this.toDaily(expMovingAverage(this.report?.deaths, this.movingAvgSpan));
+        return {
+            confirmed: Math.round(confirmedAvg[confirmedAvg.length - 1]),
+            deaths: Math.round(deathsAvg[deathsAvg.length - 1]),
+        };
+    }
+
     private toDaily(collection: number[] | undefined) {
         if (collection) {
             return collection.map((count, index) => {
