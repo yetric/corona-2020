@@ -13,20 +13,20 @@ export const Share = () => {
 
     useEffect(() => {
         const clipboard = new Clipboard(button.current, {
-            text: function(trigger: any) {
+            text: function (trigger: any) {
                 return window.location.href;
-            }
+            },
         });
 
         clipboard.on("success", () => {
             trackEvent({
                 category: "Share",
                 action: "Copy",
-                label: window.location.href
+                label: window.location.href,
             });
             toast({
                 text: "Link copied to clipboard",
-                duration: 2000
+                duration: 2000,
             });
         });
     }, []);
@@ -35,18 +35,18 @@ export const Share = () => {
         await newNavigator
             .share({
                 title: document.title,
-                url: window.location.href
+                url: window.location.href,
             })
             .catch((e: any) => {})
             .then(() => {
                 trackEvent({
                     category: "Share",
                     action: "Native",
-                    label: window.location.href
+                    label: window.location.href,
                 });
                 toast({
                     text: "Thanks for sharing",
-                    duration: 2000
+                    duration: 2000,
                 });
             });
     };
@@ -57,7 +57,7 @@ export const Share = () => {
         <div className={"shr"}>
             <ul>
                 <li ref={button}>
-                    <Copy size={14} /> Copy
+                    <Copy size={14} /> Copy URL
                 </li>
                 {showShare && (
                     <li
@@ -65,7 +65,7 @@ export const Share = () => {
                             event.preventDefault();
                             onShare();
                         }}>
-                        <Share2 size={14} /> Share
+                        <Share2 size={14} /> Share URL
                     </li>
                 )}
             </ul>

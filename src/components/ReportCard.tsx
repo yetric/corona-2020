@@ -249,6 +249,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                             <hr />
                         </>
                     )}
+                    {standalone && <Share />}
                     <CasesList
                         deaths={deaths}
                         confirmed={confirmed}
@@ -266,7 +267,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                         standalone={standalone}
                         avg={store.yesterdayMovingAvg}
                     />
-
                     {standalone && <PeakDates store={store} />}
                     {standalone && (
                         <DoublingDates
@@ -286,7 +286,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                 </div>
                 {standalone && (
                     <div className="card-footer">
-                        <Share />
                         <DownloadReport element={ref.current} name={reportFixed} /> - coronadata.se
                     </div>
                 )}
