@@ -63,7 +63,7 @@ export const CaseListItem = (props: CaseListProps) => {
                     </span>
                     {props.avg && <span className="compare">{props.avg.toLocaleString("sv-se")}</span>}
                     <span className="info">Change</span>
-                    <span className="compare-info">Moving Avg</span>
+                    {props.avg && <span className="compare-info">Moving Avg</span>}
                 </div>
             </dd>
         </>
