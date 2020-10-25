@@ -36,8 +36,10 @@ const Trend = ({ change }: TrendProps) => {
 
 export const CaseListItem = (props: CaseListProps) => {
     let change = null;
+    let extra: any = {};
     if (props.change && props.avg) {
         change = <Trend change={props.change - props.avg} />;
+        extra.title = "Moving Average: " + props.avg.toLocaleString("sv-se");
     }
 
     return (
@@ -56,9 +58,12 @@ export const CaseListItem = (props: CaseListProps) => {
                     )) || <Placeholder />}
                 </small>
                 <div className="daily-change">
-                    <span className={"yesterday"}>
+                    <span className={"yesterday"} {...extra}>
                         {props.change && (props.change > 0 || props.change < 0) && prefixNum(props.change)} {change}
                     </span>
+                    {props.avg && <span className="compare">{props.avg.toLocaleString("sv-se")}</span>}
+                    <span className="info">Change</span>
+                    <span className="compare-info">Moving Avg</span>
                 </div>
             </dd>
         </>

@@ -6,6 +6,7 @@ span.compare {
     display: block;
     line-height: 12px;
     color: var(--change);
+    margin-left: 10px;
 }
 
 span.yesterday {
@@ -29,6 +30,17 @@ span.yesterday {
     top: 2px;
     line-height: 12px;
     transform: translateX(-120%);
+    margin-right: 20px;
+    color: var(--nord9);
+}
+
+.daily-change .compare-info {
+    font-size: 12px;
+    position: absolute;
+    left: 0;
+    top: 19px;
+    line-height: 12px;
+    transform: translateX(-115%);
     margin-right: 20px;
     color: var(--nord9);
 }
