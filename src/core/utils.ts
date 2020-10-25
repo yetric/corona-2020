@@ -71,3 +71,22 @@ export const reportUrlToHeader = (reportName: string, separator: string = " / ")
         })
         .join(separator);
 };
+
+export const setCookie = (name: string, value: string, exdays: number) => {
+    const exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    const cookieVal = escape(value) + (exdays == null ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = name + "=" + cookieVal;
+};
+
+export const getCookie = (name: string) => {
+    const cookieString = document.cookie.split(";");
+    for (let i = 0; i < cookieString.length; i++) {
+        let cookieName = cookieString[i].substr(0, cookieString[i].indexOf("="));
+        let cookieValue = cookieString[i].substr(cookieString[i].indexOf("=") + 1);
+        cookieName = cookieName.replace(/^\s+|\s+$/g, "");
+        if (cookieName == name) {
+            return unescape(cookieValue);
+        }
+    }
+};

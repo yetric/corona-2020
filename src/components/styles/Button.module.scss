@@ -1,0 +1,18 @@
+.button {
+    border: 1px solid var(--action);
+    display: inline-block;
+    color: var(--action);
+    line-height: 36px;
+    padding: 0 12px;
+    cursor: default;
+    border-radius: 5px;
+    &:hover {
+        border-color: var(--action-semi);
+        color: var(--action-semi);
+    }
+
+    &:active {
+        border-color: var(--action-dark);
+        color: var(--action-dark);
+    }
+}

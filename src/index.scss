@@ -42,6 +42,7 @@
     --action: #52d8b9;
     --action-semi: #a2fae5;
     --action-light: #abded2;
+    --action-dark: #46b59c;
 
     --main-bg: #253344;
     --elevated-bg: #2c3d51;
@@ -1154,4 +1155,10 @@ td small {
             color: var(--action-semi);
         }
     }
+}
+
+.shr {
+    text-align: right;
+    font-size: 12px;
+    margin-bottom: 12px;
 }
