@@ -14,6 +14,7 @@ interface CaseListProps {
     changeRate?: number | null | undefined;
     standalone: boolean;
     avg?: number;
+    percentagePrefix?: string;
 }
 
 const prefixNum = (num: number) => {
@@ -48,6 +49,7 @@ export const CaseListItem = (props: CaseListProps) => {
             <dd>
                 {(props.count && <CountUp redraw={false} end={props.count} separator={" "} />) || <Placeholder />}{" "}
                 <small>
+                    {props.percentagePrefix && props.percentagePrefix + " "}
                     {(props.rate && isNumber(props.rate) && (
                         <CountUp
                             end={relativeToPercentage(props.rate, false)}

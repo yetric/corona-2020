@@ -64,6 +64,7 @@ export const CasesList = (props: CasesListProps) => {
                     changeRate={deathChange}
                     standalone={props.standalone}
                     avg={props.avg.deaths}
+                    percentagePrefix={"CFR - "}
                 />
                 {props.standalone && (
                     <CaseListItem
