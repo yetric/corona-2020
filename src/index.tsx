@@ -8,6 +8,7 @@ import { isInStandaloneMode } from "./core/helpers";
 import { GaDimension, setDimension, userTiming } from "./core/tracking";
 
 serviceWorker.unregister();
+
 ReactDOM.render(<App />, document.getElementById("root"), () => {
     let platform = isInStandaloneMode() ? "pwa" : "web";
     document.body.classList.add(platform);
