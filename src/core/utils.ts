@@ -85,7 +85,7 @@ export const getCookie = (name: string) => {
         let cookieName = cookieString[i].substr(0, cookieString[i].indexOf("="));
         let cookieValue = cookieString[i].substr(cookieString[i].indexOf("=") + 1);
         cookieName = cookieName.replace(/^\s+|\s+$/g, "");
-        if (cookieName == name) {
+        if (cookieName === name) {
             return unescape(cookieValue);
         }
     }
