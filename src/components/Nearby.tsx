@@ -3,11 +3,6 @@ import { observer } from "mobx-react";
 import { geoStore } from "../stores/GeoStore";
 import { withRouter } from "react-router-dom";
 
-interface NearbyProps {
-    id: number;
-    history: any;
-}
-
 const NearbyObserver = observer(({ id, history }: any) => {
     useEffect(() => {
         geoStore

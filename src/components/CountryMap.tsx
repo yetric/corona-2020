@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GeoJSON, Map, TileLayer } from "react-leaflet";
+import { GeoJSON, MapContainer, TileLayer } from "react-leaflet";
 import { LatLng, LatLngBounds } from "leaflet";
 
 interface CountryMapProps {
@@ -11,7 +11,7 @@ interface CountryMapProps {
 export const CountryMap = ({ geoJSON, coord }: CountryMapProps) => {
     return (
         <div className="map-holder">
-            <Map
+            <MapContainer
                 bounds={
                     coord && new LatLngBounds(new LatLng(coord.north, coord.west), new LatLng(coord.south, coord.east))
                 }
@@ -29,12 +29,12 @@ export const CountryMap = ({ geoJSON, coord }: CountryMapProps) => {
                                 fillColor: "#AE81FF",
                                 weight: 1,
                                 opacity: 0.5,
-                                fillOpacity: 0.25
+                                fillOpacity: 0.25,
                             };
                         }}
                     />
                 )}
-            </Map>
+            </MapContainer>
         </div>
     );
 };

@@ -3,7 +3,6 @@ import { ReportStore } from "../stores/ReportStore";
 import { observer } from "mobx-react";
 import { Report } from "./Report";
 import { CasesList } from "./CasesList";
-import { BarReport } from "./BarReport";
 import { Toggle } from "./Toggle";
 import { Star } from "react-feather";
 import { Link } from "react-router-dom";
@@ -20,6 +19,7 @@ import { MovingAvg } from "./MovingAvg";
 import { PeakDates } from "./PeakDates";
 import { DoublingDates } from "./DoublingDates";
 import { DownloadReport } from "./DownloadReport";
+import { TimeSeries } from "./TimeSeries";
 
 interface ReportCardProps {
     report: string;
@@ -231,17 +231,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                             />
                         </>
                     )}
-                    {chart === "daily" && (
-                        <BarReport
-                            showConfirmed={showConfirmed}
-                            showDeaths={showDeaths}
-                            showRecovered={showRecovered}
-                            showActive={showActive}
-                            report={dataStore}
-                            stacked={false}
-                            type={chartType}
-                        />
-                    )}
+                    {chart === "daily" && <TimeSeries granularity={"weekly"} store={store} />}
 
                     {standalone && (
                         <>

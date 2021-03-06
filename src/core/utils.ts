@@ -85,8 +85,39 @@ export const getCookie = (name: string) => {
         let cookieName = cookieString[i].substr(0, cookieString[i].indexOf("="));
         let cookieValue = cookieString[i].substr(cookieString[i].indexOf("=") + 1);
         cookieName = cookieName.replace(/^\s+|\s+$/g, "");
-        if (cookieName == name) {
+        if (cookieName === name) {
             return unescape(cookieValue);
         }
     }
+};
+const showYaxis = [
+    100,
+    1000,
+    5000,
+    10000,
+    50000,
+    100000,
+    200000,
+    500000,
+    1000000,
+    2000000,
+    3000000,
+    4000000,
+    5000000,
+    10000000,
+];
+export const fancyValue = (value: number, locale: string = "sv-se") => {
+    if (!showYaxis.includes(value)) {
+        return "";
+    }
+
+    if (value >= 1000000) {
+        return (value / 1000000).toLocaleString(locale) + "M";
+    }
+
+    if (value >= 1000) {
+        return (value / 1000).toLocaleString(locale) + "K";
+    }
+
+    return value.toLocaleString(locale);
 };

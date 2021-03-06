@@ -1,5 +1,5 @@
 import { DataClient } from "../clients/DataClient";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, toJS } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
 import chunk from "lodash/chunk";
@@ -388,7 +388,7 @@ export class ReportStore {
         this.movingAvgSpan = num;
     }
 
-    toWeek(data: number[]) {
+    dailyToWeekly(data: number[]) {
         return chunk(data, 7).map((arr) => {
             return sum(arr);
         });
@@ -408,13 +408,13 @@ export class ReportStore {
 
         this.weeklyReport = {
             labels: this.daysToWeekLabels(this.report.labels),
-            confirmed: this.toWeek(this.report.confirmed),
-            deaths: this.toWeek(this.report.deaths),
-            recovered: this.toWeek(this.report.recovered),
+            confirmed: this.dailyToWeekly(this.toDaily(this.report.confirmed)),
+            deaths: this.dailyToWeekly(this.toDaily(this.report.deaths)),
+            recovered: this.dailyToWeekly(this.toDaily(this.report.recovered)),
             name: this.report.name,
             country: this.report.country,
         };
 
-        console.log(this.weeklyReport);
+        console.log(toJS(this.weeklyReport));
     }
 }
