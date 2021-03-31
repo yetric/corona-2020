@@ -70,6 +70,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
         };
         standalone && standaloneLoading();
         !standalone && lazyLoading();
+        // eslint-disable-next-line
     }, [standalone, report, store]);
 
     const [chart, setChart] = useState("daily");

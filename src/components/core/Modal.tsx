@@ -30,7 +30,7 @@ export const Modal = ({ children, header, footer, allowClose, steps, onClose }: 
             console.log("Unmount Modal");
             document.removeEventListener("keydown", escEventHandler);
         };
-    }, []);
+    });
     return (
         <div ref={ref} className={"modal-wrapper"}>
             <div className={"modal-element"}>

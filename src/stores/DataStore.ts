@@ -13,10 +13,6 @@ interface Case {
     date: number;
 }
 
-interface Country {
-    name: string;
-    cases: Case[];
-}
 
 interface GeoLocation {
     province: string;

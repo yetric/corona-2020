@@ -30,12 +30,13 @@ export const Search = observer(({ onClose = () => {}, show = false }: SearchProp
         },
         // delay in ms
         450
+
     );
 
     const onChange = (event: any) => {
         event.preventDefault();
         setQuery(event.target.value);
-        debouncedCallback.callback(event.target.value);
+        debouncedCallback(event.target.value);
     };
 
     const searchCountryResults = searchStore.result.countries.map((geo: any) => (
