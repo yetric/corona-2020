@@ -1,4 +1,6 @@
 command = "CI=false npm run build"
+[build]
+    functions = "functions"
 [[redirects]]
   from = "/*"
   to = "/index.html"
