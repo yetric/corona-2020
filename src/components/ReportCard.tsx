@@ -95,6 +95,9 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
         case "death":
             dataStore = store.firstDeath;
             break;
+        case "yearly":
+            dataStore = store.yearly;
+            break;
     }
 
     useEffect(() => {
@@ -123,8 +126,8 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
             label: "All",
         },
         {
-            reportName: "death",
-            label: "1st Death",
+            reportName: "yearly",
+            label: "Last year",
         },
         {
             reportName: "halfyear",

@@ -72,7 +72,16 @@ export const emptyReport = {
     },
 };
 
-export type DataRange = "all" | "trimonthly" | "monthly" | "halfyear" | "weekly" | "biweekly" | "ma" | "death";
+export type DataRange =
+    | "all"
+    | "yearly"
+    | "trimonthly"
+    | "monthly"
+    | "halfyear"
+    | "weekly"
+    | "biweekly"
+    | "ma"
+    | "death";
 
 export interface TimeSpanActionProps {
     reportName: DataRange;
