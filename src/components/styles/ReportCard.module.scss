@@ -1,0 +1,12 @@
+.card {
+    position: relative;
+}
+
+.label {
+    position: absolute;
+    z-index: 10000;
+    background: black;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+}

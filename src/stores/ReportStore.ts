@@ -61,6 +61,23 @@ export class ReportStore {
             confirmedBase = expMovingAverage(confirmedBase, this.movingAvgSpan);
         }
 
+        console.log(slice < -90);
+
+        if (slice < -92) {
+            return {
+                recovered: this.toWeek(recoveredBase.slice(slice)),
+                deaths: this.toWeek(deathsBase.slice(slice)),
+                confirmed: this.toWeek(confirmedBase.slice(slice)),
+                labels: this.daysToWeekLabels(this.report?.labels.slice(slice) || []),
+                name: this.report?.name || "",
+                country: this.report.country || {
+                    coord: null,
+                    geometry: null,
+                    population: null,
+                },
+            };
+        }
+
         return {
             recovered: recoveredBase.slice(slice),
             deaths: deathsBase.slice(slice),

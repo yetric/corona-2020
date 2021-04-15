@@ -122,10 +122,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
 
     const timeSpans: TimeSpanActionProps[] = [
         {
-            reportName: "all",
-            label: "All",
-        },
-        {
             reportName: "yearly",
             label: "Last year",
         },
@@ -157,12 +153,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
             callback: setShowDeaths,
         },
         {
-            label: "Recovered",
-            short: "recovered",
-            visible: showRecovered,
-            callback: setShowRecovered,
-        },
-        {
             label: "Active",
             short: "active",
             visible: showActive,
@@ -171,7 +161,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
     ];
     return (
         <>
-            <div ref={ref} className="card">
+            <div ref={ref} className={"card"}>
                 <div className="card-header">
                     <Star
                         className={favStore.has(newFav) ? "selected" : ""}
@@ -244,6 +234,7 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                             report={dataStore}
                             stacked={false}
                             type={chartType}
+                            label={currentRange === "monthly" || currentRange === "trimonthly" ? "Daily" : "Weekly"}
                         />
                     )}
 

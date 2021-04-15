@@ -3,6 +3,7 @@ import { createDataset } from "../core/helpers";
 import { blue, green, red, yellow } from "../core/colors";
 import "./BarReport.css";
 import { ReportInterface } from "../models/Reports";
+import styles from "./styles/BarReport.module.scss";
 import React from "react";
 
 interface BarReportProps {
@@ -13,6 +14,7 @@ interface BarReportProps {
     showActive: boolean;
     stacked?: boolean;
     type?: string;
+    label?: string | null;
 }
 
 export const BarReport = ({
@@ -23,6 +25,7 @@ export const BarReport = ({
     showActive,
     stacked = true,
     type = "linear",
+    label = null,
 }: BarReportProps) => {
     if (!report) {
         return <div>Loading</div>;
@@ -134,7 +137,8 @@ export const BarReport = ({
         },
     };
     return (
-        <div className={"bar-report-wrapper"}>
+        <div className={"bar-report-wrapper " + styles.wrapper}>
+            {label && <div className={styles.label}>{label}</div>}
             <Bar data={data} redraw={true} options={options} />
         </div>
     );
