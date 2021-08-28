@@ -28,11 +28,10 @@ interface ReportCardProps {
     standalone?: boolean;
 }
 
-export const ReportCard = observer(({ report, store, range = "halfyear", standalone = false }: ReportCardProps) => {
+export const ReportCard = observer(({ report, store, range = "trimonthly", standalone = false }: ReportCardProps) => {
     const ref = createRef<any>();
     const [showConfirmed, setShowConfirmed] = useState(true);
-    const [showDeaths, setShowDeaths] = useState(true);
-    const [showRecovered, setShowRecovered] = useState(false);
+    const [showDeaths, setShowDeaths] = useState(false);
     const [showActive, setShowActive] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [currentRange, setCurrentRange] = useState(range);
@@ -218,7 +217,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                             <Report
                                 showConfirmed={showConfirmed}
                                 showDeaths={showDeaths}
-                                showRecovered={showRecovered}
                                 report={dataStore}
                                 showActive={showActive}
                                 type={chartType}
@@ -229,7 +227,6 @@ export const ReportCard = observer(({ report, store, range = "halfyear", standal
                         <BarReport
                             showConfirmed={showConfirmed}
                             showDeaths={showDeaths}
-                            showRecovered={showRecovered}
                             showActive={showActive}
                             report={dataStore}
                             stacked={false}

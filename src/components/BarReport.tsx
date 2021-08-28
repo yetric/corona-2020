@@ -1,6 +1,6 @@
 import { Bar } from "react-chartjs-2";
 import { createDataset } from "../core/helpers";
-import { blue, green, red, yellow } from "../core/colors";
+import { blue, red, yellow } from "../core/colors";
 import "./BarReport.css";
 import { ReportInterface } from "../models/Reports";
 import styles from "./styles/BarReport.module.scss";
@@ -10,7 +10,6 @@ interface BarReportProps {
     report: ReportInterface | null;
     showConfirmed: boolean;
     showDeaths: boolean;
-    showRecovered: boolean;
     showActive: boolean;
     stacked?: boolean;
     type?: string;
@@ -21,7 +20,6 @@ export const BarReport = ({
     report,
     showConfirmed,
     showDeaths,
-    showRecovered,
     showActive,
     stacked = true,
     type = "linear",
@@ -75,15 +73,6 @@ export const BarReport = ({
                 label: "Deaths",
                 color: red,
                 data: change.map((item) => item.deaths),
-            })
-        );
-
-    showRecovered &&
-        data.datasets.push(
-            createDataset({
-                label: "Recovered",
-                color: green,
-                data: change.map((item) => item.recovered),
             })
         );
 

@@ -61,8 +61,6 @@ export class ReportStore {
             confirmedBase = expMovingAverage(confirmedBase, this.movingAvgSpan);
         }
 
-        console.log(slice < -90);
-
         if (slice < -92) {
             return {
                 recovered: this.toWeek(recoveredBase.slice(slice)),

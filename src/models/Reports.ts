@@ -57,7 +57,7 @@ export enum DateSpan {
     Halfmonth = "14 days",
 }
 
-export const MOVING_AVG_DAYS_DEFAULT = 14;
+export const MOVING_AVG_DAYS_DEFAULT = 7;
 
 export const emptyReport = {
     recovered: [],

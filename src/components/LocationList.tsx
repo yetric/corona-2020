@@ -96,7 +96,6 @@ export const LocationList = observer(({ store, title, report }: LocationListProp
                         {report && (
                             <>
                                 <Report
-                                    showRecovered={true}
                                     showDeaths={true}
                                     showConfirmed={true}
                                     type={listType}
