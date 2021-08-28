@@ -112,15 +112,34 @@ export const BarReport = ({
                     gridLines: false,
                     ticks: {
                         beginAtZero: false,
-                        suggestedMin: 0,
-                        min: 0,
+
                         autoSkip: !isLogarithmic,
                         callback: isLogarithmic
                             ? (value: any, index: any, values: any) => {
-                                  return showYaxis.includes(value) ? value.toLocaleString("sv-se") : "";
+                                  if (!showYaxis.includes(value)) {
+                                      return "";
+                                  }
+
+                                  if (value >= 1000 && value < 1000000) {
+                                      return value / 1000 + "K";
+                                  }
+
+                                  if (value >= 1000000) {
+                                      return value / 1000000 + "M";
+                                  }
+
+                                  return value;
                               }
                             : (value: any, index: any, values: any) => {
-                                  return value % 1 === 0 ? value : "";
+                                  if (value >= 1000 && value < 1000000) {
+                                      return value / 1000 + "K";
+                                  }
+
+                                  if (value >= 1000000) {
+                                      return value / 1000000 + "M";
+                                  }
+
+                                  return value;
                               },
                     },
                 },

@@ -90,7 +90,20 @@ export const Report = memo(
                             autoSkip: !isLogarithmic,
                             callback: isLogarithmic
                                 ? (value: any, index: any, values: any) => {
-                                      return showYaxis.includes(value) ? value.toLocaleString("sv-se") : "";
+                                      if (!showYaxis.includes(value)) {
+                                          return "";
+                                      }
+
+                                      if (value >= 1000 && value < 1000000) {
+                                          return value / 1000 + "K";
+                                      }
+
+                                      if (value >= 1000000) {
+                                          return value / 1000000 + "M";
+                                      }
+
+                                      return value;
+                                      // return showYaxis.includes(value) ? value.toLocaleString("sv-se") : "";
                                   }
                                 : (value: any, index: any, values: any) => {
                                       return value % 1 === 0 ? value : "";

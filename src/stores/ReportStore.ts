@@ -1,5 +1,5 @@
 import { DataClient } from "../clients/DataClient";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, toJS } from "mobx";
 import { expMovingAverage } from "../core/stats";
 import { CountryMetadata } from "./DataStore";
 import chunk from "lodash/chunk";
@@ -61,20 +61,26 @@ export class ReportStore {
             confirmedBase = expMovingAverage(confirmedBase, this.movingAvgSpan);
         }
 
-        console.log(slice < -90);
-
         if (slice < -92) {
+            let deathsDaily = this.toDaily(deathsBase).slice(slice);
+            let confirmedDaily = this.toDaily(confirmedBase).slice(slice);
+            let recoveredDaily = this.toDaily(recoveredBase).slice(slice);
+
+            let deathsWeekly = this.toWeek(deathsDaily);
+            let confirmedWeekly = this.toWeek(confirmedDaily);
+            let recoveredWeekly = this.toWeek(recoveredDaily);
+
             return {
-                recovered: this.toWeek(recoveredBase.slice(slice)),
-                deaths: this.toWeek(deathsBase.slice(slice)),
-                confirmed: this.toWeek(confirmedBase.slice(slice)),
-                labels: this.daysToWeekLabels(this.report?.labels.slice(slice) || []),
-                name: this.report?.name || "",
+                recovered: recoveredWeekly,
+                deaths: deathsWeekly,
+                confirmed: confirmedWeekly,
+                name: "",
                 country: this.report.country || {
                     coord: null,
                     geometry: null,
                     population: null,
                 },
+                labels: deathsWeekly.map(() => ""),
             };
         }
 
@@ -435,7 +441,5 @@ export class ReportStore {
             name: this.report.name,
             country: this.report.country,
         };
-
-        console.log(this.weeklyReport);
     }
 }
