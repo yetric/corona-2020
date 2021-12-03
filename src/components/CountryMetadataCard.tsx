@@ -83,7 +83,6 @@ export const CountryMetadataCard = ({ metadata }: CountryMetadataCardProps) => {
                     </tbody>
                 </table>
             </div>
-            <div className="card-footer">dsfs</div>
         </div>
     );
 };
