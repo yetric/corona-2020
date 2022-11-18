@@ -68,7 +68,7 @@ const App = observer(() => {
                         </h2>
                         <small>
                             by{" "}
-                            <a href={"https://yetric.com"} rel={"noopener noreferrer"} target={"_blank"}>
+                            <a href={"https://yetric.se"} rel={"noopener noreferrer"} target={"_blank"}>
                                 Yetric AB
                             </a>
                         </small>
