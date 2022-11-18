@@ -89,7 +89,7 @@ const App = observer(() => {
 
                         <p className={"footer"}>
                             <a href={"https://github.com/CSSEGISandData/COVID-19"}>Data Source</a> - Graph by{" "}
-                            <a href={"https://yetric.com"}>Yetric AB</a> - Pull Requests Welcome{" "}
+                            <a href={"https://yetric.se"}>Yetric AB</a> - Pull Requests Welcome{" "}
                             <a href={"https://github.com/yetric/corona-2020"}>here</a>
                         </p>
                     </div>
